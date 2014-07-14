@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="com.streethawk" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	
+	<name>StreethawkLibrary</name>
+	
+	<description>
+      &lt;p&gt;This is the official plugin for StreetHawk in Apache Cordova/PhoneGap!&lt;/p&gt;
+      
+      &lt;p&gt;The Streethawk plugin for Apache Cordova allows you to use the same JavaScript code in your Cordova application as you use in your web application. However unlike in the browser, the Cordova application will use the native StreetHawk app to perform actions.&lt;/p&gt;
+    </description>
+    
+    <license>Apache 2.0</license>
+    
+    <preference name="APP_KEY" />
+	
+	<!-- JavaScript interface -->
+	<js-module name="StreethawkLibrary" src="www/StreethawkLibrary.js">
+		<clobbers target="cordova.plugins.StreethawkLibrary"/>
+	</js-module>
+	
+	<!-- android -->
+	<platform name="android">
+		<config-file parent="/*" target="res/xml/config.xml">
+			<feature name="StreethawkLibrary">
+				<param name="android-package" value="com.streethawk.StreethawkLibrary"/>
+			</feature>
+		</config-file>
+		<config-file parent="/manifest" target="AndroidManifest.xml">
+			<permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE"
+				android:protectionLevel="signature"/>
+			<uses-permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE"/>
+			<uses-permission android:name="android.permission.INTERNET"/>
+			<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+			<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+			<uses-permission android:name="android.permission.WAKE_LOCK"/>
+			<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+			<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+			<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+			<uses-permission android:name="android.permission.GET_TASKS"/>
+			<uses-permission android:name="android.permission.CALL_PHONE"/>
+			<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+			<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+			<uses-permission android:name="com.example.shsample.permission.C2D_MESSAGE"/>
+			<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+			<uses-permission android:name="android.permission.BLUETOOTH"/>
+		</config-file>
+		<config-file parent="/manifest/application" target="AndroidManifest.xml">
+			<meta-data
+        android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
+			<meta-data android:name="app_key" android:value="$APP_KEY"/>
+			<service android:name="com.streethawk.library.gcm.SimpleGCMIntentService"/>
+			<service android:name="com.streethawk.library.location.LocationService"/>
+			<receiver android:name="com.streethawk.library.location.StreethawkBroadcastReceiver">
+				<intent-filter>
+					<action android:name="android.location.PROVIDERS_CHANGED"/>
+					<action android:name="android.bluetooth.adapter.action.STATE_CHANGED"/>
+					<action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+					<action android:name="android.intent.action.BOOT_COMPLETED"/>
+					<action android:name="com.streethawk.intent.action.gcm.STREETHAWK_DECLINED"/>
+					<action android:name="com.streethawk.intent.action.gcm.STREETHAWK_POSTPONED"/>
+					<action android:name="com.streethawk.intent.action.gcm.STREETHAWK_ACCEPTED"/>
+				</intent-filter>
+			</receiver>
+			<receiver android:name="com.streethawk.library.gcm.SimpleGCMReceiver"
+				android:permission="com.google.android.c2dm.permission.SEND">
+				<intent-filter>
+					<action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+					<action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+					<category android:name="$PACKAGE_NAME"/>
+				</intent-filter>
+			</receiver>
+		</config-file>
+		<source-file src="src/android/StreethawkLibrary.jar" target-dir="libs/"/>
+		<source-file src="src/android/android-support-v4.jar" target-dir="libs/"/>
+		<source-file src="src/android/gson-2.2.4.jar" target-dir="libs/"/>
+		<source-file src="src/android/httpmime-4.1.3.jar" target-dir="libs/"/>
+		<source-file src="src/android/StreethawkLibrary.java" target-dir="src/com/streethawk/StreethawkLibrary"/>		
+	</platform>
+	
+	<!-- ios -->
+	<platform name="ios">
+	
+		<!-- Register ios class -->
+		<config-file target="config.xml" parent="/*">
+			<feature name="StreethawkLibrary">
+				<param name="ios-package" value="StreethawkLibrary"/>
+			</feature>
+		</config-file>
+		
+		<!-- Apply APP_KEY to Info.plist -->
+		<config-file target="*-Info.plist" parent="APP_KEY">
+            <string>$APP_KEY</string>
+        </config-file>
+        
+        <!-- Plugin source code -->
+		<header-file src="src/ios/StreethawkLibrary.h" />
+        <source-file src="src/ios/StreethawkLibrary.m" />
+        
+        <!-- Add frameworks -->
+        <framework src="libsqlite3.dylib" />
+		<framework src="src/ios/StreetHawkCore.framework" custom="true"/>
+		
+		<!-- Add resource bundle -->
+		<resource-file src="src/ios/StreetHawkCore.framework/Resources/StreetHawkCoreRes.bundle" />		
+	</platform>
+</plugin>
