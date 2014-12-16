@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="com.streethawk" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0"
+<plugin id="com.streethawk.plugin" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android">
 	
 	<name>StreethawkLibrary</name>
@@ -24,7 +24,7 @@
 	<dependency id="com.google.playservices" />
 		<config-file parent="/*" target="res/xml/config.xml">
 			<feature name="StreethawkLibrary">
-				<param name="android-package" value="com.streethawk.StreethawkLibrary"/>
+				<param name="android-package" value="com.streethawk.plugin.StreethawkLibrary"/>
 			</feature>
 		</config-file>
 		<config-file parent="/manifest" target="AndroidManifest.xml">
