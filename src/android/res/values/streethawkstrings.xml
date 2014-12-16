@@ -1,0 +1,19 @@
+<resources>
+    <string name="STREETHAWK_YES">Yes Please!</string>
+    <string name="STREETHAWK_CANCEL">Cancel</string>
+    <string name="STREETHAWK_OKAY">Okay</string>
+    <string name="STREETHAWK_CLOSE">Close</string>
+    <string name="STREETHAWK_BT_ENABLE_MSG">iBeaons require Bluetooth. Do you want to enable it?</string>
+    <string name="STREETHAWK_BT_ENABLE_TITLE">Start Bluetooth</string>
+    <string name="STREETHAWK_HINT_FEEDBACK_TITLE">Enter title for feedback</string>		
+	<string name="STREETHAWK_HINT_FEEDBACK_CONTENT">Enter feedback here</string>
+	<string name="STREETHAWK_WINDOW_FEEDBACK_TITLE">We loves feedback"</string>
+	<string name="STREETHAWK_DIALOG_FEEDBACK_TITLE">Title</string>
+	<string name="STREETHAWK_DIALOG_FEEDBACK_CONTENT">Feedback</string>
+	<string name="STREETHAWK_DIALOG_FEEDBACK_SEND_ANONYMOUS">Send as anonymous</string>
+	<string name="STREETHAWK_SUBMIT">Submit</string>
+	<string name="STREETHAWK_RATE">	Rate</string>
+	<string name="STREETHAWK_UPDATE">Update</string>
+	<string name="STREETHAWK_LATER">Later</string>
+	<string name="STREETHAWK_DISMISS">Dismiss</string>
+</resources>

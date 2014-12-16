@@ -26,6 +26,18 @@ var SHLibrary = function() {};
 var success = function(){}
 var fail = function(){}
 
+
+var streethawkTags = {
+    'sh_email' 			:	'sh_email',             
+	'sh_phone'			: 	'sh_phone',              
+    'sh_gender'			: 	'sh_gender',             
+    'sh_cuid'			:	'sh_cuid',            
+    'sh_first_name' 	:	'sh_first_name',          
+    'sh_last_name' 		:	'sh_last_name',          
+    'sh_date_of_birth' 	:	'sh_date_of_birth',       
+    'sh_utc_offset' 	:	'sh_utc_offset'
+};
+
 SHLibrary.prototype.streethawkinit = function() {
     exec(success, fail, 'StreethawkLibrary', 'streethawkinit', []);
     document.addEventListener("resume",function(){
@@ -81,14 +93,6 @@ SHLibrary.prototype.getCurrentFormattedDateTime = function(appSuccess,appFail) {
     exec(appSuccess,appFail, 'StreethawkLibrary', 'getCurrentFormattedDateTime', []);
 }
 
-SHLibrary.prototype.shSetApnsMode = function(int_apnsMode) {
-    exec(success, fail, 'StreethawkLibrary', 'shSetApnsMode', [int_apnsMode]);
-}
-
-SHLibrary.prototype.shApnsMode = function(appSuccess,appFail) {
-    exec(appSuccess,appFail,'StreethawkLibrary', 'shApnsMode', []);
-}
-
 SHLibrary.prototype.shSetEnableLogs = function(bool_enable) {
     exec(success, fail, 'StreethawkLibrary', 'shSetEnableLogs', [bool_enable]);
 }
@@ -133,6 +137,19 @@ SHLibrary.prototype.shSetAlertSetting = function(int_pauseMinutes) {
     exec(success, fail, 'StreethawkLibrary', 'shSetAlertSetting', [int_pauseMinutes]);
 }
 
+SHLibrary.prototype.shEnterBeacon = function(string_uuid,int_majorNo,int_minorNo,double_distance) {
+    exec(success, fail, 'StreethawkLibrary', 'shEnterBeacon', [string_uuid,int_majorNo,int_minorNo,double_distance]);
+}
+
+SHLibrary.prototype.shExitBeacon = function(string_uuid,int_majorNo,int_minorNo) {
+    exec(success, fail, 'StreethawkLibrary', 'shExitBeacon', [string_uuid,int_majorNo,int_minorNo]);
+}
+
+SHLibrary.prototype.shSetBeaconSupport = function(bool_enable) {
+    exec(success, fail, 'StreethawkLibrary', 'shSetBeaconSupport', [bool_enable]);
+}
+
+
 SHLibrary.prototype.shAlertSettings = function(appSuccess,appFail) {
     exec(appSuccess,appFail,'StreethawkLibrary', 'shAlertSettings', []);
 }
@@ -146,7 +163,13 @@ SHLibrary.prototype.shRegisterViewCallback = function(appSuccess,appFail) {
     exec(appSuccess,appFail, 'StreethawkLibrary', 'shRegisterViewCallback', []);
 }
 
+SHLibrary.prototype.shSetManualLocation = function(double_lat,double_lng) {
+    exec(success,fail, 'StreethawkLibrary', 'shSetManualLocation', [double_lat,double_lng]);
+}
 
+SHLibrary.prototype.displayBadge = function(int_count) {
+    exec(success,fail, 'StreethawkLibrary', 'displayBadge', [int_count]);
+}
 
 
 

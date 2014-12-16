@@ -14,24 +14,27 @@ cordova plugin add https://streethawk@bitbucket.org/shawk/streethawk-phonegap-pl
 ```
 Please note that, above command requires unique app_key of your application registered with Streethawk. If you dont have it , you can register you application's app_key [here](https://api.streethawk.com/static/bb/)
 
+* Initialise Streethawk
+Add the following code at start point of your application . For example you can call streethawkinit() from index.html.
+
+```
+<script type="text/javascript" src="plugins/com.streethawk/www/StreethawkLibrary.js"></script>
+<script type="text/javascript">
+document.addEventListener("deviceready", onDeviceReady, false);
+function onDeviceReady() {
+var sh = cordova.require("com.streethawk.StreethawkLibrary");
+sh.streethawkinit();
+}
+```
+
 * Build and run your application for iOS by using command
 ```
 cordova run iOS
-``` 
-* Android requires google-play-services_lib which can be added as follows
-```
-vi <Application_Root_Dir>/platforms/android/project.properties
-```
-and adding 
-```
-android.library.reference.2=../../../../<PATH_TO_ANDROID_SDK>/sdk/extras/google/google_play_services/libproject/google-play-services_lib/
-```
-in project.properties file.
- 
+```  
 * Build and run your application for Android by using command
 ```
 cordova run android
 ```
 
 That's it!. Streethawk is integrated in your application. Please refer to [Streethawk Phonegap documentation](http://api.streethawk.com/v1/docs/phonegap-introduction.html) for adding more Streethawk features.
- 
+

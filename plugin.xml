@@ -7,9 +7,9 @@
 	<description>
       &lt;p&gt;This is the official plugin for StreetHawk in Apache Cordova/PhoneGap!&lt;/p&gt;
       
-      &lt;p&gt;The Streethawk plugin for Apache Cordova allows you to use the same JavaScript code in your Cordova application as you use in your web application. However unlike in the browser, the Cordova application will use the native StreetHawk app to perform actions.&lt;/p&gt;
+      &lt;p&gt;Streethawk is mobile engagement automation for applications running on mobile and tablet.Stop user churn and increase lifetime values. Deliver messages to right customer at right time. The Streethawk plugin for Apache Cordova allows you to use the same JavaScript code in your Cordova application as you use in your web application. However unlike in the browser, the Cordova application will use the native StreetHawk app to perform actions.&lt;/p&gt;
     </description>
-    
+	    
     <license>Apache 2.0</license>
     
     <preference name="APP_KEY" />
@@ -19,51 +19,59 @@
 		<clobbers target="cordova.plugins.StreethawkLibrary"/>
 	</js-module>
 	
-	<!-- android -->
+<!-- android -->
 	<platform name="android">
+	<dependency id="com.google.playservices" />
 		<config-file parent="/*" target="res/xml/config.xml">
 			<feature name="StreethawkLibrary">
 				<param name="android-package" value="com.streethawk.StreethawkLibrary"/>
 			</feature>
 		</config-file>
 		<config-file parent="/manifest" target="AndroidManifest.xml">
+		   
 			<permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE"
 				android:protectionLevel="signature"/>
-			<uses-permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE"/>
-			<uses-permission android:name="android.permission.INTERNET"/>
-			<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-			<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
-			<uses-permission android:name="android.permission.WAKE_LOCK"/>
-			<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-			<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-			<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-			<uses-permission android:name="android.permission.GET_TASKS"/>
-			<uses-permission android:name="android.permission.CALL_PHONE"/>
-			<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-			<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-			<uses-permission android:name="com.example.shsample.permission.C2D_MESSAGE"/>
-			<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-			<uses-permission android:name="android.permission.BLUETOOTH"/>
+    		<uses-permission android:name="android.permission.INTERNET" />
+    		<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    		<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    		<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    		<uses-permission android:name="android.permission.WAKE_LOCK" />
+    		<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    		<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    		<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    		<uses-permission android:name="android.permission.GET_TASKS" />
+    		<uses-permission android:name="android.permission.CALL_PHONE" />
+    		<uses-permission android:name="com.htc.launcher.permission.READ_SETTINGS" />
+    		<uses-permission android:name="com.htc.launcher.permission.UPDATE_SHORTCUT" />
+    		<uses-permission android:name="com.sonyericsson.home.permission.BROADCAST_BADGE" />
+    		<uses-permission android:name="com.sec.android.provider.badge.permission.READ" />
+    		<uses-permission android:name="com.sec.android.provider.badge.permission.WRITE" />
+    		<uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION"/>
 		</config-file>
 		<config-file parent="/manifest/application" target="AndroidManifest.xml">
 			<meta-data
         android:name="com.google.android.gms.version"
         android:value="@integer/google_play_services_version" />
 			<meta-data android:name="app_key" android:value="$APP_KEY"/>
-			<service android:name="com.streethawk.library.gcm.SimpleGCMIntentService"/>
-			<service android:name="com.streethawk.library.location.LocationService"/>
-			<receiver android:name="com.streethawk.library.location.StreethawkBroadcastReceiver">
+			<service android:name="com.streethawk.library.SimpleGCMIntentService"/>
+        	<service android:name="com.streethawk.library.StreethawkLocationService"/>
+			<service android:name="com.streethawk.library.StreethawkBeaconService" />
+			<service android:name="com.streethawk.library.ActivityRecognitionIntentService"/>
+			<receiver android:name="com.streethawk.library.StreethawkBroadcastReceiver">
+			
 				<intent-filter>
-					<action android:name="android.location.PROVIDERS_CHANGED"/>
-					<action android:name="android.bluetooth.adapter.action.STATE_CHANGED"/>
-					<action android:name="android.intent.action.TIMEZONE_CHANGED"/>
-					<action android:name="android.intent.action.BOOT_COMPLETED"/>
-					<action android:name="com.streethawk.intent.action.gcm.STREETHAWK_DECLINED"/>
-					<action android:name="com.streethawk.intent.action.gcm.STREETHAWK_POSTPONED"/>
-					<action android:name="com.streethawk.intent.action.gcm.STREETHAWK_ACCEPTED"/>
+				<action android:name="android.location.PROVIDERS_CHANGED" />
+                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="com.streethawk.intent.action.gcm.STREETHAWK_DECLINED" />
+                <action android:name="com.streethawk.intent.action.gcm.STREETHAWK_POSTPONED" />
+                <action android:name="com.streethawk.intent.action.gcm.STREETHAWK_ACCEPTED" />
+                <action android:name="com.streethawk.intent.action.gcm.STREETHAWK_APP_STATUS_CHK" />
 				</intent-filter>
 			</receiver>
-			<receiver android:name="com.streethawk.library.gcm.SimpleGCMReceiver"
+			<receiver android:name="com.streethawk.library.SimpleGCMReceiver"
 				android:permission="com.google.android.c2dm.permission.SEND">
 				<intent-filter>
 					<action android:name="com.google.android.c2dm.intent.RECEIVE"/>
@@ -71,12 +79,91 @@
 					<category android:name="$PACKAGE_NAME"/>
 				</intent-filter>
 			</receiver>
+			
+			<activity
+            android:name="com.streethawk.library.SHFeedbackActivity"
+            android:label="SHFeedbackActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan" >
+        	</activity>
+        	<activity
+            android:name="com.streethawk.library.SelftestActivity"
+            android:label="Streethawk test"
+            android:launchMode="singleTask"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan" >
+        	</activity>
+		
 		</config-file>
 		<source-file src="src/android/StreethawkLibrary.jar" target-dir="libs/"/>
 		<source-file src="src/android/android-support-v4.jar" target-dir="libs/"/>
 		<source-file src="src/android/gson-2.2.4.jar" target-dir="libs/"/>
-		<source-file src="src/android/httpmime-4.1.3.jar" target-dir="libs/"/>
-		<source-file src="src/android/StreethawkLibrary.java" target-dir="src/com/streethawk/StreethawkLibrary"/>		
+		<source-file src="src/android/StreethawkLibrary.java" target-dir="src/com/streethawk/StreethawkLibrary"/>
+		
+		<!-- Resources -->
+		
+		<source-file src="src/android/res/values/streethawkstrings.xml" target-dir="res/values/"/>
+		
+		<source-file src="src/android/res/drawable-hdpi/shaccept.png" 		target-dir="res/drawable-hdpi/"/>
+		<source-file src="src/android/res/drawable-hdpi/shapppage.png" 		target-dir="res/drawable-hdpi/"/>
+		<source-file src="src/android/res/drawable-hdpi/shbluetooth.png" 	target-dir="res/drawable-hdpi/"/>
+		<source-file src="src/android/res/drawable-hdpi/shcall.png" 		target-dir="res/drawable-hdpi/"/>
+		<source-file src="src/android/res/drawable-hdpi/shcancel.png" 		target-dir="res/drawable-hdpi/"/>
+		<source-file src="src/android/res/drawable-hdpi/shdiscard.png" 		target-dir="res/drawable-hdpi/"/>
+		<source-file src="src/android/res/drawable-hdpi/shenablepush.png" 	target-dir="res/drawable-hdpi/"/>
+		<source-file src="src/android/res/drawable-hdpi/shfeedback.png" 	target-dir="res/drawable-hdpi/"/>
+		<source-file src="src/android/res/drawable-hdpi/shlater.png" 		target-dir="res/drawable-hdpi/"/>
+		<source-file src="src/android/res/drawable-hdpi/shlocation.png" 	target-dir="res/drawable-hdpi/"/>
+		<source-file src="src/android/res/drawable-hdpi/shrate.png" 		target-dir="res/drawable-hdpi/"/>
+		<source-file src="src/android/res/drawable-hdpi/shsimplepush.png" 	target-dir="res/drawable-hdpi/"/>
+		<source-file src="src/android/res/drawable-hdpi/shupdate.png" 		target-dir="res/drawable-hdpi/"/>
+		<source-file src="src/android/res/drawable-hdpi/shwebsite.png" 		target-dir="res/drawable-hdpi/"/>
+		
+		<source-file src="src/android/res/drawable-mdpi/shaccept.png" target-dir="res/drawable-mdpi/"/>
+		<source-file src="src/android/res/drawable-mdpi/shapppage.png" target-dir="res/drawable-mdpi/"/>
+		<source-file src="src/android/res/drawable-mdpi/shbluetooth.png" target-dir="res/drawable-mdpi/"/>
+		<source-file src="src/android/res/drawable-mdpi/shcall.png" target-dir="res/drawable-mdpi/"/>
+		<source-file src="src/android/res/drawable-mdpi/shcancel.png" target-dir="res/drawable-mdpi/"/>
+		<source-file src="src/android/res/drawable-mdpi/shdiscard.png" target-dir="res/drawable-mdpi/"/>
+		<source-file src="src/android/res/drawable-mdpi/shenablepush.png" target-dir="res/drawable-mdpi/"/>
+		<source-file src="src/android/res/drawable-mdpi/shfeedback.png" target-dir="res/drawable-mdpi/"/>
+		<source-file src="src/android/res/drawable-mdpi/shlater.png" target-dir="res/drawable-mdpi/"/>
+		<source-file src="src/android/res/drawable-mdpi/shlocation.png" target-dir="res/drawable-mdpi/"/>
+		<source-file src="src/android/res/drawable-mdpi/shrate.png" target-dir="res/drawable-mdpi/"/>
+		<source-file src="src/android/res/drawable-mdpi/shsimplepush.png" target-dir="res/drawable-mdpi/"/>
+		<source-file src="src/android/res/drawable-mdpi/shupdate.png" target-dir="res/drawable-mdpi/"/>
+		<source-file src="src/android/res/drawable-mdpi/shwebsite.png" target-dir="res/drawable-mdpi/"/>
+		
+		<source-file src="src/android/res/drawable-xhdpi/shaccept.png" target-dir="res/drawable-xhdpi/"/>
+		<source-file src="src/android/res/drawable-xhdpi/shapppage.png" target-dir="res/drawable-xhdpi/"/>
+		<source-file src="src/android/res/drawable-xhdpi/shbluetooth.png" target-dir="res/drawable-xhdpi/"/>
+		<source-file src="src/android/res/drawable-xhdpi/shcall.png" target-dir="res/drawable-xhdpi/"/>
+		<source-file src="src/android/res/drawable-xhdpi/shcancel.png" target-dir="res/drawable-xhdpi/"/>
+		<source-file src="src/android/res/drawable-xhdpi/shdiscard.png" target-dir="res/drawable-xhdpi/"/>
+		<source-file src="src/android/res/drawable-xhdpi/shenablepush.png" target-dir="res/drawable-xhdpi/"/>
+		<source-file src="src/android/res/drawable-xhdpi/shfeedback.png" target-dir="res/drawable-xhdpi/"/>
+		<source-file src="src/android/res/drawable-xhdpi/shlater.png" target-dir="res/drawable-xhdpi/"/>
+		<source-file src="src/android/res/drawable-xhdpi/shlocation.png" target-dir="res/drawable-xhdpi/"/>
+		<source-file src="src/android/res/drawable-xhdpi/shrate.png" target-dir="res/drawable-xhdpi/"/>
+		<source-file src="src/android/res/drawable-xhdpi/shsimplepush.png" target-dir="res/drawable-xhdpi/"/>
+		<source-file src="src/android/res/drawable-xhdpi/shupdate.png" target-dir="res/drawable-xhdpi/"/>
+		<source-file src="src/android/res/drawable-xhdpi/shwebsite.png" target-dir="res/drawable-xhdpi/"/>
+		
+		<source-file src="src/android/res/drawable-xxhdpi/shaccept.png" target-dir="res/drawable-xxhdpi/"/>
+		<source-file src="src/android/res/drawable-xxhdpi/shapppage.png" target-dir="res/drawable-xxhdpi/"/>
+		<source-file src="src/android/res/drawable-xxhdpi/shbluetooth.png" target-dir="res/drawable-xxhdpi/"/>
+		<source-file src="src/android/res/drawable-xxhdpi/shcall.png" target-dir="res/drawable-xxhdpi/"/>
+		<source-file src="src/android/res/drawable-xxhdpi/shcancel.png" target-dir="res/drawable-xxhdpi/"/>
+		<source-file src="src/android/res/drawable-xxhdpi/shdiscard.png" target-dir="res/drawable-xxhdpi/"/>
+		<source-file src="src/android/res/drawable-xxhdpi/shenablepush.png" target-dir="res/drawable-xxhdpi/"/>
+		<source-file src="src/android/res/drawable-xxhdpi/shfeedback.png" target-dir="res/drawable-xxhdpi/"/>
+		<source-file src="src/android/res/drawable-xxhdpi/shlater.png" target-dir="res/drawable-xxhdpi/"/>
+		<source-file src="src/android/res/drawable-xxhdpi/shlocation.png" target-dir="res/drawable-xxhdpi/"/>
+		<source-file src="src/android/res/drawable-xxhdpi/shrate.png" target-dir="res/drawable-xxhdpi/"/>
+		<source-file src="src/android/res/drawable-xxhdpi/shsimplepush.png" target-dir="res/drawable-xxhdpi/"/>
+		<source-file src="src/android/res/drawable-xxhdpi/shupdate.png" target-dir="res/drawable-xxhdpi/"/>
+		<source-file src="src/android/res/drawable-xxhdpi/shwebsite.png" target-dir="res/drawable-xxhdpi/"/>
+		
 	</platform>
 	
 	<!-- ios -->
@@ -94,15 +181,28 @@
             <string>$APP_KEY</string>
         </config-file>
         
+        <!-- Apply NSLocationAlwaysUsageDescription to Info.plist -->
+        <config-file target="*-Info.plist" parent="NSLocationAlwaysUsageDescription">
+            <string>Benefit from location service.</string>
+        </config-file>
+        
+        <!-- Add Background fetch to Info.plist -->
+        <config-file target="*-Info.plist" parent="UIBackgroundModes">
+            <array>
+                <string>fetch</string>
+            </array>
+        </config-file>
+        
         <!-- Plugin source code -->
 		<header-file src="src/ios/StreethawkLibrary.h" />
         <source-file src="src/ios/StreethawkLibrary.m" />
         
         <!-- Add frameworks -->
         <framework src="libsqlite3.dylib" />
-		<framework src="src/ios/StreetHawkCore.framework" custom="true"/>
+        <framework src="CoreTelephony.framework" />
+		<framework src="src/ios/StreetHawkCoreCompact.framework" custom="true"/>
 		
 		<!-- Add resource bundle -->
-		<resource-file src="src/ios/StreetHawkCore.framework/Resources/StreetHawkCoreRes.bundle" />		
+		<resource-file src="src/ios/StreetHawkCoreCompact.framework/StreetHawkCoreRes.bundle" />		
 	</platform>
 </plugin>
