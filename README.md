@@ -26,6 +26,7 @@ Add the following code at start point of your application . For example you can 
   document.addEventListener("deviceready", onDeviceReady, false);
   function onDeviceReady() {
         var sh = cordova.require("com.streethawk.plugin.Streethawk");
+        sh.shSetiTunesId('<Itunesid>');
         sh.streethawkinit();
 }
 ```
