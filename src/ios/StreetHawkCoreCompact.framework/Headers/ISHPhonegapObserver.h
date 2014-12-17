@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 
 /**
- Streethawk core calls [ISHPhoneGapObserver shPGDisplayHtmlFileName] function when a friendly names is sent from Streethawk server. Customer App developer gets the name of HTML file and need to implemented in Phonegap App by themselves. This is observer model. 
+ Streethawk calls [ISHPhoneGapObserver shPGDisplayHtmlFileName] function when a friendly names is sent from Streethawk server. Customer App developer gets the name of HTML file and need to implemented in Phonegap App by themselves. This is observer model. 
  
  1. Customer App create class (assume named `SHPhonegapObserver`) inherit from `ISHPhonegapObserver` and implement function `shPGDisplayHtmlFileName`, which get html page name and implement how to load the html page on web view.
  2. Customer App call `[StreetHawk shPGHtmlReceiver:<instance_SHPhonegapObserver>` to register the observer. 

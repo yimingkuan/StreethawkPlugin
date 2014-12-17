@@ -1,30 +1,24 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="com.streethawk.plugin" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0"
+<plugin id="com.streethawk.plugin" version="1.1" xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android">
-	
-	<name>StreethawkLibrary</name>
-	
-	<description>
-      &lt;p&gt;This is the official plugin for StreetHawk in Apache Cordova/PhoneGap!&lt;/p&gt;
-      
-      &lt;p&gt;Streethawk is mobile engagement automation for applications running on mobile and tablet.Stop user churn and increase lifetime values. Deliver messages to right customer at right time. The Streethawk plugin for Apache Cordova allows you to use the same JavaScript code in your Cordova application as you use in your web application. However unlike in the browser, the Cordova application will use the native StreetHawk app to perform actions.&lt;/p&gt;
+	<name>Streethawk</name>
+	<description>      
+      &lt;p&gt;<a href="http://www.streethawk.com">Streethawk</a> is a mobile engagement automation library for your smartphone and/or tablet app. Engage users in the right time using push messages, emails and sms, segment your user base, create geofences to trigger location based campaigns, analyse results and measure campaign performance. StreetHawk supports both iOS and Android devices..&lt;/p&gt;
+      <a href="mailto:support@streethawk.com">Support</a> 
     </description>
 	    
     <license>Apache 2.0</license>
     
+    <dependency id="com.google.playservices" />
     <preference name="APP_KEY" />
-	
-	<!-- JavaScript interface -->
-	<js-module name="StreethawkLibrary" src="www/StreethawkLibrary.js">
-		<clobbers target="cordova.plugins.StreethawkLibrary"/>
+	<js-module name="Streethawk" src="www/Streethawk.js">
+		<clobbers target="cordova.plugins.Streethawk"/>
 	</js-module>
-	
-<!-- android -->
 	<platform name="android">
-	<dependency id="com.google.playservices" />
+		
 		<config-file parent="/*" target="res/xml/config.xml">
-			<feature name="StreethawkLibrary">
-				<param name="android-package" value="com.streethawk.plugin.StreethawkLibrary"/>
+			<feature name="Streethawk">
+				<param name="android-package" value="com.streethawk.plugin.Streethawk"/>
 			</feature>
 		</config-file>
 		<config-file parent="/manifest" target="AndroidManifest.xml">
@@ -98,7 +92,7 @@
 		<source-file src="src/android/StreethawkLibrary.jar" target-dir="libs/"/>
 		<source-file src="src/android/android-support-v4.jar" target-dir="libs/"/>
 		<source-file src="src/android/gson-2.2.4.jar" target-dir="libs/"/>
-		<source-file src="src/android/StreethawkLibrary.java" target-dir="src/com/streethawk/StreethawkLibrary"/>
+		<source-file src="src/android/Streethawk.java" target-dir="src/com/streethawk"/>
 		
 		<!-- Resources -->
 		
@@ -163,19 +157,13 @@
 		<source-file src="src/android/res/drawable-xxhdpi/shsimplepush.png" target-dir="res/drawable-xxhdpi/"/>
 		<source-file src="src/android/res/drawable-xxhdpi/shupdate.png" target-dir="res/drawable-xxhdpi/"/>
 		<source-file src="src/android/res/drawable-xxhdpi/shwebsite.png" target-dir="res/drawable-xxhdpi/"/>
-		
 	</platform>
-	
-	<!-- ios -->
 	<platform name="ios">
-	
-		<!-- Register ios class -->
-		<config-file target="config.xml" parent="/*">
-			<feature name="StreethawkLibrary">
-				<param name="ios-package" value="StreethawkLibrary"/>
+		<config-file parent="/*" target="config.xml">
+			<feature name="Streethawk">
+				<param name="ios-package" value="Streethawk"/>
 			</feature>
 		</config-file>
-		
 		<!-- Apply APP_KEY to Info.plist -->
 		<config-file target="*-Info.plist" parent="APP_KEY">
             <string>$APP_KEY</string>
@@ -194,8 +182,8 @@
         </config-file>
         
         <!-- Plugin source code -->
-		<header-file src="src/ios/StreethawkLibrary.h" />
-        <source-file src="src/ios/StreethawkLibrary.m" />
+		<header-file src="src/ios/Streethawk.h" />
+        <source-file src="src/ios/Streethawk.m" />
         
         <!-- Add frameworks -->
         <framework src="libsqlite3.dylib" />
@@ -203,6 +191,6 @@
 		<framework src="src/ios/StreetHawkCoreCompact.framework" custom="true"/>
 		
 		<!-- Add resource bundle -->
-		<resource-file src="src/ios/StreetHawkCoreCompact.framework/StreetHawkCoreRes.bundle" />		
+		<resource-file src="src/ios/StreetHawkCoreCompact.framework/StreetHawkCoreRes.bundle" />
 	</platform>
 </plugin>

@@ -20,10 +20,10 @@ Add the following code at start point of your application . For example you can 
 ```
 <script type="text/javascript" src="plugins/com.streethawk/www/StreethawkLibrary.js"></script>
 <script type="text/javascript">
-document.addEventListener("deviceready", onDeviceReady, false);
-function onDeviceReady() {
-var sh = cordova.require("com.streethawk.StreethawkLibrary");
-sh.streethawkinit();
+  document.addEventListener("deviceready", onDeviceReady, false);
+  function onDeviceReady() {
+        var sh = cordova.require("com.streethawk.StreethawkLibrary");
+        sh.streethawkinit();
 }
 ```
 
@@ -37,4 +37,4 @@ cordova run android
 ```
 
 That's it!. Streethawk is integrated in your application. Please refer to [Streethawk Phonegap documentation](http://api.streethawk.com/v1/docs/phonegap-introduction.html) for adding more Streethawk features.
-
+ 

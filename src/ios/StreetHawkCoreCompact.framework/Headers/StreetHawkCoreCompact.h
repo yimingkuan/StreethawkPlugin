@@ -27,6 +27,7 @@ FOUNDATION_EXPORT const unsigned char StreetHawkCoreCompactVersionString[];
 // In this header, you should import all the public headers of your framework using statements like #import <StreetHawkCoreCompact/PublicHeader.h>
 
 //folder Public/
+#import <StreetHawkCoreCompact/ISHCustomiseHandler.h>
 #import <StreetHawkCoreCompact/ISHPhonegapObserver.h>
 #import <StreetHawkCoreCompact/StreetHawkApp.h>
 #import <StreetHawkCoreCompact/StreetHawkLocationManager.h>

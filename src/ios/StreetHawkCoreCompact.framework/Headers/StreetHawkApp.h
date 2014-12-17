@@ -459,6 +459,17 @@ The application version and build version of current Application, formatted as @
 - (BOOL)shLaunchPageForVC:(NSString *)vcClassName withiPhoneXib:(NSString *)iPhoneXib withiPadXib:(NSString *)iPadXib withTitle:(NSString *)infoTitle withMessage:(NSString *)infoMessage withPushCode:(int)pushCode withPushMsgid:(NSInteger)pushMsgid withPushData:(NSString *)pushData;
 
 /**
+ Array for hosting customised handler.
+ */
+@property (nonatomic, strong) NSMutableArray *arrayCustomisedHandler;
+
+/**
+ Register handler for customised tasks.
+ @param handler Instance class of `ISHCustomiseHandler` to let customer implement their own code.
+ */
+- (void)shSetCustomiseHandler:(id<ISHCustomiseHandler>)handler;
+
+/**
  Register observer for phonegap App to load html page when receive 8004 push notification.
  @param phonegapObserver Instance class of `ISHPhonegapObserver` to load html on customer's phonegap web view.
  */
