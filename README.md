@@ -10,7 +10,7 @@ Assuming you have an application created using Phonegap, you can integrate Stree
 
 * Add streethawk plugin by running command
 ```
-cordova plugin add https://streethawk@bitbucket.org/shawk/streethawk-phonegap-plugin.git --variable APP_KEY=<YOUR_APPLICATIONS_APP_KEY>
+cordova plugin add https://github.com/streethawkphonegap/StreethawkPlugin.git --variable APP_KEY=<YOUR_APPLICATIONS_APP_KEY>
 ```
 Please note that, above command requires unique app_key of your application registered with Streethawk. If you dont have it , you can register you application's app_key [here](https://api.streethawk.com/static/bb/)
 
@@ -18,11 +18,14 @@ Please note that, above command requires unique app_key of your application regi
 Add the following code at start point of your application . For example you can call streethawkinit() from index.html.
 
 ```
-<script type="text/javascript" src="plugins/com.streethawk/www/StreethawkLibrary.js"></script>
-<script type="text/javascript">
+...
+...
+<script type="text/javascript" src="plugins/com.streethawk.plugin/www/Streethawk.js"></script>
+...
+...
   document.addEventListener("deviceready", onDeviceReady, false);
   function onDeviceReady() {
-        var sh = cordova.require("com.streethawk.StreethawkLibrary");
+        var sh = cordova.require("com.streethawk.plugin.Streethawk");
         sh.streethawkinit();
 }
 ```
