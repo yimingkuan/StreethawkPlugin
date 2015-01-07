@@ -3,11 +3,12 @@
 	xmlns:android="http://schemas.android.com/apk/res/android">
 	<name>Streethawk</name>
 	<description>      
-      &lt;p&gt;<a href="http://www.streethawk.com">Streethawk</a> is a mobile engagement automation library for your smartphone and/or tablet apps. Engage users in the right time using push messages, emails and sms, segment your user base, create geofences to trigger location based campaigns, analyse results and measure campaign performance. StreetHawk supports both iOS and Android devices..&lt;/p&gt;
+      &lt;p&gt;<a href="http://www.streethawk.com">Streethawk</a> is a mobile engagement automation library for your smartphone and tablet apps. Engage users in the right time using push notifications, emails and sms, segment your user base, create geofences to trigger location based campaigns, analyse results and measure campaign performance. StreetHawk supports both iOS and Android devices..&lt;/p&gt;
       <a href="mailto:support@streethawk.com">Support</a> 
     </description>
 	    
     <license>Apache 2.0</license>
+    <keywords>push,notification,segments,emails,sms,segments,geofence,location,crash reports,analysis,engagement,engage,measure,optimize,android,ios</keywords>
     
     <dependency id="com.google.playservices" />
     <preference name="APP_KEY" />
