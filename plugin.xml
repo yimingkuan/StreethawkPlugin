@@ -8,7 +8,7 @@
     </description>
 	    
     <license>Apache 2.0</license>
-    <keywords>push,notification,segments,emails,sms,segments,geofence,location,crash reports,analysis,engagement,engage,measure,optimize,android,ios</keywords>
+    <keywords>push,notification,segments,emails,sms,segments,geofence,location,beacon,ibeacon,crash reports,analysis,engagement,engage,measure,optimize,android,ios</keywords>
     
     <dependency id="com.google.playservices" />
     <preference name="APP_KEY" />
