@@ -18,18 +18,19 @@
 
 #import "StreetHawkPublicFwds.h"
 #import "StreetHawkUtils.h" //for enum SHDevelopmentPlatform
+#import "StreetHawkFeedObject.h" //for SHNewFeedsHandler and SHFeedsFetchHandler
 
 /**
  Singleton to access SHApp.
  */
-#define StreetHawk          [SHApp app]
+#define StreetHawk          [SHApp sharedInstance]
 
 /**
  The SHApp Class is core of whole SDK. It contains almost all the functions.
  
  **Normal usage:**
  
- - SHApp is singleton, access it by `[SHApp app]` or `StreetHawk`.
+ - SHApp is singleton, access it by `[SHApp sharedInstance]` or `StreetHawk`.
  
  - When your Application starts, usually in `- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions`, call  `registerInstallForApp:withDebugMode:withiTunesId:` to initialize all required StreetHawk features.
  
@@ -71,10 +72,10 @@
 /** @name Create and initialize */
 
 /**
- Singleton creator of SHApp. Normally use `StreetHawk` to represent `[SHApp app]`.
+ Singleton creator of SHApp. Normally use `StreetHawk` to represent `[SHApp sharedInstance]`.
  @return Singleton SHApp instance.
  */
-+ (SHApp *)app;
++ (SHApp *)sharedInstance;
 
 /**
  Initialize for an Application, setting up the environment.
@@ -133,9 +134,9 @@ The application version and build version of current Application, formatted as @
 @property (nonatomic, strong) SHInstall *currentInstall;
 
 /**
- A flag to indicate whether a new install is being processing. When newly install an Application, it may call [StreetHawkE registerOrUpdateInstallWithHandler:] many times, for example when send logs to server. Having this flag to avoid register mulitiple installs.
+ Make sure installs/register or installs/update happen in sequence.
  */
-@property (nonatomic) BOOL registering_install;
+@property (nonatomic, strong) dispatch_semaphore_t install_semaphore;
 
 /**
  A flag to indicate whether current is uploading logs. 
@@ -225,6 +226,28 @@ The application version and build version of current Application, formatted as @
  Customer is free to change the types, and make sure setting up this property before registering for remote notification, such as before calling [registerForInstall...].
  */
 @property (nonatomic) NSUInteger notificationTypes;
+
+/**
+ Property for customer to add their own interactive notification. It's same as iOS 8 defined categories set. Code snippet:
+ 
+    // Define an action for the category
+    UIMutableUserNotificationAction *action = [[UIMutableUserNotificationAction alloc] init];
+    action.destructive = NO;
+    action.activationMode = UIUserNotificationActivationModeForeground;
+    action.authenticationRequired = YES;
+    action.title = @"Action!";
+    action.identifier = @"custom_action";
+    // Define the category
+    UIMutableUserNotificationCategory *category = [[UIMutableUserNotificationCategory alloc] init];
+    [category setActions:@[action] forContext:UIUserNotificationActionContextMinimal];
+    [category setActions:@[action] forContext:UIUserNotificationActionContextDefault];
+    category.identifier = @"custom_category";
+    // Set the custom categories
+    StreetHawk.notificationCategories = [NSSet setWithArray:@[category]];
+ 
+ Customer is free to add their own categories, make sure categories' `identifier` is not same as StreetHawk's pre-defined code such as 8000, 8004 etc. In case customer's category uses same `identifier` as StreetHawk's predefined code, StreetHawk's function will be override. Customer's categories, combined with StreetHawk's predefined categories, work side by side. Customer needs to handle their own category by their own code, usually needs to implement their own AppDelegate functions, check document http://api.streethawk.com/v1/docs/ios-manualsetup.html#ios-manualsetup. Make sure setting up this property before registering for remote notification, such as before calling [registerForInstall...].
+ */
+@property (nonatomic, strong) NSSet *notificationCategories NS_AVAILABLE_IOS(8_0);
 
 /**
  Handle user notification settings callback. Call this in customer App's UIApplicationDelegate if NOT auto-integrate. If `StreetHawk.autoIntegrateAppDelegate = YES;` make sure NOT call this otherwise cause dead loop. Code snippet:
@@ -507,6 +530,43 @@ The application version and build version of current Application, formatted as @
  */
 - (void)shBackgroundTask:(void (^)(UIBackgroundFetchResult result))completionHandler needComplete:(BOOL)needComplete NS_AVAILABLE_IOS(7_0);
 
+/** @name Feeds */
+
+/**
+ Callback happen when new feed detects by app_status/feed.
+ */
+@property (nonatomic, copy) SHNewFeedsHandler newFeedHandler;
+
+/**
+ Fetch feeds starting from `offset`.
+ @param offset Offset from which to fetch.
+ @param handler Callback for fetch handler, which return NSArray of SHFeedObject and error if meet.
+ */
+- (void)feed:(NSInteger)offset withHandler:(SHFeedsFetchHandler)handler;
+
+/**
+ Send no priority logline for feed once it's seen by user. Code=8201, domain is empty, comment=passin_feed_id, feed_id=passin_feed_id, result=passin_int.
+ */
+- (void)sendLogForFeed:(NSInteger)feed_id withResult:(NSInteger)result;
+
+/** @name Permission */
+
+/**
+ Does user disable location permission for this App in system preference settings App. It's used to check before promote settings dialog by calling `- (void)launchSystemPreferenceSettings` to let user reset location since iOS 8, or before iOS 8 needs to show self made instruction. It's only return YES when make sure global location is disabled or App location is disabled. If this App not has location required (for example not have location key in Info.plist), or not ask for location service by prevent enable it, return NO.
+ */
+@property (nonatomic, readonly) BOOL systemPreferenceDisableLocation;
+
+/**
+ Does user disable notification permission for this App in system preference settings App. It's used to check before promote settings dialog by calling `- (void)launchSystemPreferenceSettings` to let user reset location since iOS 8, or before iOS 8 needs to show self made instruction. Return YES if notification is disabled or no type is enabled.
+ */
+@property (nonatomic, readonly) BOOL systemPreferenceDisableNotification;
+
+/**
+ Show this App's preference settings page. Only available since iOS 8. In previous iOS nothing happen.
+ @return YES if can show preference page since iOS 8; NO if called in previous iOS and nothing happen.
+ */
+- (BOOL)launchSystemPreferenceSettings NS_AVAILABLE_IOS(8_0);
+
 @end
 
 /**
@@ -519,17 +579,8 @@ The application version and build version of current Application, formatted as @
  * Remove a tagged profile if not need it anymore.
  
  [StreetHawk removeTag:@"sh_email"];
- 
- * Send logs to StreetHawk server for trace actions.
- 
- [StreetHawk sendLog:@"ActionTrace" withCode:1080 withComment:@"Question A is answered."];
  */
 @interface SHApp (LoggerExt)
-
-/**
- Asynchronously log into local database, and follow the rule of SHLogger to upload to server.
- */
--(void)sendLog:(NSString *)domain withCode:(NSInteger)code withComment:(NSString *)comment;
 
 /**
  Send log with domain="custom", code=8999. It's used for tagging a string value for user. For example, you can tag user's email as by:

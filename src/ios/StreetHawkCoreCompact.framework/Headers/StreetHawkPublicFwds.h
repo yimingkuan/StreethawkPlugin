@@ -28,6 +28,13 @@
 //CrashHandler
 @class          SHCrashHandler;
 
+//FeedObject
+@class          SHFeedObject;
+@class          SHFeedNewsObject;
+@class          SHFeedOfferObject;
+@class          SHFeedJsonObject;
+@class          SHFeedUnknownObject;
+
 //FriendlyName
 @class          SHFriendlyNameObject;
 

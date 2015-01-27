@@ -42,6 +42,7 @@ FOUNDATION_EXPORT const unsigned char StreetHawkCoreCompactVersionString[];
 #import <StreetHawkCoreCompact/StreetHawkRateHandler.h>
 
 //folder Public/Object/
+#import <StreetHawkCoreCompact/StreetHawkFeedObject.h>
 #import <StreetHawkCoreCompact/StreetHawkFriendlyNameObject.h>
 #import <StreetHawkCoreCompact/StreetHawkInstall.h>
 #import <StreetHawkCoreCompact/StreetHawkObject.h>

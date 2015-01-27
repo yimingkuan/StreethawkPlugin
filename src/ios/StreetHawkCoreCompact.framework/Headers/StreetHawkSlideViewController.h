@@ -95,12 +95,13 @@ typedef void(^SHSlideContentLoadFinish)(BOOL isSuccesss);
  @param speed The seconds duration from start slide till it complete, measured in seconds. It should be a positive number. Note: it's the time for animate slide show, not include time for loading web page. It should be a positive number, if not use 0.1 by default.
  @param percentage The width or height (depending on direction) of the slide cover on screen. It should be from 0 to 1. If set too much to outside of screen, the slide cover whole screen.
  @param isHideLoading Whether the slide should wait till web page load finished. If YES the slide will not show till web page finish loading, and then call confirm alert (if `alertTitle` or `alertMessage` not empty) or slide without activity spinner; If NO the slide show immediately with an acivity spinner, not wait till web page load finish.
- @param alertTitle Before slide it may be show a confirm dialog if `alertTitle` or `alertMessage` not empty. 
+ @param alertTitle Before slide it may be show a confirm dialog if `alertTitle` or `alertMessage` not empty and `needShowDialog`=YES. This title will also display on slide top.
  @param alertMessage Same as `alertTitle`.
+ @param needShowDialog Before slide it may be show a confirm dialog if `alertTitle` or `alertMessage` not empty and `needShowDialog`=YES.
  @param pushMsgid When used in remote notification, pass in "i" field from server. If not used in remote notification, pass 0.
  @param pushData When used in remote notification, pass in "d" field from server. If not used in remote notification, pass nil.
  */
-- (void)slideForUrl:(NSString *)url withDirection:(SHSlideDirection)direction withSpeed:(double)speed withCoverPercentage:(double)percentage withHideLoading:(BOOL)isHideLoading withAlertTitle:(NSString *)alertTitle withAlertMessage:(NSString *)alertMessage withPushMsgid:(NSInteger)pushMsgid withPushData:(NSString *)pushData;
+- (void)slideForUrl:(NSString *)url withDirection:(SHSlideDirection)direction withSpeed:(double)speed withCoverPercentage:(double)percentage withHideLoading:(BOOL)isHideLoading withAlertTitle:(NSString *)alertTitle withAlertMessage:(NSString *)alertMessage withNeedShowDialog:(BOOL)needShowDialog withPushMsgid:(NSInteger)pushMsgid withPushData:(NSString *)pushData;
 
 /**
  Utility function to show slide with url content.
@@ -112,6 +113,6 @@ typedef void(^SHSlideContentLoadFinish)(BOOL isSuccesss);
  @param alertTitle Before slide it may be show a confirm dialog if `alertTitle` or `alertMessage` not empty.
  @param alertMessage Same as `alertTitle`.
  */
-- (void)slideForVC:(UIViewController<SHSlideContentViewController> *)contentVC withDirection:(SHSlideDirection)direction withSpeed:(double)speed withCoverPercentage:(double)percentage withHideLoading:(BOOL)isHideLoading withAlertTitle:(NSString *)alertTitle withAlertMessage:(NSString *)alertMessage;
+- (void)slideForVC:(UIViewController<SHSlideContentViewController> *)contentVC withDirection:(SHSlideDirection)direction withSpeed:(double)speed withCoverPercentage:(double)percentage withHideLoading:(BOOL)isHideLoading withAlertTitle:(NSString *)alertTitle withAlertMessage:(NSString *)alertMessage withNeedShowDialog:(BOOL)needShowDialog ;
 
 @end

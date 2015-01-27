@@ -279,7 +279,7 @@ A core class to monitor location change. By default process of StreetHawk SDK, i
 /**
  Since iOS 8 needs obviously asking for permission for a type.
  */
-- (void)requestPermissionSinceiOS8 __OSX_AVAILABLE_STARTING(__MAC_NA, __IPHONE_8_0);
+- (void)requestPermissionSinceiOS8 NS_AVAILABLE_IOS(8_0);
 
 /**
  Start detecting the location change. Normally you don't need to call this because the SHApp will call this and related functions based on application state (foreground uses standard location service, background uses significant location service). However you may wish to control this, for example in foreground you may wish to switch to significant location service, so call `startDetectingLocationStandard:NO inForeground:YES`. After detecting successfully, observe `SHLMUpdateLocationSuccessNotification` to get the result.

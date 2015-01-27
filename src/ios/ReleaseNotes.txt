@@ -1,3 +1,19 @@
+Version Number   : 1/1.5.2
+Release Date     : 23-January-2014
+Notes:
+1. Add API for customer to setup their own interactive notification categories.
+2. Register new install if client side switch Apns mode.
+3. Show toast message for feedback submit successfully.
+4. Add API "shRawJsonCallback" for handle 8049 customised remote notification.
+5. Try to send more location 19 regardless network status.
+6. Slide view show scrollable title and message for 8000.
+7. Simplify App FG BG loglines to be pair. 
+8. Implement Feed.
+9. Class method `[SHApp app]` is renamed as `[SHApp sharedInstance]` for Swift.
+10. Implement API for permission denied check and launch preference UI.
+11. Fix SQLite fail to setup SERIALIZED mode.
+12. Check embedded binary framework path inside built package for searching for resource bundle.
+------------------------------------------------------------------------
 Version Number   : 1/1.5.0
 Release Date     : 1-December-2014
 Notes:
