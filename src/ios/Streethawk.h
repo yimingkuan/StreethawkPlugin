@@ -124,7 +124,10 @@
  * Set iTunes registered App Id. Command arguement is [string_value] like ['507040546'] or [''] or [null] if not register yet.
  */
 - (void)shSetiTunesId:(CDVInvokedUrlCommand *)command;
-
+/**
+ * Android function, ignored in ios
+ */
+- (void)shSetGcmSenderId:(CDVInvokedUrlCommand *)command;
 /**
  * Get iTunes registered App Id. Command returns string value.
  */

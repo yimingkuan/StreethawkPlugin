@@ -577,6 +577,11 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+- (void)shSetGcmSenderId:(CDVInvokedUrlCommand *)command
+{
+    
+}
+
 #pragma mark - override
 
 - (void)shPGDisplayHtmlFileName:(NSString *)html_fileName
