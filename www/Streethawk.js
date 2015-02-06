@@ -175,6 +175,13 @@ SHLibrary.prototype.displayBadge = function(int_count) {
     exec(success,fail, 'Streethawk', 'displayBadge', [int_count]);
 }
 
+SHLibrary.prototype.shSetGcmSenderId = function(string_senderKey) {
+    exec(success,fail, 'Streethawk', 'shSetGcmSenderId', [string_senderKey]);
+}
+
+SHLibrary.prototype.shGetAppKey = function(appSuccess,appFail) {
+    exec(appSuccess,appFail,'Streethawk', 'shGetAppKey', []);
+}
 
 
 

@@ -11,9 +11,6 @@ import org.apache.cordova.PluginResult;
 import android.util.Log;
 
 
-/**
- * This class echoes a string called from JavaScript.
- */
 public class Streethawk extends CordovaPlugin implements ISHObserver {
 
     private CallbackContext mSHCallbackContext;
@@ -61,6 +58,9 @@ public class Streethawk extends CordovaPlugin implements ISHObserver {
         if(action.equals("shIsUseLocation")) {
             return isUseLocation(callbackContext);
         }
+        if(action.equals("shGetAppKey")) {
+            return getAppKey(callbackContext);
+        }
         if(action.equals("getSHLibraryVersion")) {
             return getSHLibraryVersion(callbackContext);
         }
@@ -97,6 +97,9 @@ public class Streethawk extends CordovaPlugin implements ISHObserver {
 		if(action.equals("shiTunesId")){
 			return true;
 		}
+        if(action.equals("shSetGcmSenderId")){
+            return setgcmSenderId(args);
+        }
 		if(action.equals("shSetIsPushNotificationEnabled")){
 			return true;
 		}
@@ -134,7 +137,8 @@ public class Streethawk extends CordovaPlugin implements ISHObserver {
 		}
 		if(action.equals("displayBadge")){
 			return displayBadge(args);
-		}	
+		}
+			
         return false;
     }
     private boolean streethawkInit(){
@@ -186,9 +190,14 @@ public class Streethawk extends CordovaPlugin implements ISHObserver {
     	StreetHawk.INSTANCE.shSetLocationSupport(enable);
         return true;
     }
-       private boolean shSetBeaconSupport(JSONArray args)throws JSONException{
+    private boolean shSetBeaconSupport(JSONArray args)throws JSONException{
     	Boolean enable = args.getBoolean(0);
     	StreetHawk.INSTANCE.shSetBeaconSupport(enable);
+        return true;
+    }
+    private boolean setgcmSenderId(JSONArray args)throws JSONException{
+        String senderId = args.getString(0);
+        StreetHawk.INSTANCE.setGcmSenderId(senderId);
         return true;
     }
     private boolean shSendSimpleFeedback(JSONArray args)throws JSONException{
@@ -214,6 +223,13 @@ public class Streethawk extends CordovaPlugin implements ISHObserver {
         callbackContext.success(shVersion);
         return true;
     }
+    
+    private boolean getAppKey(CallbackContext callbackContext){
+        String app_key  = StreetHawk.getAppKey(cordova.getActivity().getApplicationContext());
+        callbackContext.success(app_key);
+        return true;
+    }
+
     private boolean shGetAlertSettings(CallbackContext callbackContext){
         int timeRemaining  = (int)StreetHawk.INSTANCE.shGetAlertSettings();
         callbackContext.success(timeRemaining);
