@@ -51,32 +51,41 @@
         android:name="com.google.android.gms.version"
         android:value="@integer/google_play_services_version" />
 			<meta-data android:name="app_key" android:value="$APP_KEY"/>
-			<service android:name="com.streethawk.library.SimpleGCMIntentService"/>
+			<service android:name="com.streethawk.library.GCMIntentService"/>
         	<service android:name="com.streethawk.library.StreethawkLocationService"/>
 			<service android:name="com.streethawk.library.StreethawkBeaconService" />
-			<service android:name="com.streethawk.library.ActivityRecognitionIntentService"/>
-			<receiver android:name="com.streethawk.library.StreethawkBroadcastReceiver">
 			
-				<intent-filter>
-				<action android:name="android.location.PROVIDERS_CHANGED" />
+			<receiver android:name="com.streethawk.library.StreethawkBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="android.location.PROVIDERS_CHANGED" />
                 <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="com.streethawk.intent.action.gcm.STREETHAWK_APP_STATUS_CHK" />
+            </intent-filter>
+        </receiver>
+			
+			<receiver
+            android:name="com.streethawk.library.GCMReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="$PACKAGE_NAME" />
+            </intent-filter>
+        </receiver>
+        
+         <receiver
+            android:name="com.streethawk.library.PushNotificationBroadcastReceiver">
+            <intent-filter>
+                <action android:name="com.streethawk.intent.action.pushnotification" />
                 <action android:name="com.streethawk.intent.action.gcm.STREETHAWK_DECLINED" />
                 <action android:name="com.streethawk.intent.action.gcm.STREETHAWK_POSTPONED" />
                 <action android:name="com.streethawk.intent.action.gcm.STREETHAWK_ACCEPTED" />
-                <action android:name="com.streethawk.intent.action.gcm.STREETHAWK_APP_STATUS_CHK" />
-				</intent-filter>
-			</receiver>
-			<receiver android:name="com.streethawk.library.SimpleGCMReceiver"
-				android:permission="com.google.android.c2dm.permission.SEND">
-				<intent-filter>
-					<action android:name="com.google.android.c2dm.intent.RECEIVE"/>
-					<action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
-					<category android:name="$PACKAGE_NAME"/>
-				</intent-filter>
-			</receiver>
+            </intent-filter>
+        </receiver>
+
 			
 			<activity
             android:name="com.streethawk.library.SHFeedbackActivity"
@@ -96,6 +105,7 @@
 		<source-file src="src/android/StreethawkLibrary.jar" target-dir="libs/"/>
 		<source-file src="src/android/android-support-v4.jar" target-dir="libs/"/>
 		<source-file src="src/android/gson-2.2.4.jar" target-dir="libs/"/>
+		<source-file src="src/android/android-async-http-1.4.6.jar" target-dir="libs/"/>
 		<source-file src="src/android/Streethawk.java" target-dir="src/com/streethawk"/>
 		
 		<!-- Resources -->
