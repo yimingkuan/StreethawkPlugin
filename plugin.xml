@@ -12,6 +12,7 @@
     
     <dependency id="com.google.playservices" />
     <preference name="APP_KEY" />
+    <preference name="URL_SCHEME"/>
 	<js-module name="Streethawk" src="www/Streethawk.js">
 		<clobbers target="cordova.plugins.Streethawk"/>
 	</js-module>
@@ -22,6 +23,17 @@
 				<param name="android-package" value="com.streethawk.plugin.Streethawk"/>
 			</feature>
 		</config-file>
+		
+		<config-file target="AndroidManifest.xml" parent="/*/application/activity">
+      <intent-filter>
+        <data android:scheme="$URL_SCHEME"/>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+      </intent-filter>
+    </config-file>
+		
+		
 		<config-file parent="/manifest" target="AndroidManifest.xml">
 		   
 		<permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE"
@@ -89,6 +101,7 @@
 			
 			<activity
             android:name="com.streethawk.library.SHFeedbackActivity"
+            android:exported="true"
             android:label="SHFeedbackActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan" >

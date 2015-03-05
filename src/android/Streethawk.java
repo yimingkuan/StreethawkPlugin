@@ -9,6 +9,8 @@ import com.streethawk.library.StreetHawk;
 import com.streethawk.library.ISHObserver;
 import org.apache.cordova.PluginResult;
 import android.util.Log;
+import android.content.Intent;
+import org.apache.cordova.CordovaActivity;
 
 
 public class Streethawk extends CordovaPlugin implements ISHObserver {
@@ -108,6 +110,10 @@ public class Streethawk extends CordovaPlugin implements ISHObserver {
 		}
 		if(action.equals("shRegisterViewCallback")){
 			this.mSHCallbackContext = callbackContext;
+			return true;
+		}
+		if(action.equals("shDeeplinking")){
+			processDeeplinkRequest(callbackContext);
 			return true;
 		}
 		if(action.equals("shRawJsonCallback")){
@@ -293,6 +299,17 @@ public class Streethawk extends CordovaPlugin implements ISHObserver {
     	int count  = args.getInt(0);
         StreetHawk.INSTANCE.displayBadge(cordova.getActivity().getApplicationContext(),count);
     	return true;
+    }
+    
+    private void processDeeplinkRequest(CallbackContext callbackContext){
+    	if(null==callbackContext)
+    		return;
+    	final Intent intent = ((CordovaActivity) this.webView.getContext()).getIntent();
+        String url = null;
+        if(null!=intent){
+            url =intent.getDataString();
+        }
+        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, url));
     }
     
     @Override
