@@ -22,6 +22,7 @@
 
 @property (nonatomic, strong) CDVInvokedUrlCommand *callbackCommandForRegisterView;  //remember command to be used for callback
 @property (nonatomic, strong) CDVInvokedUrlCommand *callbackCommandForRawJson;
+@property (nonatomic, strong) CDVInvokedUrlCommand *callbackCommandForOpenUrl;
 
 @end
 
@@ -313,6 +314,19 @@
 - (void)shRawJsonCallback:(CDVInvokedUrlCommand *)command
 {
     self.callbackCommandForRawJson = command;  //remember this command to be used when 8049 push json
+}
+
+- (void)shDeeplinking:(CDVInvokedUrlCommand *)command
+{
+    self.callbackCommandForOpenUrl = command; //remember this command to be used when open url happen
+    StreetHawk.openUrlHandler = ^(NSURL *openUrl)
+    {
+        if (self.callbackCommandForOpenUrl != nil)
+        {
+            CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:openUrl.absoluteString];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackCommandForOpenUrl.callbackId];
+        }
+    };
 }
 
 - (void)shSetManualLocation:(CDVInvokedUrlCommand *)command

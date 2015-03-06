@@ -94,6 +94,11 @@
 - (void)shRawJsonCallback:(CDVInvokedUrlCommand *)command;
 
 /**
+ * Callback for handling open url.
+ */
+- (void)shDeeplinking:(CDVInvokedUrlCommand *)command;
+
+/**
  * Reports manual locations to streethawk server.
  */
 - (void)shSetManualLocation:(CDVInvokedUrlCommand *)command;

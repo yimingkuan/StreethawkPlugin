@@ -21,6 +21,11 @@
 #import "StreetHawkFeedObject.h" //for SHNewFeedsHandler and SHFeedsFetchHandler
 
 /**
+ Callback once open url app delegate triggers.
+ */
+typedef void (^SHOpenUrlHandler)(NSURL *openUrl);
+
+/**
  Singleton to access SHApp.
  */
 #define StreetHawk          [SHApp sharedInstance]
@@ -500,6 +505,11 @@ The application version and build version of current Application, formatted as @
  @param htmlFile The html page register by `shCustomActivityList`.
  */
 - (void)shPGLoadHtml:(NSString *)htmlFile;
+
+/**
+ Callback happen when open url delegate trigger.
+ */
+@property (nonatomic, copy) SHOpenUrlHandler openUrlHandler;
 
 /** @name Background Regular Task */
 
