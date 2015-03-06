@@ -174,8 +174,12 @@ The application version and build version of current Application, formatted as @
  - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
  {
     [StreetHawk shBackgroundTask:completionHandler];
- }`
+ }
  
+ - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+ {
+    return [StreetHawk openURL:url sourceApplication:sourceApplication annotation:annotation];
+ }`
  */
 @property (nonatomic) BOOL autoIntegrateAppDelegate;
 
@@ -421,12 +425,13 @@ The application version and build version of current Application, formatted as @
  * Choice title is mandatory, free text detail content is optional.
  @param arrayChoice The option choice list. For example, @[@"Product not Available", @"Wrong Address", @"Description mismatch"]. It can be nil.
  @param needInput Whether need to show free text input dialog. If `arrayChoice` is nil or empty always show input dialog regardless of this settings.
+ @param needConfirm Whether need to show confirm alert dialog of Cancel/Yes Please!. When App in FG and notification arrive needs to show confirm dialog.
  @param infoTitle The title display on choice list. If nil shows "<App Name> loves Feedback!".
  @param infoMessage The message display on choice list. It can be nil or empty.
  @param pushMsgid When used in remote notification, pass in "i" field from server. If not used in remote notification, pass 0.
  @param pushData When used in remote notification, pass in "d" field from server. If not used in remote notification, pass nil.
  */
--(void)shFeedback:(NSArray *)arrayChoice needInputDialog:(BOOL)needInput withTitle:(NSString *)infoTitle withMessage:(NSString *)infoMessage withPushMsgid:(NSInteger)pushMsgid withPushData:(NSString *)pushData;
+-(void)shFeedback:(NSArray *)arrayChoice needInputDialog:(BOOL)needInput needConfirmDialog:(BOOL)needConfirm withTitle:(NSString *)infoTitle withMessage:(NSString *)infoMessage withPushMsgid:(NSInteger)pushMsgid withPushData:(NSString *)pushData;
 
 /**
  Push notification 8004/8006/8007 is to launch a certain view controller, however it's difficult for server to know "how to launch the view controller". In iOS platform it requires the following elements to initialize a view controller:
@@ -466,20 +471,6 @@ The application version and build version of current Application, formatted as @
  @param page Exit page name. It cannot be nil. For UIViewController it's class name such as `self.class.description`; for Phonegap it's html page name such as `index.html`.
  */
 - (void)shNotifyPageExit:(NSString *)page;
-
-/**
- Create a new page according to pass in `vcClassName` and show it if current visible page does is not this one. If current has navigation controller, push in navigation stack; otherwise show in modal way.
- @param vcClassName The name of the subclass of UIViewController, must have, for example: @"MyViewController". If it's empty, or it's typo and cannot create the VC, return NO.
- @param iPhoneXib The xib name for the page in iPhone, optional, for example "MyViewController_iPhone". If it uses same name as `vcClassName`, use nil.
- @param iPadXib The xib name for the page in iPad, optional, for example "MyViewController_iPad". If it uses same name as `vcClassName`, use nil.
- @param infoTitle The title display on alert view, optional.
- @param infoMessage The message display on alert view, optional.
- @param pushCode When used in remote notification, pass in "c" field from server. If not used in remote notification, pass 0.
- @param pushMsgid When used in remote notification, pass in "i" field from server. If not used in remote notification, pass 0.
- @param pushData When used in remote notification, pass in "d" field from server. If not used in remote notification, pass nil.
- @return If successfully create VC and need display, return YES; otherwise, if fail to create, or no need to display, return NO.
- */
-- (BOOL)shLaunchPageForVC:(NSString *)vcClassName withiPhoneXib:(NSString *)iPhoneXib withiPadXib:(NSString *)iPadXib withTitle:(NSString *)infoTitle withMessage:(NSString *)infoMessage withPushCode:(int)pushCode withPushMsgid:(NSInteger)pushMsgid withPushData:(NSString *)pushData;
 
 /**
  Array for hosting customised handler.
@@ -529,6 +520,20 @@ The application version and build version of current Application, formatted as @
  3. Check whether install/log is sent within 6 hours. If inside 6 hours no install/log sent, sends priority heartbeat log (domain=system, code=8051).
  */
 - (void)shBackgroundTask:(void (^)(UIBackgroundFetchResult result))completionHandler needComplete:(BOOL)needComplete NS_AVAILABLE_IOS(7_0);
+
+/** @name Open Url Scheme */
+
+/**
+ Handle open URL, customer's App must register "URL Types" in Info.plist with its own scheme. User App implement this function by calling it in AppDelegate.m if NOT auto-integrate. If `StreetHawk.autoIntegrateAppDelegate = YES;` make sure NOT call this otherwise cause dead loop. Code snippet:
+    `- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation`
+    `{`
+        `return [StreetHawk openURL:url sourceApplication:sourceApplication annotation:annotation];`
+    `}`
+ 
+ This function performs following tasks:
+ 1. Deeplinking: open a view and call function of the view. The url must be formatted as: <url scheme>://launchvc?vc=<friendly name or vc>&xib_iphone=<xib_iphone>&xib_ipad=<xib_ipad>&<additional params>. "<url scheme>" must same as Info.plist register URL type; "launchvc" is pre-defined command, case insensitive; "vc" is friendly name or UIViewController's class name, mandatory; others are optional.
+ */
+- (BOOL)openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
 
 /** @name Feeds */
 

@@ -22,11 +22,11 @@
 		</data>
 		<key>Headers/StreetHawkApp.h</key>
 		<data>
-		prBAXUgcudlJ2rhiRu2nKiKOuy4=
+		fSgkxSeIgIQBzPLdOt2ZuIEf7LE=
 		</data>
 		<key>Headers/StreetHawkBaseViewController.h</key>
 		<data>
-		VFLRhfFL9YhQg+l9iO+XzSAkApw=
+		Z9VrToIIvQbRQQ3TDaaSAW2z6XQ=
 		</data>
 		<key>Headers/StreetHawkCoreCompact.h</key>
 		<data>
@@ -42,7 +42,7 @@
 		</data>
 		<key>Headers/StreetHawkFriendlyNameObject.h</key>
 		<data>
-		APJ8UkxIAUGULRsUYd7wdB7KLuc=
+		kr5TXPsCh3DZEXCew73cAm7/xmw=
 		</data>
 		<key>Headers/StreetHawkInstall.h</key>
 		<data>
@@ -62,7 +62,7 @@
 		</data>
 		<key>Headers/StreetHawkNotificationHandler.h</key>
 		<data>
-		Wzu+/0Qi1tlLs+Pon9oPfKdLzLs=
+		5OEbJ3JDjSXzIsO6SCIt+oTDgfk=
 		</data>
 		<key>Headers/StreetHawkObject.h</key>
 		<data>
@@ -74,7 +74,7 @@
 		</data>
 		<key>Headers/StreetHawkRateHandler.h</key>
 		<data>
-		hsv2WgWObjqHHhJ77v1Vn7RcC+Y=
+		Hwx3bf5W/2IbUEegUY7I3W1lhIs=
 		</data>
 		<key>Headers/StreetHawkRequest.h</key>
 		<data>
@@ -86,11 +86,11 @@
 		</data>
 		<key>Headers/StreetHawkUtils.h</key>
 		<data>
-		UkxkNHCCklCvH6Zuko1YFtRmI3U=
+		bQh3HFA0rKiMJSd/cVv+cMtCPlo=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		YSODSesE8xX8JWC+GAh8C249GoA=
+		Mdw/GgSxnIB4mwNpMbKGjnm6+Gs=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -98,47 +98,47 @@
 		</data>
 		<key>StreetHawkCoreRes.bundle/Info.plist</key>
 		<data>
-		rBTL/We/zzXbqZ0YA6LqG+W5S4w=
+		Fmkoaa5NrwKQOW3RthVuv9A/NPE=
 		</data>
 		<key>StreetHawkCoreRes.bundle/Localizable.strings</key>
 		<data>
-		Tps+6SwEJdei+/ZFKvcbVe3UenM=
+		59VRxv2bLMeO6UAB7cS9jBHn9fE=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHAlertSettingsViewController.nib/objects-8.0+.nib</key>
 		<data>
-		7xhElb2IKPBvURQ9JB+XHqm/LbE=
+		KK7MBkjIfKT/csZ9pU30ggI0eGc=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHAlertSettingsViewController.nib/objects.nib</key>
 		<data>
-		NgWRGKwVdakSScuJ2q+7acIHwy4=
+		+T+pjdTiuJuGy1jfex0kuzsc1zs=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHAlertSettingsViewController.nib/runtime.nib</key>
 		<data>
-		Ws3sMsSsQi8SnBQQNHV6NpFfM9k=
+		IqqJUz+E4pXOIz8bMxKzOcx/OxI=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHFeedbackViewController.nib/objects-8.0+.nib</key>
 		<data>
-		cSdhLUKZ5X566wfkmrjx1TwvKmg=
+		zABIU++W8zV737gn8/gE/9Pa+sI=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHFeedbackViewController.nib/objects.nib</key>
 		<data>
-		xWxnTlaF0sPES0azDk11XOiAWEQ=
+		W9yl5xQiEodkpn/GROj+HvZp7XA=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHFeedbackViewController.nib/runtime.nib</key>
 		<data>
-		gFP2t0Aa+nfsT/TZCVJvWSquY/8=
+		p4hkKz97QphdVu1VYmEPKHsSEq0=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHSlideWebViewController.nib/objects-8.0+.nib</key>
 		<data>
-		pztrCaFoExLuC2x5Oh6tBchDW+s=
+		o3Y/0fMEgkat7jtZFPel4y1Pfng=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHSlideWebViewController.nib/objects.nib</key>
 		<data>
-		MZfJo7odM2gkwnLAcV3i3yxS1HU=
+		Kk3pB9AIcXOn34/+wAoTTYMXYqw=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHSlideWebViewController.nib/runtime.nib</key>
 		<data>
-		Y5ozhY+nbY3L9xiGaJZQ3HwvyBk=
+		4+Q9gp9sMhxDXFAwFU16DQfLiNI=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -161,11 +161,11 @@
 		</data>
 		<key>Headers/StreetHawkApp.h</key>
 		<data>
-		prBAXUgcudlJ2rhiRu2nKiKOuy4=
+		fSgkxSeIgIQBzPLdOt2ZuIEf7LE=
 		</data>
 		<key>Headers/StreetHawkBaseViewController.h</key>
 		<data>
-		VFLRhfFL9YhQg+l9iO+XzSAkApw=
+		Z9VrToIIvQbRQQ3TDaaSAW2z6XQ=
 		</data>
 		<key>Headers/StreetHawkCoreCompact.h</key>
 		<data>
@@ -181,7 +181,7 @@
 		</data>
 		<key>Headers/StreetHawkFriendlyNameObject.h</key>
 		<data>
-		APJ8UkxIAUGULRsUYd7wdB7KLuc=
+		kr5TXPsCh3DZEXCew73cAm7/xmw=
 		</data>
 		<key>Headers/StreetHawkInstall.h</key>
 		<data>
@@ -201,7 +201,7 @@
 		</data>
 		<key>Headers/StreetHawkNotificationHandler.h</key>
 		<data>
-		Wzu+/0Qi1tlLs+Pon9oPfKdLzLs=
+		5OEbJ3JDjSXzIsO6SCIt+oTDgfk=
 		</data>
 		<key>Headers/StreetHawkObject.h</key>
 		<data>
@@ -213,7 +213,7 @@
 		</data>
 		<key>Headers/StreetHawkRateHandler.h</key>
 		<data>
-		hsv2WgWObjqHHhJ77v1Vn7RcC+Y=
+		Hwx3bf5W/2IbUEegUY7I3W1lhIs=
 		</data>
 		<key>Headers/StreetHawkRequest.h</key>
 		<data>
@@ -225,7 +225,7 @@
 		</data>
 		<key>Headers/StreetHawkUtils.h</key>
 		<data>
-		UkxkNHCCklCvH6Zuko1YFtRmI3U=
+		bQh3HFA0rKiMJSd/cVv+cMtCPlo=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -233,47 +233,47 @@
 		</data>
 		<key>StreetHawkCoreRes.bundle/Info.plist</key>
 		<data>
-		rBTL/We/zzXbqZ0YA6LqG+W5S4w=
+		Fmkoaa5NrwKQOW3RthVuv9A/NPE=
 		</data>
 		<key>StreetHawkCoreRes.bundle/Localizable.strings</key>
 		<data>
-		Tps+6SwEJdei+/ZFKvcbVe3UenM=
+		59VRxv2bLMeO6UAB7cS9jBHn9fE=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHAlertSettingsViewController.nib/objects-8.0+.nib</key>
 		<data>
-		7xhElb2IKPBvURQ9JB+XHqm/LbE=
+		KK7MBkjIfKT/csZ9pU30ggI0eGc=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHAlertSettingsViewController.nib/objects.nib</key>
 		<data>
-		NgWRGKwVdakSScuJ2q+7acIHwy4=
+		+T+pjdTiuJuGy1jfex0kuzsc1zs=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHAlertSettingsViewController.nib/runtime.nib</key>
 		<data>
-		Ws3sMsSsQi8SnBQQNHV6NpFfM9k=
+		IqqJUz+E4pXOIz8bMxKzOcx/OxI=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHFeedbackViewController.nib/objects-8.0+.nib</key>
 		<data>
-		cSdhLUKZ5X566wfkmrjx1TwvKmg=
+		zABIU++W8zV737gn8/gE/9Pa+sI=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHFeedbackViewController.nib/objects.nib</key>
 		<data>
-		xWxnTlaF0sPES0azDk11XOiAWEQ=
+		W9yl5xQiEodkpn/GROj+HvZp7XA=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHFeedbackViewController.nib/runtime.nib</key>
 		<data>
-		gFP2t0Aa+nfsT/TZCVJvWSquY/8=
+		p4hkKz97QphdVu1VYmEPKHsSEq0=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHSlideWebViewController.nib/objects-8.0+.nib</key>
 		<data>
-		pztrCaFoExLuC2x5Oh6tBchDW+s=
+		o3Y/0fMEgkat7jtZFPel4y1Pfng=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHSlideWebViewController.nib/objects.nib</key>
 		<data>
-		MZfJo7odM2gkwnLAcV3i3yxS1HU=
+		Kk3pB9AIcXOn34/+wAoTTYMXYqw=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHSlideWebViewController.nib/runtime.nib</key>
 		<data>
-		Y5ozhY+nbY3L9xiGaJZQ3HwvyBk=
+		4+Q9gp9sMhxDXFAwFU16DQfLiNI=
 		</data>
 	</dict>
 	<key>rules</key>

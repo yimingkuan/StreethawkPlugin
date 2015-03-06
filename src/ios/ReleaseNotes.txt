@@ -1,5 +1,12 @@
+Version Number   : 1/1.5.3
+Release Date     : 13-February-2015
+Notes:
+1. Implement deeplinking.
+2. 8005 rate push notification remove "Dismiss" choice.
+3. 8011 feedback push notification show confirm dialog when App in foreground. 
+------------------------------------------------------------------------
 Version Number   : 1/1.5.2
-Release Date     : 23-January-2014
+Release Date     : 23-January-2015
 Notes:
 1. Add API for customer to setup their own interactive notification categories.
 2. Register new install if client side switch Apns mode.

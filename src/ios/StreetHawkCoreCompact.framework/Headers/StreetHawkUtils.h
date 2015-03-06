@@ -79,6 +79,7 @@ extern NSDictionary *parseObjectToDict(NSObject *obj);
  Appends a whole bunch of parameter and values to a string in the form: param1=value1&param2=value2&param3=value3....
  @param params Array listed as [param1, value1, param2, value2, param3, value3, ...], it must be paired.
  @param isForPost If YES only "&" is used; otherwise first append should be "?".
+ @return Result string formatted by pass in value.
  */
 extern NSMutableString *appendParamsArrayToString(NSMutableString *str, NSArray *params, BOOL isForPost);
 
@@ -86,8 +87,16 @@ extern NSMutableString *appendParamsArrayToString(NSMutableString *str, NSArray 
  Appends a whole bunch of parameter and values to a string in the form: param1=value1&param2=value2&param3=value3....
  @param params Dictionary listed as {param1 = value1, param2 = value2, param3 = value3, ...}, it must be paired.
  @param isForPost If YES only "&" is used; otherwise first append should be "?".
+ @return Result string formatted by pass in value.
  */
 extern NSMutableString *appendParamsDictToString(NSMutableString *str, NSDictionary *params, BOOL isForPost);
+
+/**
+ Parse get request string's parameter string to NSDictionary. For example, param1=value1&param2=value2&param3=value3 is parsed to {param1:value1, param2:value2, param3=value3}.
+ @param str Parameter string of a get request, formatted as: param1=value1&param2=value2&param3=value3...
+ @return Dictionary parsed from the parameter string.
+ */
+extern NSDictionary *parseGetParamStringToDict(NSString *str);
 
 /** @name UI Utility */
 

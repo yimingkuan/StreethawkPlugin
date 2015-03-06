@@ -228,7 +228,7 @@
         {
             NSString *title = command.arguments[0];
             NSString *message = command.arguments[1];
-            [StreetHawk shFeedback:nil needInputDialog:NO withTitle:title withMessage:message withPushMsgid:0 withPushData:nil];
+            [StreetHawk shFeedback:nil needInputDialog:NO needConfirmDialog:NO withTitle:title withMessage:message withPushMsgid:0 withPushData:nil];
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         }
         else

@@ -21,7 +21,7 @@
 /**
  Handler for rating App, or open App Store to point to the App.
  */
-@interface SHRateHandler : NSObject<UIActionSheetDelegate>
+@interface SHRateHandler : NSObject
 
 /**
  Promote rate dialog regardless of how many times enter or user dismiss before. 

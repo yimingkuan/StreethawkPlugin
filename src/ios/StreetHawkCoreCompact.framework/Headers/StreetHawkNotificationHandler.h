@@ -18,15 +18,6 @@
 
 #import "StreetHawkPublicFwds.h"
 
-#define FRIENDLYNAME_KEY                    @"FRIENDLYNAME_KEY" //key in user defaults for whole friendly name, it get an array, with each one is a dictionary.
-#define FRIENDLYNAME_NAME                   @"FRIENDLYNAME_NAME"  //the register to server name.
-#define FRIENDLYNAME_VC                     @"FRIENDLYNAME_VC"  //the view controller class name
-#define FRIENDLYNAME_XIB_IPHONE             @"FRIENDLYNAME_XIB_IPHONE"  //the xib for iphone
-#define FRIENDLYNAME_XIB_IPAD               @"FRIENDLYNAME_XIB_IPAD"  //the xib for ipad
-
-#define FRIENDLYNAME_REGISTER               @"register"  //reserved friendly name for login UI, push notification code 8006
-#define FRIENDLYNAME_LOGIN                  @"login"  //reserved friendly name for login UI, push notification code 8007
-
 #define PHONEGAP_8004_PAGE                  @"PHONEGAP_8004_PAGE"  //when Phonegap receive 8004 at background and launch, store this and it will read by [StreetHawk shGetViewName] when launch
 #define PHONEGAP_8004_MSGID                 @"PHONEGAP_8004_MSGID" //together with PHONEGAP_8004_PAGE.
 
