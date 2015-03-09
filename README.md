@@ -10,7 +10,7 @@ Assuming you have an application created using Phonegap, you can integrate Stree
 
 * Add streethawk plugin by running command
 ```
-cordova plugin add https://github.com/streethawkphonegap/StreethawkPlugin.git --variable APP_KEY=<YOUR_APPLICATIONS_APP_KEY>
+cordova plugin add https://github.com/streethawkphonegap/StreethawkPlugin.git --variable APP_KEY=<YOUR_APPLICATIONS_APP_KEY> --variable URL_SCHEME=<URL_SHEME_OF_APP>
 ```
 Please note that, above command requires unique app_key of your application registered with Streethawk. If you dont have it , you can register you application's app_key [here](https://api.streethawk.com/static/bb/)
 
