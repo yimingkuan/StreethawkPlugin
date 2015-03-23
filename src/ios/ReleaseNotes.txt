@@ -1,3 +1,8 @@
+Version Number   : 1/1.5.4
+Release Date     : 23-March-2015
+Notes:
+1. Fix iBeacon not detetable bug due to identifier.
+------------------------------------------------------------------------
 Version Number   : 1/1.5.3
 Release Date     : 13-February-2015
 Notes:
