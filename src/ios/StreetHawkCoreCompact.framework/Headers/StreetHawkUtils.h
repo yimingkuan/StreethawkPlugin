@@ -73,6 +73,13 @@ extern NSDate *parseDate(NSString *input, int offsetSeconds);
  */
 extern NSDictionary *parseObjectToDict(NSObject *obj);
 
+/**
+ Serialize the NSObject to json string. 
+ @param obj The object to be serialized.
+ @return The json string if serialize successfully. If fail return nil.
+ */
+extern NSString *serializeObjToJson(NSObject *obj);
+
 /** @name URL Process Utility */
 
 /**
@@ -229,5 +236,10 @@ typedef enum SHDevelopmentPlatform SHDevelopmentPlatform;
  Return string describing which development platform current App is.
  */
 extern NSString *developmentPlatformString();
+
+/**
+ Return app/status result of streethawk function should be enabled. 
+ */
+extern BOOL streetHawkIsEnabled();
 
 #endif

@@ -26,6 +26,17 @@
 typedef void (^SHOpenUrlHandler)(NSURL *openUrl);
 
 /**
+ Enum for result.
+ */
+enum SHResult
+{
+    SHResult_Accept,
+    SHResult_Postpone,
+    SHResult_Decline,
+};
+typedef enum SHResult SHResult;
+
+/**
  Singleton to access SHApp.
  */
 #define StreetHawk          [SHApp sharedInstance]
@@ -103,12 +114,6 @@ typedef void (^SHOpenUrlHandler)(NSURL *openUrl);
 - (void)setDefaultStartingUrl:(NSString *)defaultUrl;
 
 /**
- The current alive host url. It can be switched to other host at runtime by app_status. This is readonly function return the local cached alive host root url, if it's empty return default one `hostDefaultRootUrl`. Get function contains version, for example @"https://api.streethawk.com/V1". Use `makeBaseUrlString(StreetHawk.hostAliveRootUrl, @"install/details/")` to create request path.
- * Set: if set nil or empty or same host url, nothing happen; otherwise the alive host root url is changed to new one. Set function should NOT contain version, just be @"https://api.streethawk.com".
- */
-@property (nonatomic, readonly, weak) NSString *hostAliveRootUrl;
-
-/**
  Decide whether need to show debug log in console.
  */
 @property (nonatomic) BOOL isDebugMode;
@@ -144,11 +149,6 @@ The application version and build version of current Application, formatted as @
 @property (nonatomic, strong) dispatch_semaphore_t install_semaphore;
 
 /**
- A flag to indicate whether current is uploading logs. 
- */
-@property (nonatomic) BOOL uploading_log;
-
-/**
  An enum for current App's development platform, refer to `SHDevelopmentPlatform` for supporting platforms. This is only used internally, and setup by Phonegap plugin, Titanium module, Xamarin binding etc. Normal customer does not need to change it.
  */
 @property (nonatomic) SHDevelopmentPlatform developmentPlatform;
@@ -171,14 +171,29 @@ The application version and build version of current Application, formatted as @
     [StreetHawk handleRemoteNotification:userInfo];
  }
  
+ - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+ {
+    [StreetHawk handleRemoteNotification:userInfo needComplete:YES fetchCompletionHandler:completionHandler];
+ }
+ 
+ - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler
+ {
+    [StreetHawk handleRemoteNotification:userInfo withActionId:identifier needComplete:YES completionHandler:completionHandler];
+ }
+
  - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
  {
     [StreetHawk handleLocalNotification:notification];
  }
  
+ - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void (^)())completionHandler
+ {
+    [StreetHawk handleLocalNotification:notification withActionId:identifier needComplete:YES completionHandler:completionHandler];
+ }
+
  - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
  {
-    [StreetHawk shBackgroundTask:completionHandler];
+    [StreetHawk shRegularTask:completionHandler];
  }
  
  - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
@@ -327,14 +342,7 @@ The application version and build version of current Application, formatted as @
     `- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification`
     {
         [StreetHawk handleLocalNotification:notification needComplete:YES fetchCompletionHandler:nil];
-    }`
- 
-    or 
- 
-    `- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler`
-    {
-        [StreetHawk handleLocalNotification:notification needComplete:YES fetchCompletionHandler:completionHandler];
-    }`
+    }` 
  
  @param notification Object passed in by local notification.
  @param needComplete Whether need to call `completionHandler` when task finish. If `completionHandler`=nil this does not matter YES or NO.
@@ -514,22 +522,21 @@ The application version and build version of current Application, formatted as @
 /** @name Background Regular Task */
 
 /**
- Perform background task at certain time interval. It leverages `UIApplicationDelegate` function `- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler` to do some tasks at background. Note:
+ Perform regular task at certain time interval. It leverages `UIApplicationDelegate` function `- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler` to do some tasks at background, and when App in foreground, it calls each time when App become active. Note:
  
  1. Customer App must have Background mode -> fetch enabled to have this work. 
  2. This function is available since iOS 7.0. Previous iOS system cannot support it. 
  3. User App implement this function by calling it in AppDelegate.m if NOT auto-integrate. If `StreetHawk.autoIntegrateAppDelegate = YES;` make sure NOT call this otherwise cause dead loop. Code snippet:
     `- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler`
     `{`
-        `[StreetHawk shBackgroundTask:completionHandler needComplete:YES];`
+        `[StreetHawk shRegularTask:completionHandler needComplete:YES];`
     `}`
  
  This function perform following tasks:
- 1. It's called every hour.
- 2. If user's location service is enabled, every time it's launched, send non-priority log for current user location (domain=location, code=19).
- 3. Check whether install/log is sent within 6 hours. If inside 6 hours no install/log sent, sends priority heartbeat log (domain=system, code=8051).
+ 1. If user's location service is enabled, time interval one hour, send non-priority log for current user location (code=19).
+ 2. Sends priority heartbeat log in 6 hours(code=8051).
  */
-- (void)shBackgroundTask:(void (^)(UIBackgroundFetchResult result))completionHandler needComplete:(BOOL)needComplete NS_AVAILABLE_IOS(7_0);
+- (void)shRegularTask:(void (^)(UIBackgroundFetchResult result))completionHandler needComplete:(BOOL)needComplete NS_AVAILABLE_IOS(7_0);
 
 /** @name Open Url Scheme */
 
@@ -560,9 +567,17 @@ The application version and build version of current Application, formatted as @
 - (void)feed:(NSInteger)offset withHandler:(SHFeedsFetchHandler)handler;
 
 /**
- Send no priority logline for feed once it's seen by user. Code=8201, domain is empty, comment=passin_feed_id, feed_id=passin_feed_id, result=passin_int.
+ Send no priority logline for feedack. Customer developer should call this when a feed is read. Server may receive multiple loglines if user read one feed many times.
+ @param feed_id The feed id of reading feed.
  */
-- (void)sendLogForFeed:(NSInteger)feed_id withResult:(NSInteger)result;
+- (void)sendFeedAck:(NSInteger)feed_id;
+
+/**
+ Send no priority logline for feed result.
+ @param feed_id The feed id of result feed.
+ @param result The result for accept, or postpone or decline.
+ */
+- (void)sendLogForFeed:(NSInteger)feed_id withResult:(SHResult)result;
 
 /** @name Permission */
 
@@ -598,11 +613,11 @@ The application version and build version of current Application, formatted as @
 @interface SHApp (LoggerExt)
 
 /**
- Send log with domain="custom", code=8999. It's used for tagging a string value for user. For example, you can tag user's email as by:
+ Send log with code=8999. It's used for tagging a string value for user. For example, you can tag user's email as by:
  
  `[StreetHawk tagString:@"a@a.com" forKey:@"sh_email"];`
  
- This will send log comment as {"key": "sh_email", "value": @"a@a.com", "type": "string"}.
+ This will send log comment as {"key": "sh_email", "string": @"a@a.com"}.
  
  @param value The value for tag to the user profile. Cannot be empty. It can be NSString, or NSDictionary, or NSArray. 
  @param key The key for tag to the user profile. Cannot be empty.
@@ -610,11 +625,11 @@ The application version and build version of current Application, formatted as @
 -(void)tagString:(NSObject *)value forKey:(NSString *)key;
 
 /**
- Send log with domain="custom", code=8999. It's used for tagging a number value for user. For example, you can tag user's favourite product count by:
+ Send log with code=8999. It's used for tagging a number value for user. For example, you can tag user's favourite product count by:
  
  `[StreetHawk tagNumeric:8 forKey:@"fave_product"];`
  
- This will send log comment as {"key": "fave_product", "value": [NSNumber numberWithDouble:8], "type": "numeric"}.
+ This will send log comment as {"key": "fave_product", "numeric": [NSNumber numberWithDouble:8]}.
  
  @param value The number value for tag to the user profile.
  @param key The key for tag to the user profile. Cannot be empty.
@@ -622,11 +637,11 @@ The application version and build version of current Application, formatted as @
 -(void)tagNumeric:(double)value forKey:(NSString *)key;
 
 /**
- Send log with domain="custom", code=8999. It's used for tagging a date value for user. For example, you can tag user's visit time by:
+ Send log with code=8999. It's used for tagging a date value for user. For example, you can tag user's visit time by:
  
  `[StreetHawk tagDatetime:[NSDate date] forKey:@"visit_time"];`
  
- This will send log comment as {"key": "visit_time", "value": [NSDate date], "type": "datetime"}.
+ This will send log comment as {"key": "visit_time", "datetime": [NSDate date]}.
  
  @param value The date value for tag to the user profile. Cannot be empty.
  @param key The key for tag to the user profile. Cannot be empty.
@@ -634,13 +649,13 @@ The application version and build version of current Application, formatted as @
 -(void)tagDatetime:(NSDate *)value forKey:(NSString *)key;
 
 /**
- This is opposite function of `tagString` or `tagNumeric` or `tagDatetime`. It's to remove a user tag by the key, for example `tagDatetime` adds {"key": "sh_date_of_birth", "value": "2012-12-12 11:11:11", "type": "datetime"}, so this `removeUserTag` can remove the tag by key = "sh_date_of_birth". It send log with domain="custom", code=8998, comment = "{key : "sh_date_of_birth"}".
+ This is opposite function of `tagString` or `tagNumeric` or `tagDatetime`. It's to remove a user tag by the key, for example `tagDatetime` adds {"key": "sh_date_of_birth", "datetime": "2012-12-12 11:11:11"}, so this `removeUserTag` can remove the tag by key = "sh_date_of_birth". It send log with code=8998, comment = "{key : "sh_date_of_birth"}".
  @param key Key for existing tag. Cannot be empty.
  */
 -(void)removeTag:(NSString *)key;
 
 /**
- Send log with domain="custom", code=8999, comment={"key": "<key>", "value": 1, "operator": "+", "type": "numeric"}.
+ Send log with code=8997, comment={"key": "<key>", "numeric": 1}.
  @param key Key for existing tag. Cannot be empty.
  */
 -(void)incrementTag:(NSString *)key;

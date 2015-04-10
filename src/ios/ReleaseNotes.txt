@@ -1,3 +1,14 @@
+Version Number   : 1/1.5.5
+Release Date     : 6-April-2015
+Notes:
+1. Slide view automatically scroll for long title and message.
+2. Implement new loglines to /v2.
+3. Remove send manual location API.
+4. Customer developer can setup their own notification categories.
+5. Install 1/1.5.5 SDK do fresh new install.
+6. Feedback with long choice list can scroll.
+7. Install update add feature flags, indicating location, notification and iBeacon.
+------------------------------------------------------------------------
 Version Number   : 1/1.5.4
 Release Date     : 23-March-2015
 Notes:

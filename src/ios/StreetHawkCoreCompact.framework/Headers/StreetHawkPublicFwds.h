@@ -61,6 +61,7 @@
 @class          SHRequest;
 
 //UI
+@class          SHActionSheet;
 @class          SHAlertSettingsViewController;
 @class          SHAlertView;
 @class          SHBaseTableViewController;

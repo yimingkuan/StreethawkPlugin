@@ -173,7 +173,6 @@ A core class to monitor location change. By default process of StreetHawk SDK, i
 - The SHLocationManager automatically manages/monitors the foreground/background state, so there is no requirement from the App developer. It should be noted that if the screen is turned off while the App is in the foreground, this is treated as a transition to background.
 - Even if the App crashes or is terminated, or phone power off/on, the App will be woken up and put in background because significant location monitoring.
 - Once location update notification occur, (according to the algorithm above) logs are post to server immediately, and install updated.
-- The User can send manual location by `[StreetHawk shSetManualLocationAtLatitude:(double)latitude atLongitude:(double)longitude]`, it sends logline once for: code=20, domain=location, loc_is_manual=true, loc_lat/loc_lng use pass in value, and not stop automatic location update. It not affect install's loc_lat/loc/lng either.
  
  **Default Values by Application state**
  <table>
