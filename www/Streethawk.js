@@ -1,4 +1,4 @@
-cordova.define("com.streethawk.plugin.Streethawk", function(require, exports, module) { /*
+/*
  * Copyright 2014 StreetHawk
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -174,15 +174,11 @@ SHLibrary.prototype.shSetGcmSenderId = function(string_senderKey) {
 SHLibrary.prototype.shGetAppKey = function(appSuccess,appFail) {
     exec(appSuccess,appFail,'Streethawk', 'shGetAppKey', []);
 }
+
 SHLibrary.prototype.shDeeplinking = function(appSuccess,appFail) {
     exec(appSuccess,appFail,'Streethawk', 'shDeeplinking', []);
 }
 
-
-
-
-
 var myplugin = new SHLibrary();
 module.exports = myplugin;
 
-});
