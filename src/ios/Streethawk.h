@@ -59,11 +59,6 @@
 - (void)removeTag:(CDVInvokedUrlCommand *)command;
 
 /**
- * Send dictionary for tag user. Command arguement is array contains a dictionary. It will be deprecated in next release, iOS not implement it.
- */
-- (void)sendLogForTagUser:(CDVInvokedUrlCommand *)command;
-
-/**
  * Send log to trace current page is entered. Command arguement is [view_string]. 
  */
 - (void)currentPage:(CDVInvokedUrlCommand *)command;
@@ -97,11 +92,6 @@
  * Callback for handling open url.
  */
 - (void)shDeeplinking:(CDVInvokedUrlCommand *)command;
-
-/**
- * Reports manual locations to streethawk server.
- */
-- (void)shSetManualLocation:(CDVInvokedUrlCommand *)command;
 
 //////////////////  Properties  ///////////////////////////////////
 

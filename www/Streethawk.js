@@ -1,4 +1,4 @@
-/*
+cordova.define("com.streethawk.plugin.Streethawk", function(require, exports, module) { /*
  * Copyright 2014 StreetHawk
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -67,10 +67,6 @@ SHLibrary.prototype.incrementTag = function(string_key) {
 
 SHLibrary.prototype.removeTag = function(string_key) {
     exec(success, fail, 'Streethawk', 'removeTag', [string_key]);
-}
-
-SHLibrary.prototype.sendLogForTagUser = function(dict_tag) {
-    exec(success, fail, 'Streethawk', 'sendLogForTagUser', [dict_tag]);
 }
 
 SHLibrary.prototype.currentPage = function(string_pagename) {
@@ -167,10 +163,6 @@ SHLibrary.prototype.shRawJsonCallback = function(appSuccess,appFail) {
     exec(appSuccess,appFail, 'Streethawk', 'shRawJsonCallback', []);
 }
 
-SHLibrary.prototype.shSetManualLocation = function(double_lat,double_lng) {
-    exec(success,fail, 'Streethawk', 'shSetManualLocation', [double_lat,double_lng]);
-}
-
 SHLibrary.prototype.displayBadge = function(int_count) {
     exec(success,fail, 'Streethawk', 'displayBadge', [int_count]);
 }
@@ -192,3 +184,5 @@ SHLibrary.prototype.shDeeplinking = function(appSuccess,appFail) {
 
 var myplugin = new SHLibrary();
 module.exports = myplugin;
+
+});

@@ -174,29 +174,6 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
-- (void)sendLogForTagUser:(CDVInvokedUrlCommand *)command
-{
-    CDVPluginResult *pluginResult = nil;
-    if (command.arguments.count == 1)
-    {
-        if ([command.arguments[0] isKindOfClass:[NSDictionary class]])
-        {
-            NSDictionary *dict = command.arguments[0];
-            [StreetHawk sendLogForTag:dict withDomain:LOG_DOMAIN_CUSTOM withCode:LOG_CODE_CUSTOM_USERTAG_ADD];
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-        }
-        else
-        {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Parameter [0] expects a dictionary."];
-        }
-    }
-    else
-    {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Wrong number of parameters, expect 1."];
-    }    
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-}
-
 - (void)currentPage:(CDVInvokedUrlCommand *)command
 {
     CDVPluginResult *pluginResult = nil;
@@ -327,30 +304,6 @@
             [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackCommandForOpenUrl.callbackId];
         }
     };
-}
-
-- (void)shSetManualLocation:(CDVInvokedUrlCommand *)command
-{
-    CDVPluginResult *pluginResult = nil;
-    if (command.arguments.count == 2)
-    {
-        if ([command.arguments[0] isKindOfClass:[NSNumber class]] && ([command.arguments[1] isKindOfClass:[NSNumber class]]))
-        {
-            double latitude = [(NSNumber *)command.arguments[0] doubleValue];
-            double longitude = [(NSNumber *)command.arguments[1] doubleValue];
-            [StreetHawk shSetManualLocationAtLatitude:latitude atLongitude:longitude];
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-        }
-        else
-        {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Parameters should be double."];
-        }
-    }
-    else
-    {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Wrong number of parameters, expect 2."];
-    }
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 #pragma mark - properties
