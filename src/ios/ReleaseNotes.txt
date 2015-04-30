@@ -1,13 +1,14 @@
 Version Number   : 1/1.5.5
-Release Date     : 6-April-2015
+Release Date     : 25-April-2015
 Notes:
-1. Slide view automatically scroll for long title and message.
-2. Implement new loglines to /v2.
-3. Remove send manual location API.
-4. Customer developer can setup their own notification categories.
-5. Install 1/1.5.5 SDK do fresh new install.
-6. Feedback with long choice list can scroll.
-7. Install update add feature flags, indicating location, notification and iBeacon.
+1. Add scroll label to display 8000 title and message. It will scroll on demand.
+2. Avoid send request in case StreetHawk is disabled. 
+3. Remove API of sending manual location.
+4. Customer category can have same identifier to override StreetHawk predefined category.
+5. Feedback with long option list can scroll.
+6. Fix location permission not promote in case user install and not launch for more than half an hour.
+7. Delay post application did finish launch notification for platforms get StreetHawk ready later.
+8. Hard code development platform in SDK.
 ------------------------------------------------------------------------
 Version Number   : 1/1.5.4
 Release Date     : 23-March-2015

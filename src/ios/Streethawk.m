@@ -33,7 +33,6 @@
 - (void)streethawkinit:(CDVInvokedUrlCommand *)command
 {
     CDVPluginResult *pluginResult = nil;
-    StreetHawk.developmentPlatform = SHDevelopmentPlatform_Phonegap;
     [StreetHawk registerInstallForApp:nil/*read from Info.plist APP_KEY*/ withDebugMode:StreetHawk.isDebugMode withiTunesId:StreetHawk.itunesAppId];
     [StreetHawk shPGHtmlReceiver:self]; //register as html page load observer.
     [StreetHawk shSetCustomiseHandler:self]; //register as customise handler.

@@ -26,7 +26,7 @@
 		</data>
 		<key>Headers/StreetHawkApp.h</key>
 		<data>
-		Tbrp3pP9NykOuzMSXyMVf40OOaw=
+		AsTPLNF0CYByhoXG6zo/vKY4Eg8=
 		</data>
 		<key>Headers/StreetHawkBaseViewController.h</key>
 		<data>
@@ -62,7 +62,7 @@
 		</data>
 		<key>Headers/StreetHawkLogger.h</key>
 		<data>
-		mK2IYZWn6U9+D+f9mQEUKo13nvQ=
+		x6Y1DZ83KCm2VBrZGnd977KNqF0=
 		</data>
 		<key>Headers/StreetHawkNotificationHandler.h</key>
 		<data>
@@ -82,7 +82,7 @@
 		</data>
 		<key>Headers/StreetHawkRequest.h</key>
 		<data>
-		lVeCVYRRcu9DbBS4x2NuTv90RUw=
+		qmDa/PsKx2hZeXSI6OzCxskpavY=
 		</data>
 		<key>Headers/StreetHawkSlideViewController.h</key>
 		<data>
@@ -90,11 +90,11 @@
 		</data>
 		<key>Headers/StreetHawkUtils.h</key>
 		<data>
-		DvsZWeGMUkm2U5N7s1SeAHdp6Gw=
+		L1+hYZmBQRj6oyNmj9rj9fWV84o=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		ItcqSYMAWG00/mUHB7td+l8ibrs=
+		SF5FObeClOSwI/wHHfZBNVyjPPY=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -102,7 +102,7 @@
 		</data>
 		<key>StreetHawkCoreRes.bundle/Info.plist</key>
 		<data>
-		zuDwz9g6EHfgp+Eq3y7tR9k94DI=
+		lfPJgiLcWLqV926G7FLwGlxAoL0=
 		</data>
 		<key>StreetHawkCoreRes.bundle/Localizable.strings</key>
 		<data>
@@ -110,51 +110,51 @@
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHAlertSettingsViewController.nib/objects-8.0+.nib</key>
 		<data>
-		DaWsJ7V9fuBgHNvLEdviFO4SKBE=
+		O2KEx2OxY8UYZCAxF4ZstsaeyQc=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHAlertSettingsViewController.nib/objects.nib</key>
 		<data>
-		Thl7dc6vRAklXPi8WoMozjcTZmU=
+		mGBE7mNflfAQWZr1HTPa88hVnGw=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHAlertSettingsViewController.nib/runtime.nib</key>
 		<data>
-		EPCE/PoaPv/Ue1EpWJjm+y8hbJU=
+		DxkHXx03T21TPKopnfJ6AUkDRyY=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHChoiceViewController.nib/objects-8.0+.nib</key>
 		<data>
-		jdve13FNxUuE5zyauhwjKK0bjOE=
+		tKpVF5t8bgShM7mh/CgV0ToA/8A=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHChoiceViewController.nib/objects.nib</key>
 		<data>
-		0zJTWsjfAPgRi6k1hF4FUTYSpBE=
+		pRktgOQW9LszaooI1B3k6flxTx0=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHChoiceViewController.nib/runtime.nib</key>
 		<data>
-		DDoOq7Rweb2leRvZuWUocjvVn8k=
+		GO+cFLXPg1RNFFH6Cil+rKVL41A=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHFeedbackViewController.nib/objects-8.0+.nib</key>
 		<data>
-		OPuNHR1lnEP6UriAZETjqT0TR4c=
+		oYt6IQ6QlFzWss50ZahhQNsq37Y=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHFeedbackViewController.nib/objects.nib</key>
 		<data>
-		4/jFK0N+Z1g9TmilbCObT1kdUvc=
+		WX78v9dEHHeIdvWoHxiE4+YPX+Q=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHFeedbackViewController.nib/runtime.nib</key>
 		<data>
-		Ed25aOgHU9B4gIwBb6knqwtT4hI=
+		fZFtmJ+n20o1v4JJoHDz5/ioiU4=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHSlideWebViewController.nib/objects-8.0+.nib</key>
 		<data>
-		iwsmDGV7eE5M/Vpb03/51MXZXKs=
+		Bmeyj5Kbf5ot4IpRgCsyvCtFnRU=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHSlideWebViewController.nib/objects.nib</key>
 		<data>
-		OyZpfVtcOvHNRbv4sVBZuShE9u4=
+		uztJvTrr/QJ9sWfRFFX0JqNQJoQ=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHSlideWebViewController.nib/runtime.nib</key>
 		<data>
-		/zycoLJFHPeZl6iZNHmSmobgR/Q=
+		xzJsUDelVfY7NjLKEOpHkfWkv/s=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -181,7 +181,7 @@
 		</data>
 		<key>Headers/StreetHawkApp.h</key>
 		<data>
-		Tbrp3pP9NykOuzMSXyMVf40OOaw=
+		AsTPLNF0CYByhoXG6zo/vKY4Eg8=
 		</data>
 		<key>Headers/StreetHawkBaseViewController.h</key>
 		<data>
@@ -217,7 +217,7 @@
 		</data>
 		<key>Headers/StreetHawkLogger.h</key>
 		<data>
-		mK2IYZWn6U9+D+f9mQEUKo13nvQ=
+		x6Y1DZ83KCm2VBrZGnd977KNqF0=
 		</data>
 		<key>Headers/StreetHawkNotificationHandler.h</key>
 		<data>
@@ -237,7 +237,7 @@
 		</data>
 		<key>Headers/StreetHawkRequest.h</key>
 		<data>
-		lVeCVYRRcu9DbBS4x2NuTv90RUw=
+		qmDa/PsKx2hZeXSI6OzCxskpavY=
 		</data>
 		<key>Headers/StreetHawkSlideViewController.h</key>
 		<data>
@@ -245,7 +245,7 @@
 		</data>
 		<key>Headers/StreetHawkUtils.h</key>
 		<data>
-		DvsZWeGMUkm2U5N7s1SeAHdp6Gw=
+		L1+hYZmBQRj6oyNmj9rj9fWV84o=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -253,7 +253,7 @@
 		</data>
 		<key>StreetHawkCoreRes.bundle/Info.plist</key>
 		<data>
-		zuDwz9g6EHfgp+Eq3y7tR9k94DI=
+		lfPJgiLcWLqV926G7FLwGlxAoL0=
 		</data>
 		<key>StreetHawkCoreRes.bundle/Localizable.strings</key>
 		<data>
@@ -261,51 +261,51 @@
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHAlertSettingsViewController.nib/objects-8.0+.nib</key>
 		<data>
-		DaWsJ7V9fuBgHNvLEdviFO4SKBE=
+		O2KEx2OxY8UYZCAxF4ZstsaeyQc=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHAlertSettingsViewController.nib/objects.nib</key>
 		<data>
-		Thl7dc6vRAklXPi8WoMozjcTZmU=
+		mGBE7mNflfAQWZr1HTPa88hVnGw=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHAlertSettingsViewController.nib/runtime.nib</key>
 		<data>
-		EPCE/PoaPv/Ue1EpWJjm+y8hbJU=
+		DxkHXx03T21TPKopnfJ6AUkDRyY=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHChoiceViewController.nib/objects-8.0+.nib</key>
 		<data>
-		jdve13FNxUuE5zyauhwjKK0bjOE=
+		tKpVF5t8bgShM7mh/CgV0ToA/8A=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHChoiceViewController.nib/objects.nib</key>
 		<data>
-		0zJTWsjfAPgRi6k1hF4FUTYSpBE=
+		pRktgOQW9LszaooI1B3k6flxTx0=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHChoiceViewController.nib/runtime.nib</key>
 		<data>
-		DDoOq7Rweb2leRvZuWUocjvVn8k=
+		GO+cFLXPg1RNFFH6Cil+rKVL41A=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHFeedbackViewController.nib/objects-8.0+.nib</key>
 		<data>
-		OPuNHR1lnEP6UriAZETjqT0TR4c=
+		oYt6IQ6QlFzWss50ZahhQNsq37Y=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHFeedbackViewController.nib/objects.nib</key>
 		<data>
-		4/jFK0N+Z1g9TmilbCObT1kdUvc=
+		WX78v9dEHHeIdvWoHxiE4+YPX+Q=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHFeedbackViewController.nib/runtime.nib</key>
 		<data>
-		Ed25aOgHU9B4gIwBb6knqwtT4hI=
+		fZFtmJ+n20o1v4JJoHDz5/ioiU4=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHSlideWebViewController.nib/objects-8.0+.nib</key>
 		<data>
-		iwsmDGV7eE5M/Vpb03/51MXZXKs=
+		Bmeyj5Kbf5ot4IpRgCsyvCtFnRU=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHSlideWebViewController.nib/objects.nib</key>
 		<data>
-		OyZpfVtcOvHNRbv4sVBZuShE9u4=
+		uztJvTrr/QJ9sWfRFFX0JqNQJoQ=
 		</data>
 		<key>StreetHawkCoreRes.bundle/SHSlideWebViewController.nib/runtime.nib</key>
 		<data>
-		/zycoLJFHPeZl6iZNHmSmobgR/Q=
+		xzJsUDelVfY7NjLKEOpHkfWkv/s=
 		</data>
 	</dict>
 	<key>rules</key>

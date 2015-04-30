@@ -73,13 +73,6 @@ extern NSDate *parseDate(NSString *input, int offsetSeconds);
  */
 extern NSDictionary *parseObjectToDict(NSObject *obj);
 
-/**
- Serialize the NSObject to json string. 
- @param obj The object to be serialized.
- @return The json string if serialize successfully. If fail return nil.
- */
-extern NSString *serializeObjToJson(NSObject *obj);
-
 /** @name URL Process Utility */
 
 /**
@@ -229,6 +222,10 @@ enum SHDevelopmentPlatform
      Xamarin Apps.
      */
     SHDevelopmentPlatform_Xamarin,
+    /**
+     Unity Apps.
+     */
+    SHDevelopmentPlatform_Unity,
 };
 typedef enum SHDevelopmentPlatform SHDevelopmentPlatform;
 
