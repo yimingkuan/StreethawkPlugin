@@ -69,6 +69,10 @@ SHLibrary.prototype.removeTag = function(string_key) {
     exec(success, fail, 'Streethawk', 'removeTag', [string_key]);
 }
 
+SHLibrary.prototype.sendLogForTagUser = function(dict_tag) {
+    exec(success, fail, 'Streethawk', 'sendLogForTagUser', [dict_tag]);
+}
+
 SHLibrary.prototype.currentPage = function(string_pagename) {
     exec(success, fail, 'Streethawk', 'currentPage', [string_pagename]);
 }
@@ -165,6 +169,10 @@ SHLibrary.prototype.shRegisterViewCallback = function(appSuccess,appFail) {
 
 SHLibrary.prototype.shRawJsonCallback = function(appSuccess,appFail) {
     exec(appSuccess,appFail, 'Streethawk', 'shRawJsonCallback', []);
+}
+
+SHLibrary.prototype.shSetManualLocation = function(double_lat,double_lng) {
+    exec(success,fail, 'Streethawk', 'shSetManualLocation', [double_lat,double_lng]);
 }
 
 SHLibrary.prototype.displayBadge = function(int_count) {
