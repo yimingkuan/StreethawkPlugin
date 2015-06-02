@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <plugin id="com.streethawk.plugin" version="1.5.5" xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android">
-	<name>Streethawk plugin for push notification,geofencing,ibeacon,mobile analytics,marketing automation</name>
+	<name>StreetHawk plugin for push notification,geofencing,ibeacon,mobile analytics,marketing automation</name>
 	<description>      
       &lt;p&gt;<a href="http://www.streethawk.com">Streethawk</a> is a mobile engagement automation library for your smartphone and tablet apps. Engage users in the right time using push notifications, emails and sms, segment your user base, create geofences to trigger location based campaigns or ibeacons for proximity based campaigns, mobile analytics measure campaign performance and more. StreetHawk supports both iOS and Android devices..&lt;/p&gt;
       <a href="mailto:support@streethawk.com">Support</a> 
@@ -57,6 +57,7 @@
     		<uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION"/>
     		<uses-permission android:name="android.permission.BLUETOOTH" />
     		<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    		<uses-permission android:name="android.permission.READ_PHONE_STATE" />
     		
 		</config-file>
 		<config-file parent="/manifest/application" target="AndroidManifest.xml">
@@ -67,6 +68,16 @@
 			<service android:name="com.streethawk.library.GCMIntentService"/>
         	<service android:name="com.streethawk.library.StreethawkLocationService"/>
 			<service android:name="com.streethawk.library.StreethawkBeaconService" />
+			  <service
+            android:name="com.streethawk.library.CrashReportingService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+        <service
+            android:name="com.streethawk.library.NewBeaconService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
 			
 			<receiver android:name="com.streethawk.library.StreethawkBroadcastReceiver" >
             <intent-filter>
@@ -78,8 +89,14 @@
                 <action android:name="com.streethawk.intent.action.gcm.STREETHAWK_APP_STATUS_CHK" />
             </intent-filter>
         </receiver>
+        <receiver android:name="com.streethawk.library.Growth"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
 			
-			<receiver
+	<receiver
             android:name="com.streethawk.library.GCMReceiver"
             android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND" >
@@ -118,7 +135,6 @@
 		</config-file>
 		<source-file src="src/android/StreethawkLibrary.jar" target-dir="libs/"/>
 		<source-file src="src/android/android-support-v4.jar" target-dir="libs/"/>
-		<source-file src="src/android/gson-2.2.4.jar" target-dir="libs/"/>
 		<source-file src="src/android/android-async-http-1.4.6.jar" target-dir="libs/"/>
 		<source-file src="src/android/Streethawk.java" target-dir="src/com/streethawk"/>
 		

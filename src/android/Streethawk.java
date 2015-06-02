@@ -7,17 +7,38 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import com.streethawk.library.StreetHawk;
 import com.streethawk.library.ISHObserver;
+import com.streethawk.library.ISHFeedItemObserver;
 import org.apache.cordova.PluginResult;
 import android.util.Log;
 import android.content.Intent;
 import org.apache.cordova.CordovaActivity;
+import com.streethawk.library.PushDataForApplication;
 
 
-public class Streethawk extends CordovaPlugin implements ISHObserver {
+public class Streethawk extends CordovaPlugin implements ISHObserver,ISHFeedItemObserver {
 
     private CallbackContext mSHCallbackContext;
 	private int mCallBackID  = 0;
 	private CallbackContext shRawJsonCallback;
+    private CallbackContext mPushDataCallback;
+    private CallbackContext mPushResultCallback;
+    private CallbackContext mFeedItemCallback;
+    
+    
+    private final String ACTION 		= "action";
+    private final String MSGID			= "msgid";
+    private final String TITLE			= "title";
+    private final String MESSAGE		= "message";
+    private final String DATA			= "data";
+    private final String PORTION		= "portion";
+    private final String ORIENTATION	= "orientation";
+    private final String SPEED			= "speed";
+    private final String SOUND			= "sound";
+    private final String BADGE			= "badge";
+    private final String JSON			= "json";
+    private final String RESULT			= "result";
+    private final String DISPLAY_WITHOTUT_DAILOG = "displaywihtoutdialog";
+ 
 	private final String TAG = "StreethawkPlugin";
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -72,6 +93,9 @@ public class Streethawk extends CordovaPlugin implements ISHObserver {
         if(action.equals("shSetEnableLogs")) {
             return shEnableLogs(args);
         }
+        if(action.equals("setUseCustomDialog")) {
+            return setUseCustomDialog(args);
+        }
         if(action.equals("currentPage")) {
             return currentPage(args);
         }
@@ -103,10 +127,10 @@ public class Streethawk extends CordovaPlugin implements ISHObserver {
             return setgcmSenderId(args);
         }
 		if(action.equals("shSetIsPushNotificationEnabled")){
-			return true;
+			return shSetGcmSupport(args);
 		}
 		if(action.equals("shSetIsUseLocation")){
-			return true;
+			return shSetLocationSupport(args);
 		}
 		if(action.equals("shRegisterViewCallback")){
 			this.mSHCallbackContext = callbackContext;
@@ -120,6 +144,18 @@ public class Streethawk extends CordovaPlugin implements ISHObserver {
 			this.shRawJsonCallback = callbackContext;
 			return true;
 		}
+        if(action.equals("registerPushResultCallback")){
+            this.mPushResultCallback = callbackContext;
+            return true;
+        }
+        if(action.equals("registerPushDataCallback")){
+            this.mPushDataCallback = callbackContext;
+            return true;
+        }
+        if(action.equals("registerFeedItemCallback")){
+            this.mFeedItemCallback = callbackContext;
+            return true;
+        }
 		if(action.equals("shGetViewName")){
 			return shGetViewName(callbackContext);
 		}
@@ -139,18 +175,35 @@ public class Streethawk extends CordovaPlugin implements ISHObserver {
 			return shSetBeaconSupport(args);
 		}
 		if(action.equals("shSetManualLocation")){
-			return shSetManualLocation(args);
+			 Log.e(TAG,"shSetManualLocation is deprecated.");
+			return true;
 		}
 		if(action.equals("displayBadge")){
 			return displayBadge(args);
+		}
+		if(action.equals("shReportFeedRead")){
+			return shReportFeedRead(args);
+		}
+		if(action.equals("sendPushResult")){
+			return sendPushResult(args);
+		}
+		if(action.equals("InviteFriendsToDownloadApplication")){
+			return InviteFriendsToDownloadApplication(args);
+		}
+		if(action.equals("forcePushToNotificationBar")){
+			return forcePushToNotificationBar(args);
+		}
+		if(action.equals("shGetFeedDataFromServer")){
+			return shGetFeedDataFromServer(args);
 		}
 			
         return false;
     }
     private boolean streethawkInit(){
+        StreetHawk.INSTANCE.registerSHObserver(this);
+        StreetHawk.INSTANCE.registerSHFeedItemObserver(this);
         StreetHawk.INSTANCE.setCurrentActivity(cordova.getActivity());
         StreetHawk.INSTANCE.init(cordova.getActivity().getApplication());
-        StreetHawk.INSTANCE.setAppPageReceiver(this);
         return true;
     }
     
@@ -160,6 +213,41 @@ public class Streethawk extends CordovaPlugin implements ISHObserver {
         StreetHawk.INSTANCE.tagNumeric(key,value);
         return true;
     }
+    
+    private boolean shGetFeedDataFromServer(JSONArray args)throws JSONException{	
+		int offset = args.getInt(0);
+        StreetHawk.INSTANCE.shGetFeedDataFromServer(offset);
+        return true;
+    }
+    
+    private boolean forcePushToNotificationBar(JSONArray args)throws JSONException{
+        boolean status = args.getBoolean(0);	
+		StreetHawk.forcePushToNotificationBar(cordova.getActivity().getApplicationContext(),status);
+		return true;
+    }
+
+    private boolean InviteFriendsToDownloadApplication(JSONArray args)throws JSONException{
+        String ID = args.getString(0);	
+		String deeplink_url = args.getString(1);
+		String EmailSubject = args.getString(2);
+		String EmailBody = args.getString(3);
+        return StreetHawk.InviteFriendsToDownloadApplication(cordova.getActivity().getApplicationContext(),ID,deeplink_url,EmailSubject,EmailBody);
+    }
+    
+    private boolean shReportFeedRead(JSONArray args)throws JSONException{
+        int FeedId = args.getInt(0);	
+		int result = args.getInt(1);
+        StreetHawk.INSTANCE.shReportFeedRead(FeedId,result);
+        return true;
+    }
+    
+    private boolean sendPushResult(JSONArray args)throws JSONException{
+        String msgId = args.getString(0);	
+		int result = args.getInt(1);
+        StreetHawk.INSTANCE.sendPushResult(cordova.getActivity().getApplicationContext(),msgId,result);
+        return true;
+    }
+    
     private boolean tagString(JSONArray args)throws JSONException{
         String key 	 = args.getString(0);
         String value = args.getString(1);
@@ -241,6 +329,14 @@ public class Streethawk extends CordovaPlugin implements ISHObserver {
         callbackContext.success(timeRemaining);
         return true;
     }
+    
+    
+    private boolean setUseCustomDialog(JSONArray args)throws JSONException{
+    	Boolean enable = args.getBoolean(0);
+        StreetHawk.INSTANCE.setUseCustomDialog(enable);
+        return true;
+    }
+    
     private boolean shEnableLogs(JSONArray args)throws JSONException{
     	Boolean enable = args.getBoolean(0);
         StreetHawk.INSTANCE.ENABLE_STREETHAWK_LOGS = enable;
@@ -288,13 +384,6 @@ public class Streethawk extends CordovaPlugin implements ISHObserver {
         StreetHawk.INSTANCE.shExitBeacon(cordova.getActivity().getApplicationContext(),UUID,major,minor);
     	return true;
     }
-    private boolean shSetManualLocation(JSONArray args)throws JSONException{
-    	double lat  = args.getDouble(0);
-    	double lng	= args.getDouble(1);
-        StreetHawk.INSTANCE.shSetLocation(lat,lng);
-    	return true;
-    }
-    
     private boolean displayBadge(JSONArray args)throws JSONException{
     	int count  = args.getInt(0);
         StreetHawk.INSTANCE.displayBadge(cordova.getActivity().getApplicationContext(),count);
@@ -312,6 +401,7 @@ public class Streethawk extends CordovaPlugin implements ISHObserver {
         callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, url));
     }
     
+    
     @Override
 	public void shNotifyAppPage(String html_fileName) {
     	if(null!=this.mSHCallbackContext){
@@ -326,9 +416,9 @@ public class Streethawk extends CordovaPlugin implements ISHObserver {
     	if(null!=this.shRawJsonCallback){
     	    try{
     	    JSONObject customJson = new JSONObject();
-    	    customJson.put("title",title);
-    	    customJson.put("message",message);
-    	    customJson.put("json",json);
+    	    customJson.put(TITLE,title);
+    	    customJson.put(MESSAGE,message);
+    	    customJson.put(JSON,json);
     		PluginResult result = new PluginResult(PluginResult.Status.OK,customJson);
     		result.setKeepCallback(true);
     		this.shRawJsonCallback.sendPluginResult(result);
@@ -337,4 +427,64 @@ public class Streethawk extends CordovaPlugin implements ISHObserver {
     		}
     	}
     }
+    
+    @Override
+    public void onReceivePushData(final PushDataForApplication pushData) {
+        if(null!=this.mPushDataCallback){
+         try{
+    	    JSONObject pushDataJSON = new JSONObject();  	   
+    	    pushDataJSON.put(ACTION,pushData.getAction());
+    	    pushDataJSON.put(MSGID,pushData.getMsgId());
+    	    pushDataJSON.put(TITLE,pushData.getTitle());
+    	    pushDataJSON.put(MESSAGE,pushData.getMessage());
+    	    pushDataJSON.put(DATA,pushData.getData());
+    	    pushDataJSON.put(PORTION,pushData.getPortion());
+    	    pushDataJSON.put(ORIENTATION,pushData.getOrientation());
+    	    pushDataJSON.put(SPEED,pushData.getSpeed());    	    
+    	    pushDataJSON.put(SOUND,pushData.getSound());
+    	    pushDataJSON.put(BADGE,pushData.getBadge());
+    	    pushDataJSON.put(DISPLAY_WITHOTUT_DAILOG,pushData.getDisplayWithoutConfirmation());
+
+    		PluginResult result = new PluginResult(PluginResult.Status.OK,pushDataJSON);
+    		result.setKeepCallback(true);
+    		this.mPushDataCallback.sendPluginResult(result);
+    		}catch(JSONException e){
+    			Log.e(TAG,"JSONException "+e);
+    		}
+        }
+    }
+    @Override
+    public void onReceiveResult(PushDataForApplication resultData,int result) {
+            if(null!=this.mPushResultCallback){
+            try{
+    	    JSONObject pushDataJSON = new JSONObject();  	   
+    	    pushDataJSON.put(RESULT,result);
+    	    pushDataJSON.put(ACTION,resultData.getAction());
+    	    pushDataJSON.put(MSGID,resultData.getMsgId());
+    	    pushDataJSON.put(TITLE,resultData.getTitle());
+    	    pushDataJSON.put(MESSAGE,resultData.getMessage());
+    	    pushDataJSON.put(DATA,resultData.getData());
+    	    pushDataJSON.put(PORTION,resultData.getPortion());
+    	    pushDataJSON.put(ORIENTATION,resultData.getOrientation());
+    	    pushDataJSON.put(SPEED,resultData.getSpeed());    	    
+    	    pushDataJSON.put(SOUND,resultData.getSound());
+    	    pushDataJSON.put(BADGE,resultData.getBadge());
+    	    pushDataJSON.put(DISPLAY_WITHOTUT_DAILOG,resultData.getDisplayWithoutConfirmation());
+
+    		PluginResult presult = new PluginResult(PluginResult.Status.OK,pushDataJSON);
+    		presult.setKeepCallback(true);
+    		this.mPushResultCallback.sendPluginResult(presult);
+    		}catch(JSONException e){
+    			Log.e(TAG,"JSONException "+e);
+    		}
+    	}
+    	}
+    	@Override
+    	public void shFeedReceived(JSONArray value){
+    	if(null!=this.mFeedItemCallback){
+    		PluginResult result = new PluginResult(PluginResult.Status.OK,value);
+    		result.setKeepCallback(true);
+    		this.mFeedItemCallback.sendPluginResult(result);
+    		}
+    	 }
 }
