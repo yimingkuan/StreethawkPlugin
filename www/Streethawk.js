@@ -125,6 +125,10 @@ SHLibrary.prototype.shSetDefaultLocationSupport = function(bool_enable) {
     exec(success, fail, 'Streethawk', 'shSetDefaultLocationSupport', [bool_enable]);
 }
 
+SHLibrary.prototype.setUseCustomDialog = function(bool_enable) {
+    exec(success, fail, 'Streethawk', 'setUseCustomDialog', [bool_enable]);
+}
+
 SHLibrary.prototype.shSetIsUseLocation = function(bool_enable) {
     exec(success, fail, 'Streethawk', 'shSetIsUseLocation', [bool_enable]);
 }
@@ -186,9 +190,30 @@ SHLibrary.prototype.shDeeplinking = function(appSuccess,appFail) {
     exec(appSuccess,appFail,'Streethawk', 'shDeeplinking', []);
 }
 
-
-
-
+SHLibrary.prototype.pushResultCallback = function(appSuccess,appFail) {
+    exec(appSuccess,appFail, 'Streethawk', 'registerPushResultCallback', []);
+}
+SHLibrary.prototype.pushDataCallback = function(appSuccess,appFail) {
+    exec(appSuccess,appFail, 'Streethawk', 'registerPushDataCallback', []);
+}
+SHLibrary.prototype.feedItemCallback = function(appSuccess,appFail) {
+    exec(appSuccess,appFail, 'Streethawk', 'registerFeedItemCallback', []);
+}
+SHLibrary.prototype.reportFeedRead = function(int_feedid,int_result) {
+    exec(success,fail, 'Streethawk', 'shReportFeedRead', [int_feedid, int_result]);
+}
+SHLibrary.prototype.sendPushResult = function(String_msgId,int_result) {
+    exec(success,fail, 'Streethawk', 'sendPushResult', [String_msgId, int_result]);
+}
+SHLibrary.prototype.InviteFriendsToDownloadApplication = function(String_ID,String_deeplinkUrl,String_EmailSubject,String_EmailBody) {
+    exec(success,fail, 'Streethawk', 'InviteFriendsToDownloadApplication', [String_ID,String_deeplinkUrl,String_EmailSubject,String_EmailBody]);
+}
+SHLibrary.prototype.forcePushToNotificationBar = function(bool_status) {
+    exec(success,fail, 'Streethawk', 'forcePushToNotificationBar', [bool_status]);
+}
+SHLibrary.prototype.shGetFeedDataFromServer = function(int_offset) {
+    exec(success,fail, 'Streethawk', 'shGetFeedDataFromServer', [int_offset]);
+}
 
 var myplugin = new SHLibrary();
 module.exports = myplugin;
