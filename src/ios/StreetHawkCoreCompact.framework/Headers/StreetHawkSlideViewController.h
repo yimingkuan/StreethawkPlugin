@@ -17,7 +17,30 @@
  */
 
 #import "StreetHawkPublicFwds.h"
-#import "PushDataForApplication.h"
+
+/**
+ The directions of how slide show.
+ */
+enum SHSlideDirection
+{
+    /**
+     Move from device's bottom to up.
+     */
+    SHSlideDirection_Up = 0,
+    /**
+     Move from device's top to down.
+     */
+    SHSlideDirection_Down = 1,
+    /**
+     Move from device's right to left.
+     */
+    SHSlideDirection_Left = 2,
+    /**
+     Move from device's left to right.
+     */
+    SHSlideDirection_Right = 3,
+};
+typedef enum SHSlideDirection SHSlideDirection;
 
 /**
  Callback for `SHSlideContentViewController` load finish.
@@ -44,9 +67,14 @@ typedef void(^SHSlideContentLoadFinish)(BOOL isSuccesss);
 @optional
 
 /**
- Property for passing notification payload with slide.
+ Property for passing remote notification msgid with slide.
  */
-@property (nonatomic, strong) PushDataForApplication *pushData;
+@property (nonatomic) NSInteger pushMsgid;
+
+/**
+ Property for passing remote notification comment string with slide.
+ */
+@property (nonatomic, strong) NSString *pushData;
 
 @end
 
@@ -70,9 +98,10 @@ typedef void(^SHSlideContentLoadFinish)(BOOL isSuccesss);
  @param alertTitle Before slide it may be show a confirm dialog if `alertTitle` or `alertMessage` not empty and `needShowDialog`=YES. This title will also display on slide top.
  @param alertMessage Same as `alertTitle`.
  @param needShowDialog Before slide it may be show a confirm dialog if `alertTitle` or `alertMessage` not empty and `needShowDialog`=YES.
- @param pushData When used in notification, pass in payload information. If not used in notification, pass nil.
+ @param pushMsgid When used in remote notification, pass in "i" field from server. If not used in remote notification, pass 0.
+ @param pushData When used in remote notification, pass in "d" field from server. If not used in remote notification, pass nil.
  */
-- (void)slideForUrl:(NSString *)url withDirection:(SHSlideDirection)direction withSpeed:(double)speed withCoverPercentage:(double)percentage withHideLoading:(BOOL)isHideLoading withAlertTitle:(NSString *)alertTitle withAlertMessage:(NSString *)alertMessage withNeedShowDialog:(BOOL)needShowDialog withPushData:(PushDataForApplication *)pushData;
+- (void)slideForUrl:(NSString *)url withDirection:(SHSlideDirection)direction withSpeed:(double)speed withCoverPercentage:(double)percentage withHideLoading:(BOOL)isHideLoading withAlertTitle:(NSString *)alertTitle withAlertMessage:(NSString *)alertMessage withNeedShowDialog:(BOOL)needShowDialog withPushMsgid:(NSInteger)pushMsgid withPushData:(NSString *)pushData;
 
 /**
  Utility function to show slide with url content.
@@ -84,6 +113,6 @@ typedef void(^SHSlideContentLoadFinish)(BOOL isSuccesss);
  @param alertTitle Before slide it may be show a confirm dialog if `alertTitle` or `alertMessage` not empty.
  @param alertMessage Same as `alertTitle`.
  */
-- (void)slideForVC:(UIViewController<SHSlideContentViewController> *)contentVC withDirection:(SHSlideDirection)direction withSpeed:(double)speed withCoverPercentage:(double)percentage withHideLoading:(BOOL)isHideLoading withAlertTitle:(NSString *)alertTitle withAlertMessage:(NSString *)alertMessage withNeedShowDialog:(BOOL)needShowDialog;
+- (void)slideForVC:(UIViewController<SHSlideContentViewController> *)contentVC withDirection:(SHSlideDirection)direction withSpeed:(double)speed withCoverPercentage:(double)percentage withHideLoading:(BOOL)isHideLoading withAlertTitle:(NSString *)alertTitle withAlertMessage:(NSString *)alertMessage withNeedShowDialog:(BOOL)needShowDialog ;
 
 @end

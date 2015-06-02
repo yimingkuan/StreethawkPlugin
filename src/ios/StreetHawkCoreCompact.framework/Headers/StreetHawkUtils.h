@@ -73,13 +73,6 @@ extern NSDate *parseDate(NSString *input, int offsetSeconds);
  */
 extern NSDictionary *parseObjectToDict(NSObject *obj);
 
-/**
- Serialize the NSObject to json string. 
- @param obj The object to be serialized.
- @return The json string if serialize successfully. If fail return nil.
- */
-extern NSString *serializeObjToJson(NSObject *obj);
-
 /** @name URL Process Utility */
 
 /**
@@ -104,11 +97,6 @@ extern NSMutableString *appendParamsDictToString(NSMutableString *str, NSDiction
  @return Dictionary parsed from the parameter string.
  */
 extern NSDictionary *parseGetParamStringToDict(NSString *str);
-
-/**
- Append two string together into one string, ignore if empty. For example "abc" and "efg" to be "abc efg"; "abc" and nil to be "abc".
- */
-extern NSString *appendString(NSString *str1, NSString *str2);
 
 /** @name UI Utility */
 

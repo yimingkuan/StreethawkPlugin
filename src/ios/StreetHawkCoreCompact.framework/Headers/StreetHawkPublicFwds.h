@@ -50,7 +50,6 @@
 
 //NotificationHandler
 @class          SHNotificationHandler;
-@class          PushDataForApplication;
 
 //Object
 @class          SHObject;
