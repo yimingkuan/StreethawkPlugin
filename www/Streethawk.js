@@ -26,7 +26,6 @@ var SHLibrary = function() {};
 var success = function(){}
 var fail = function(){}
 
-
 var streethawkTags = {
     'sh_email' 			:	'sh_email',             
 	'sh_phone'			: 	'sh_phone',              
@@ -40,11 +39,11 @@ var streethawkTags = {
 
 SHLibrary.prototype.streethawkinit = function() {
     exec(success, fail, 'Streethawk', 'streethawkinit', []);
-    document.addEventListener("resume",function(){
-    exec(success, fail, 'Streethawk', 'shOnResume', []);
+    document.addEventListener("resume", function() {
+        exec(success, fail, 'Streethawk', 'shOnResume', []);
     }, false);
-	document.addEventListener("pause",function(){
-    exec(success, fail, 'Streethawk', 'shOnPause', []);
+	document.addEventListener("pause",function() {
+        exec(success, fail, 'Streethawk', 'shOnPause', []);
     }, false);
     
 }
@@ -125,10 +124,6 @@ SHLibrary.prototype.shSetDefaultLocationSupport = function(bool_enable) {
     exec(success, fail, 'Streethawk', 'shSetDefaultLocationSupport', [bool_enable]);
 }
 
-SHLibrary.prototype.setUseCustomDialog = function(bool_enable) {
-    exec(success, fail, 'Streethawk', 'setUseCustomDialog', [bool_enable]);
-}
-
 SHLibrary.prototype.shSetIsUseLocation = function(bool_enable) {
     exec(success, fail, 'Streethawk', 'shSetIsUseLocation', [bool_enable]);
 }
@@ -136,9 +131,9 @@ SHLibrary.prototype.shSetIsUseLocation = function(bool_enable) {
 SHLibrary.prototype.shIsUseLocation = function(appSuccess,appFail) {
     exec(appSuccess,appFail,'Streethawk', 'shIsUseLocation', []);
 }
-
-SHLibrary.prototype.shSetAlertSetting = function(int_pauseMinutes) {
-    exec(success, fail, 'Streethawk', 'shSetAlertSetting', [int_pauseMinutes]);
+               
+SHLibrary.prototype.setUseCustomDialog = function(bool_enable) {
+    exec(success, fail, 'Streethawk', 'setUseCustomDialog', [bool_enable]);
 }
 
 SHLibrary.prototype.shEnterBeacon = function(string_uuid,int_majorNo,int_minorNo,double_distance) {
@@ -152,14 +147,17 @@ SHLibrary.prototype.shExitBeacon = function(string_uuid,int_majorNo,int_minorNo)
 SHLibrary.prototype.shSetBeaconSupport = function(bool_enable) {
     exec(success, fail, 'Streethawk', 'shSetBeaconSupport', [bool_enable]);
 }
+               
+SHLibrary.prototype.shSetAlertSetting = function(int_pauseMinutes) {
+    exec(success, fail, 'Streethawk', 'shSetAlertSetting', [int_pauseMinutes]);
+}
 
-
-SHLibrary.prototype.shAlertSettings = function(appSuccess,appFail) {
+SHLibrary.prototype.shAlertSettings = function(appSuccess, appFail) {
     exec(appSuccess,appFail,'Streethawk', 'shAlertSettings', []);
 }
 
-SHLibrary.prototype.shGetViewName = function(appSuccess,appFail){
-	exec(appSuccess,appFail,'Streethawk','shGetViewName',[]);
+SHLibrary.prototype.shGetViewName = function(appSuccess, appFail){
+	exec(appSuccess,appFail,'Streethawk', 'shGetViewName',[]);
     return true;
 }
 
@@ -167,7 +165,7 @@ SHLibrary.prototype.shRegisterViewCallback = function(appSuccess,appFail) {
     exec(appSuccess,appFail, 'Streethawk', 'shRegisterViewCallback', []);
 }
 
-SHLibrary.prototype.shRawJsonCallback = function(appSuccess,appFail) {
+SHLibrary.prototype.shRawJsonCallback = function(appSuccess, appFail) {
     exec(appSuccess,appFail, 'Streethawk', 'shRawJsonCallback', []);
 }
 
@@ -214,6 +212,9 @@ SHLibrary.prototype.forcePushToNotificationBar = function(bool_status) {
 }
 SHLibrary.prototype.shGetFeedDataFromServer = function(int_offset) {
     exec(success,fail, 'Streethawk', 'shGetFeedDataFromServer', [int_offset]);
+}
+SHLibrary.prototype.notifyNewFeedCallback = function(int_offset) {
+    exec(success,fail, 'Streethawk', 'notifyNewFeedCallback', []);
 }
 
 var myplugin = new SHLibrary();

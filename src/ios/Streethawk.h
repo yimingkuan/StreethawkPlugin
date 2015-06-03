@@ -84,14 +84,57 @@
 - (void)shRegisterViewCallback:(CDVInvokedUrlCommand *)command;
 
 /**
- * Callback for handling 8049 json push.
+ * Callback for handling custom json push. Callback get a dictionary `{"title": <string>, "message", <string>, "json", <string>}`.
  */
 - (void)shRawJsonCallback:(CDVInvokedUrlCommand *)command;
 
 /**
- * Callback for handling open url.
+ * Callback for showing custom dialog for one push. Callback get a dictionary `{"action": <enum>, "msgid": <int>, "title", <string>, "message": <string>, "data": <string>, "portion": <float>, "orientation": <enum>, "speed": <float>, "sound": <string>, "badge": <int>, "displaywihtoutdialog": <bool>}`. Customer's js using these information to create custom confirm dialog.
+ * Please note:
+ * 1. once `registerPushDataCallback` set, all custom dialog must be implemented by customer's js, StreetHawk's default dialog will not show.
+ * 2. must call `sendPushResult` to let process continue.
+ */
+- (void)registerPushDataCallback:(CDVInvokedUrlCommand *)command;
+
+/**
+ * Continue process after show custom dialog using `- (void)registerPushDataCallback:(CDVInvokedUrlCommand *)command`. Command arguement is [msgid_int, pushresult_enum(0:accept, 1:postpone, 2:decline)].
+ */
+- (void)sendPushResult:(CDVInvokedUrlCommand *)command;
+
+/**
+ * Callback for handling when customer decides one push result. Callback get a dictionary `{"result": <int>, "action": <enum>, "msgid": <int>, "title", <string>, "message": <string>, "data": <string>, "portion": <float>, "orientation": <enum>, "speed": <float>, "sound": <string>, "badge": <int>, "displaywihtoutdialog": <bool>}`. Customer's js using these information to know what result is chosen.
+ */
+- (void)registerPushResultCallback:(CDVInvokedUrlCommand *)command;
+
+/**
+ * Callback for handling open url. Callback get open url string.
  */
 - (void)shDeeplinking:(CDVInvokedUrlCommand *)command;
+
+/**
+ * Callback when new feed arrives. Callback get empty.
+ */
+- (void)notifyNewFeedCallback:(CDVInvokedUrlCommand *)command;
+
+/**
+ * Callback when server fetch feeds. Callback get feeds array.
+ */
+- (void)registerFeedItemCallback:(CDVInvokedUrlCommand *)command;
+
+/**
+ * Fetch feeds from server. Command argument is [offset_int]. Result is get by callback `registerFeedItemCallback`.
+ */
+- (void)shGetFeedDataFromServer:(CDVInvokedUrlCommand *)command;
+
+/**
+ * Send logline to server for feed result. Command arguement is [feedId_int, result_enum(0:accept, 1:postpone, 2:decline)].
+ */
+- (void)shReportFeedRead:(CDVInvokedUrlCommand *)command;
+
+/**
+ * Get Pointzi link to invite friend, if email is available send by email, otherwise show a message alert. Command argument is [campaign_string, deeplinkUrl_string, emailSubject_string, emailBody_string].
+ */
+- (void)InviteFriendsToDownloadApplication:(CDVInvokedUrlCommand *)command;
 
 //////////////////  Properties  ///////////////////////////////////
 
@@ -165,7 +208,22 @@
  */
 - (void)shAlertSettings:(CDVInvokedUrlCommand *)command;
 
+/**
+ * Get StreetHawk register App key.
+ */
+- (void)shGetAppKey:(CDVInvokedUrlCommand *)command;
+
 //////////////////  None iOS Implementation  ///////////////////////////////////
+
+/**
+ * Deprecated, native SDK has removed implementation, nothing to do.
+ */
+- (void)sendLogForTagUser:(CDVInvokedUrlCommand *)command;
+
+/**
+ * Deprecated, native SDK has removed implementation, nothing to do.
+ */
+- (void)shSetManualLocation:(CDVInvokedUrlCommand *)command;
 
 /**
  * Android needs this function to send install/log when App from BG to FG. iOS SDK has handle this inside already, this function is empty.
@@ -176,6 +234,11 @@
  * Android needs this function to send install/log when App from FG to BG. iOS SDK has handle this inside already, this function is empty.
  */
 - (void)shOnPause:(CDVInvokedUrlCommand *)command;
+
+/**
+ * Android function, ignored in ios, not need this.
+ */
+- (void)setUseCustomDialog:(CDVInvokedUrlCommand *)command;
 
 /**
  * Nothing to do in iOS part. ios doesn't support third party beacon library.
@@ -201,5 +264,10 @@
  * Android function, ignored in ios.
  */
 - (void)shSetGcmSenderId:(CDVInvokedUrlCommand *)command;
+
+/**
+ * Android function, ignored in ios.
+ */
+- (void)forcePushToNotificationBar:(CDVInvokedUrlCommand *)command;
 
 @end

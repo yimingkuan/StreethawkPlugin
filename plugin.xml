@@ -248,6 +248,7 @@
         <!-- Add frameworks -->
         <framework src="libsqlite3.dylib" />
         <framework src="CoreTelephony.framework" />
+        <framework src="MessageUI.framework" />
 		<framework src="src/ios/StreetHawkCoreCompact.framework" custom="true"/>
 		
 		<!-- Add resource bundle -->

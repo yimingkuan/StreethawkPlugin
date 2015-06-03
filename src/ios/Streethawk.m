@@ -17,12 +17,18 @@
  */
 
 #import "Streethawk.h"
+#import <MessageUI/MessageUI.h>
 
-@interface Streethawk ()
+@interface Streethawk () <MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) CDVInvokedUrlCommand *callbackCommandForRegisterView;  //remember command to be used for callback
 @property (nonatomic, strong) CDVInvokedUrlCommand *callbackCommandForRawJson;
+@property (nonatomic, strong) CDVInvokedUrlCommand *callbackCommandForPushData;
+@property (nonatomic, strong) CDVInvokedUrlCommand *callbackCommandForPushResult;
 @property (nonatomic, strong) CDVInvokedUrlCommand *callbackCommandForOpenUrl;
+@property (nonatomic, strong) CDVInvokedUrlCommand *callbackCommandForNewFeeds;
+@property (nonatomic, strong) CDVInvokedUrlCommand *callbackCommandForFetchFeeds;
+@property (nonatomic, strong) NSMutableDictionary *dictPushMsgHandler; //remember msg and click handler, to continue between `- (BOOL)onReceive:(PushDataForApplication *)pushData clickButton:(ClickButtonHandler)handler` and `sendPushResult`.
 
 @end
 
@@ -36,6 +42,7 @@
     [StreetHawk registerInstallForApp:nil/*read from Info.plist APP_KEY*/ withDebugMode:StreetHawk.isDebugMode withiTunesId:StreetHawk.itunesAppId];
     [StreetHawk shPGHtmlReceiver:self]; //register as html page load observer.
     [StreetHawk shSetCustomiseHandler:self]; //register as customise handler.
+    self.dictPushMsgHandler = [NSMutableDictionary dictionary];
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
@@ -205,7 +212,7 @@
         {
             NSString *title = command.arguments[0];
             NSString *message = command.arguments[1];
-            [StreetHawk shFeedback:nil needInputDialog:NO needConfirmDialog:NO withTitle:title withMessage:message withPushMsgid:0 withPushData:nil];
+            [StreetHawk shFeedback:nil needInputDialog:NO needConfirmDialog:NO withTitle:title withMessage:message withPushData:nil];
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         }
         else
@@ -292,6 +299,52 @@
     self.callbackCommandForRawJson = command;  //remember this command to be used when 8049 push json
 }
 
+- (void)registerPushDataCallback:(CDVInvokedUrlCommand *)command
+{
+    self.callbackCommandForPushData = command;
+}
+
+- (void)sendPushResult:(CDVInvokedUrlCommand *)command
+{
+    CDVPluginResult *pluginResult = nil;
+    if (command.arguments.count == 2)
+    {
+        if ([command.arguments[0] isKindOfClass:[NSNumber class]] && [command.arguments[1] isKindOfClass:[NSNumber class]])
+        {
+            NSInteger msgId = [command.arguments[0] integerValue];
+            NSInteger pushResult = [command.arguments[1] integerValue];
+            if (pushResult < 0  || pushResult > 2)
+            {
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Push result should be: 0 for accept, 1 for postpone, 2 for decline."];
+            }
+            else
+            {
+                NSAssert([self.dictPushMsgHandler.allKeys containsObject:@(msgId)], @"Cannot find msgid %ld match.", msgId);
+                if ([self.dictPushMsgHandler.allKeys containsObject:@(msgId)])
+                {
+                    ClickButtonHandler handler = self.dictPushMsgHandler[@(msgId)];
+                    handler((SHResult)pushResult);
+                }
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+            }
+        }
+        else
+        {
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Parameters expect [int_msgid, int_pushresult]."];
+        }
+    }
+    else
+    {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Wrong number of parameters, expect 2."];
+    }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)registerPushResultCallback:(CDVInvokedUrlCommand *)command
+{
+    self.callbackCommandForPushResult = command;
+}
+
 - (void)shDeeplinking:(CDVInvokedUrlCommand *)command
 {
     self.callbackCommandForOpenUrl = command; //remember this command to be used when open url happen
@@ -303,6 +356,145 @@
             [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackCommandForOpenUrl.callbackId];
         }
     };
+}
+
+- (void)notifyNewFeedCallback:(CDVInvokedUrlCommand *)command
+{
+    self.callbackCommandForNewFeeds = command;
+    StreetHawk.newFeedHandler = ^()
+    {
+        if (self.callbackCommandForNewFeeds != nil)
+        {
+            CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackCommandForNewFeeds.callbackId];
+        }
+    };
+}
+
+- (void)registerFeedItemCallback:(CDVInvokedUrlCommand *)command
+{
+    self.callbackCommandForFetchFeeds = command;
+}
+
+- (void)shGetFeedDataFromServer:(CDVInvokedUrlCommand *)command
+{
+    CDVPluginResult *pluginResult = nil;
+    if (command.arguments.count == 1)
+    {
+        if ([command.arguments[0] isKindOfClass:[NSNumber class]])
+        {
+            NSInteger offset = [command.arguments[0] integerValue];
+            [StreetHawk feed:offset withHandler:^(NSArray *arrayFeeds, NSError *error)
+            {
+                if (self.callbackCommandForFetchFeeds)
+                {
+                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:arrayFeeds];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackCommandForFetchFeeds.callbackId];
+                }
+            }];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        }
+        else
+        {
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Parameters expect [int_offset]."];
+        }
+    }
+    else
+    {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Wrong number of parameters, expect 1."];
+    }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)shReportFeedRead:(CDVInvokedUrlCommand *)command
+{
+    CDVPluginResult *pluginResult = nil;
+    if (command.arguments.count == 2)
+    {
+        if ([command.arguments[0] isKindOfClass:[NSNumber class]] && [command.arguments[1] isKindOfClass:[NSNumber class]])
+        {
+            NSInteger feedId = [command.arguments[0] integerValue];
+            NSInteger feedResult = [command.arguments[1] integerValue];
+            if (feedResult < 0  || feedResult > 2)
+            {
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Feed result should be: 0 for accept, 1 for postpone, 2 for decline."];
+            }
+            else
+            {
+                [StreetHawk sendLogForFeed:feedId withResult:(SHResult)feedResult];
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+            }
+        }
+        else
+        {
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Parameters expect [int_feedid, int_feedresult]."];
+        }
+    }
+    else
+    {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Wrong number of parameters, expect 2."];
+    }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)InviteFriendsToDownloadApplication:(CDVInvokedUrlCommand *)command
+{
+    CDVPluginResult *pluginResult = nil;
+    if (command.arguments.count == 4)
+    {
+        if ([command.arguments[0] isKindOfClass:[NSString class]] && [command.arguments[1] isKindOfClass:[NSString class]] && [command.arguments[2] isKindOfClass:[NSString class]] && [command.arguments[3] isKindOfClass:[NSString class]])
+        {
+            NSString *campaign = command.arguments[0];
+            NSString *deeplinking = command.arguments[1];
+            NSString *emailTitle = command.arguments[2];
+            NSString *emailBody = command.arguments[3];
+            NSURL *deeplinkingUrl = nil;
+            if (deeplinking != nil && deeplinking.length > 0)
+            {
+                deeplinkingUrl = [NSURL URLWithString:deeplinking];
+                if (deeplinkingUrl == nil)
+                {
+                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Command 2 is not valid url format, correct it or set empty."];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                    return;
+                }
+            }
+            [StreetHawk originateShareWithCampaign:campaign deepLinkingUrl:deeplinkingUrl handler:^(id result, NSError *error)
+             {
+                 presentErrorAlert(error, YES);
+                 if (error == nil)
+                 {
+                     dispatch_async(dispatch_get_main_queue(), ^
+                        {
+                            NSString *shareUrl = result;
+                            if ([MFMailComposeViewController canSendMail])
+                            {
+                                MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+                                mc.mailComposeDelegate = self;
+                                [mc setMessageBody:[NSString stringWithFormat:@"%@\n\n%@", emailBody, shareUrl] isHTML:NO];
+                                [mc setSubject:emailTitle];
+                                [[UIApplication sharedApplication].windows[0] presentViewController:mc animated:YES completion:nil];
+                            }
+                            else
+                            {
+                                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"share_guid_url" message:shareUrl delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+                                [alert show];
+                            }
+                        });
+                 }
+             }];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        }
+        else
+        {
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Parameters expect [campaign_string, deeplinkUrl_string, emailSubject_string, emailBody_string]."];
+        }
+    }
+    else
+    {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Wrong number of parameters, expect 4."];
+    }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 #pragma mark - properties
@@ -505,7 +697,25 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+- (void)shGetAppKey:(CDVInvokedUrlCommand *)command
+{
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:StreetHawk.appKey];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
 #pragma mark - none iOS implementation
+
+- (void)sendLogForTagUser:(CDVInvokedUrlCommand *)command
+{
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)shSetManualLocation:(CDVInvokedUrlCommand *)command
+{
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
 
 - (void)shOnResume:(CDVInvokedUrlCommand *)command
 {
@@ -514,6 +724,12 @@
 }
 
 - (void)shOnPause:(CDVInvokedUrlCommand *)command
+{
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)setUseCustomDialog:(CDVInvokedUrlCommand *)command
 {
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
@@ -549,6 +765,12 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+- (void)forcePushToNotificationBar:(CDVInvokedUrlCommand *)command
+{
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
 #pragma mark - override
 
 - (void)shPGDisplayHtmlFileName:(NSString *)html_fileName
@@ -566,11 +788,65 @@
     if (self.callbackCommandForRawJson != nil)
     {
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        dict[@"title"] = title;
-        dict[@"message"] = message;
-        dict[@"json"] = json;
+        dict[@"title"] = NONULL(title);
+        dict[@"message"] = NONULL(message);
+        dict[@"json"] = NONULL(json);
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackCommandForRawJson.callbackId];
+    }
+}
+
+- (BOOL)onReceive:(PushDataForApplication *)pushData clickButton:(ClickButtonHandler)handler
+{
+    if (self.callbackCommandForPushData != nil)
+    {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        dict[@"action"] = @(pushData.action);
+        dict[@"msgid"] = @(pushData.msgID);
+        dict[@"title"] = NONULL(pushData.title);
+        dict[@"message"] = NONULL(pushData.message);
+        dict[@"data"] = NONULL(pushData.data.description);
+        dict[@"portion"] = @(pushData.portion);
+        dict[@"orientation"] = @(pushData.orientation);
+        dict[@"speed"] = @(pushData.speed);
+        dict[@"sound"] = NONULL(pushData.sound);
+        dict[@"badge"] = @(pushData.badge);
+        dict[@"displaywihtoutdialog"] = @(pushData.displayWithoutDialog);
+        //insert into memory cache
+        if (handler)
+        {
+            NSAssert(![self.dictPushMsgHandler.allKeys containsObject:@(pushData.msgID)], @"msg id %ld is inside cache.", pushData.msgID);
+            if (![self.dictPushMsgHandler.allKeys containsObject:@(pushData.msgID)])
+            {
+                [self.dictPushMsgHandler setObject:handler forKey:@(pushData.msgID)];
+            }
+        }
+        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackCommandForPushData.callbackId];
+        return YES; //not able to get return value from js, so once implement `registerPushDataCallback` all confirm dialog use js, not like native sdk which can override some and leave others not affected.
+    }
+    return NO;
+}
+
+- (void)onReceiveResult:(PushDataForApplication *)pushData withResult:(SHResult)result
+{
+    if (self.callbackCommandForPushResult != nil)
+    {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        dict[@"result"] = @(result);
+        dict[@"action"] = @(pushData.action);
+        dict[@"msgid"] = @(pushData.msgID);
+        dict[@"title"] = NONULL(pushData.title);
+        dict[@"message"] = NONULL(pushData.message);
+        dict[@"data"] = NONULL(pushData.data.description);
+        dict[@"portion"] = @(pushData.portion);
+        dict[@"orientation"] = @(pushData.orientation);
+        dict[@"speed"] = @(pushData.speed);
+        dict[@"sound"] = NONULL(pushData.sound);
+        dict[@"badge"] = @(pushData.badge);
+        dict[@"displaywihtoutdialog"] = @(pushData.displayWithoutDialog);
+        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackCommandForPushResult.callbackId];
     }
 }
 
