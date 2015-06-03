@@ -324,6 +324,7 @@
                 {
                     ClickButtonHandler handler = self.dictPushMsgHandler[@(msgId)];
                     handler((SHResult)pushResult);
+                    [self.dictPushMsgHandler removeObjectForKey:@(msgId)];
                 }
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
             }
@@ -353,6 +354,7 @@
         if (self.callbackCommandForOpenUrl != nil)
         {
             CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:openUrl.absoluteString];
+            [pluginResult setKeepCallbackAsBool:YES];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackCommandForOpenUrl.callbackId];
         }
     };
@@ -366,6 +368,7 @@
         if (self.callbackCommandForNewFeeds != nil)
         {
             CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+            [pluginResult setKeepCallbackAsBool:YES];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackCommandForNewFeeds.callbackId];
         }
     };
@@ -389,6 +392,7 @@
                 if (self.callbackCommandForFetchFeeds)
                 {
                     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:arrayFeeds];
+                    [pluginResult setKeepCallbackAsBool:YES];
                     [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackCommandForFetchFeeds.callbackId];
                 }
             }];
@@ -779,6 +783,7 @@
     if (self.callbackCommandForRegisterView != nil)
     {
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:html_fileName];
+        [pluginResult setKeepCallbackAsBool:YES];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackCommandForRegisterView.callbackId];
     }
 }
@@ -792,6 +797,7 @@
         dict[@"message"] = NONULL(message);
         dict[@"json"] = NONULL(json);
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];
+        [pluginResult setKeepCallbackAsBool:YES];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackCommandForRawJson.callbackId];
     }
 }
@@ -822,6 +828,7 @@
             }
         }
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];
+        [pluginResult setKeepCallbackAsBool:YES];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackCommandForPushData.callbackId];
         return YES; //not able to get return value from js, so once implement `registerPushDataCallback` all confirm dialog use js, not like native sdk which can override some and leave others not affected.
     }
@@ -846,6 +853,7 @@
         dict[@"badge"] = @(pushData.badge);
         dict[@"displaywihtoutdialog"] = @(pushData.displayWithoutDialog);
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];
+        [pluginResult setKeepCallbackAsBool:YES];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackCommandForPushResult.callbackId];
     }
 }
