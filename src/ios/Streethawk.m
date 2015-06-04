@@ -477,7 +477,8 @@
                                 mc.mailComposeDelegate = self;
                                 [mc setMessageBody:[NSString stringWithFormat:@"%@\n\n%@", emailBody, shareUrl] isHTML:NO];
                                 [mc setSubject:emailTitle];
-                                [[UIApplication sharedApplication].windows[0] presentViewController:mc animated:YES completion:nil];
+                                UIWindow *window = [UIApplication sharedApplication].windows[0];
+                                [window.rootViewController presentViewController:mc animated:YES completion:nil];
                             }
                             else
                             {
