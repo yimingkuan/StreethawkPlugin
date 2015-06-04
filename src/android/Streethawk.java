@@ -13,9 +13,10 @@ import android.util.Log;
 import android.content.Intent;
 import org.apache.cordova.CordovaActivity;
 import com.streethawk.library.PushDataForApplication;
+import com.streethawk.library.IStreetHawkGrowth;
 
 
-public class Streethawk extends CordovaPlugin implements ISHObserver,ISHFeedItemObserver {
+public class Streethawk extends CordovaPlugin implements ISHObserver,ISHFeedItemObserver,IStreetHawkGrowth{
 
     private CallbackContext mSHCallbackContext;
 	private int mCallBackID  = 0;
@@ -23,6 +24,8 @@ public class Streethawk extends CordovaPlugin implements ISHObserver,ISHFeedItem
     private CallbackContext mPushDataCallback;
     private CallbackContext mPushResultCallback;
     private CallbackContext mFeedItemCallback;
+    private CallbackContext mNotifyNewFeedCallback;
+   private CallbackContext mShareUrlCallBack;
     
     
     private final String ACTION 		= "action";
@@ -135,7 +138,7 @@ public class Streethawk extends CordovaPlugin implements ISHObserver,ISHFeedItem
 		if(action.equals("shRegisterViewCallback")){
 			this.mSHCallbackContext = callbackContext;
 			return true;
-		}
+		}	
 		if(action.equals("shDeeplinking")){
 			processDeeplinkRequest(callbackContext);
 			return true;
@@ -144,8 +147,8 @@ public class Streethawk extends CordovaPlugin implements ISHObserver,ISHFeedItem
 			this.shRawJsonCallback = callbackContext;
 			return true;
 		}
-        if(action.equals("registerPushResultCallback")){
-            this.mPushResultCallback = callbackContext;
+        if(action.equals("getShareUrlForAppDownload,")){
+            this.mShareUrlCallBack = callbackContext;
             return true;
         }
         if(action.equals("registerPushDataCallback")){
@@ -154,6 +157,10 @@ public class Streethawk extends CordovaPlugin implements ISHObserver,ISHFeedItem
         }
         if(action.equals("registerFeedItemCallback")){
             this.mFeedItemCallback = callbackContext;
+            return true;
+        }
+        if(action.equals("notifyNewFeedCallback")){
+            this.mNotifyNewFeedCallback = callbackContext;
             return true;
         }
 		if(action.equals("shGetViewName")){
@@ -196,7 +203,6 @@ public class Streethawk extends CordovaPlugin implements ISHObserver,ISHFeedItem
 		if(action.equals("shGetFeedDataFromServer")){
 			return shGetFeedDataFromServer(args);
 		}
-			
         return false;
     }
     private boolean streethawkInit(){
@@ -401,7 +407,6 @@ public class Streethawk extends CordovaPlugin implements ISHObserver,ISHFeedItem
         callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, url));
     }
     
-    
     @Override
 	public void shNotifyAppPage(String html_fileName) {
     	if(null!=this.mSHCallbackContext){
@@ -480,6 +485,14 @@ public class Streethawk extends CordovaPlugin implements ISHObserver,ISHFeedItem
     	}
     	}
     	@Override
+    	public void notifyNewFeed(){
+    	if(null!=this.mNotifyNewFeedCallback){
+    		PluginResult result = new PluginResult(PluginResult.Status.OK);
+    		result.setKeepCallback(true);
+    		this.mNotifyNewFeedCallback.sendPluginResult(result);
+    		}
+    	 }
+    	@Override
     	public void shFeedReceived(JSONArray value){
     	if(null!=this.mFeedItemCallback){
     		PluginResult result = new PluginResult(PluginResult.Status.OK,value);
@@ -487,4 +500,20 @@ public class Streethawk extends CordovaPlugin implements ISHObserver,ISHFeedItem
     		this.mFeedItemCallback.sendPluginResult(result);
     		}
     	 }
+    	@Override
+        public void onReceiveShareUrl(String shareUrl) {
+    	  if(null!=this.mShareUrlCallBack){
+    		PluginResult result = new PluginResult(PluginResult.Status.OK,shareUrl);
+    		result.setKeepCallback(true);
+    		this.mFeedItemCallback.sendPluginResult(result);
+    		}
+    	  }
+  		@Override
+        public void onReceiveErrorForShareUrl(JSONObject errorResponse){
+  		  if(null!=this.mShareUrlCallBack){
+    		PluginResult result = new PluginResult(PluginResult.Status.OK,errorResponse);
+    		result.setKeepCallback(true);
+    		this.mFeedItemCallback.sendPluginResult(result);
+    		}
+  		  }    	  
 }
