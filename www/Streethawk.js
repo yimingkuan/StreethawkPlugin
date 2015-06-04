@@ -17,7 +17,7 @@
 
 /**
  * Javascript interface for Streethawk library.
- * Online document http://api.streethawk.com/v1/docs/phonegap-introduction.html
+ * Online document https://streethawk.freshdesk.com/solution/categories/5000158959/folders/5000254780
  */
 
 var exec = require('cordova/exec');
@@ -192,28 +192,36 @@ SHLibrary.prototype.shDeeplinking = function(appSuccess,appFail) {
 SHLibrary.prototype.pushResultCallback = function(appSuccess,appFail) {
     exec(appSuccess,appFail, 'Streethawk', 'registerPushResultCallback', []);
 }
+
 SHLibrary.prototype.pushDataCallback = function(appSuccess,appFail) {
     exec(appSuccess,appFail, 'Streethawk', 'registerPushDataCallback', []);
 }
+
 SHLibrary.prototype.feedItemCallback = function(appSuccess,appFail) {
     exec(appSuccess,appFail, 'Streethawk', 'registerFeedItemCallback', []);
 }
+
 SHLibrary.prototype.reportFeedRead = function(int_feedid,int_result) {
     exec(success,fail, 'Streethawk', 'shReportFeedRead', [int_feedid, int_result]);
 }
+
 SHLibrary.prototype.sendPushResult = function(String_msgId,int_result) {
     exec(success,fail, 'Streethawk', 'sendPushResult', [String_msgId, int_result]);
 }
+
 SHLibrary.prototype.InviteFriendsToDownloadApplication = function(String_ID,String_deeplinkUrl,String_EmailSubject,String_EmailBody) {
     exec(success,fail, 'Streethawk', 'InviteFriendsToDownloadApplication', [String_ID,String_deeplinkUrl,String_EmailSubject,String_EmailBody]);
 }
+
 SHLibrary.prototype.forcePushToNotificationBar = function(bool_status) {
     exec(success,fail, 'Streethawk', 'forcePushToNotificationBar', [bool_status]);
 }
+
 SHLibrary.prototype.shGetFeedDataFromServer = function(int_offset) {
     exec(success,fail, 'Streethawk', 'shGetFeedDataFromServer', [int_offset]);
 }
-SHLibrary.prototype.notifyNewFeedCallback = function(int_offset) {
+
+SHLibrary.prototype.notifyNewFeedCallback = function() {
     exec(success,fail, 'Streethawk', 'notifyNewFeedCallback', []);
 }
 

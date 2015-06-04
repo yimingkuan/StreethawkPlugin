@@ -74,12 +74,12 @@
 - (void)shCustomActivityList:(CDVInvokedUrlCommand *)command;
 
 /**
- * Get stored view name for push 8004, this is used for App launches and check whether a 8004 push notification occured. If this App is waken up by 8004 push notification, the view name is stored locally and read by this function, so that App knows a specific page should be loaded.
+ * Get stored view name for launching page notification, this is used for App launches and check whether a 8004 push notification occured. If this App is waken up by 8004 push notification, the view name is stored locally and read by this function, so that App knows a specific page should be loaded.
  */
 - (void)shGetViewName:(CDVInvokedUrlCommand *)command;
 
 /**
- * Callback for directing to page when 8004 happen and App in FG.
+ * Callback for launching page notification. Callback get a string for `html_fileName`.
  */
 - (void)shRegisterViewCallback:(CDVInvokedUrlCommand *)command;
 
