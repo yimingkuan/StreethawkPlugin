@@ -132,7 +132,12 @@
 - (void)shReportFeedRead:(CDVInvokedUrlCommand *)command;
 
 /**
- * Get Pointzi link to invite friend, if email is available send by email, otherwise show a message alert. Command argument is [campaign_string, deeplinkUrl_string, emailSubject_string, emailBody_string].
+ * Callback when `InviteFriendsToDownloadApplication:` get share url. Callback get share url.
+ */
+- (void)getShareUrlForAppDownload:(CDVInvokedUrlCommand *)command;
+
+/**
+ * Get Pointzi link to invite friend. If `getShareUrlForAppDownload` is setup, return share url to `getShareUrlForAppDownload` and let customer App to perform share action; otherwise if email is available send by email, otherwise show a message alert. Command argument is [campaign_string, deeplinkUrl_string, emailSubject_string, emailBody_string].
  */
 - (void)InviteFriendsToDownloadApplication:(CDVInvokedUrlCommand *)command;
 

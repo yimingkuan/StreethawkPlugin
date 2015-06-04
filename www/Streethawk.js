@@ -220,15 +220,13 @@ SHLibrary.prototype.forcePushToNotificationBar = function(bool_status) {
 SHLibrary.prototype.shGetFeedDataFromServer = function(int_offset) {
     exec(success,fail, 'Streethawk', 'shGetFeedDataFromServer', [int_offset]);
 }
-SHLibrary.prototype.notifyNewFeedCallback = function(appSuccess,appFail) {
+
+SHLibrary.prototype.notifyNewFeedCallback = function(appSuccess, appFail) {
     exec(appSuccess,appFail, 'Streethawk', 'notifyNewFeedCallback', []);
 }
-SHLibrary.prototype.getShareUrlForAppDownload = function(appSuccess,appFail) {
-    exec(appSuccess,appFail, 'Streethawk', 'getShareUrlForAppDownload', []);
-}
 
-SHLibrary.prototype.notifyNewFeedCallback = function() {
-    exec(success,fail, 'Streethawk', 'notifyNewFeedCallback', []);
+SHLibrary.prototype.getShareUrlForAppDownload = function(appSuccess, appFail) {
+    exec(appSuccess,appFail, 'Streethawk', 'getShareUrlForAppDownload', []);
 }
 
 var myplugin = new SHLibrary();
