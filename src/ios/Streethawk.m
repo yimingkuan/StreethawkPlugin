@@ -859,4 +859,14 @@
     }
 }
 
+#pragma mark - MFMailComposeViewControllerDelegate
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    if (!error)
+    {
+        [controller dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
 @end
