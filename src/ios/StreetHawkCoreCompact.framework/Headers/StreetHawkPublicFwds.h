@@ -50,6 +50,7 @@
 
 //NotificationHandler
 @class          SHNotificationHandler;
+@class          PushDataForApplication;
 
 //Object
 @class          SHObject;
@@ -61,6 +62,7 @@
 @class          SHRequest;
 
 //UI
+@class          SHActionSheet;
 @class          SHAlertSettingsViewController;
 @class          SHAlertView;
 @class          SHBaseTableViewController;

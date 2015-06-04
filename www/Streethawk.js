@@ -17,7 +17,7 @@
 
 /**
  * Javascript interface for Streethawk library.
- * Online document http://api.streethawk.com/v1/docs/phonegap-introduction.html
+ * Online document https://streethawk.freshdesk.com/solution/categories/5000158959/folders/5000254780
  */
 
 var exec = require('cordova/exec');
@@ -25,7 +25,6 @@ var SHLibrary = function() {};
 
 var success = function(){}
 var fail = function(){}
-
 
 var streethawkTags = {
     'sh_email' 			:	'sh_email',             
@@ -40,11 +39,11 @@ var streethawkTags = {
 
 SHLibrary.prototype.streethawkinit = function() {
     exec(success, fail, 'Streethawk', 'streethawkinit', []);
-    document.addEventListener("resume",function(){
-    exec(success, fail, 'Streethawk', 'shOnResume', []);
+    document.addEventListener("resume", function() {
+        exec(success, fail, 'Streethawk', 'shOnResume', []);
     }, false);
-	document.addEventListener("pause",function(){
-    exec(success, fail, 'Streethawk', 'shOnPause', []);
+	document.addEventListener("pause",function() {
+        exec(success, fail, 'Streethawk', 'shOnPause', []);
     }, false);
     
 }
@@ -125,10 +124,6 @@ SHLibrary.prototype.shSetDefaultLocationSupport = function(bool_enable) {
     exec(success, fail, 'Streethawk', 'shSetDefaultLocationSupport', [bool_enable]);
 }
 
-SHLibrary.prototype.setUseCustomDialog = function(bool_enable) {
-    exec(success, fail, 'Streethawk', 'setUseCustomDialog', [bool_enable]);
-}
-
 SHLibrary.prototype.shSetIsUseLocation = function(bool_enable) {
     exec(success, fail, 'Streethawk', 'shSetIsUseLocation', [bool_enable]);
 }
@@ -136,9 +131,9 @@ SHLibrary.prototype.shSetIsUseLocation = function(bool_enable) {
 SHLibrary.prototype.shIsUseLocation = function(appSuccess,appFail) {
     exec(appSuccess,appFail,'Streethawk', 'shIsUseLocation', []);
 }
-
-SHLibrary.prototype.shSetAlertSetting = function(int_pauseMinutes) {
-    exec(success, fail, 'Streethawk', 'shSetAlertSetting', [int_pauseMinutes]);
+               
+SHLibrary.prototype.setUseCustomDialog = function(bool_enable) {
+    exec(success, fail, 'Streethawk', 'setUseCustomDialog', [bool_enable]);
 }
 
 SHLibrary.prototype.shEnterBeacon = function(string_uuid,int_majorNo,int_minorNo,double_distance) {
@@ -152,14 +147,17 @@ SHLibrary.prototype.shExitBeacon = function(string_uuid,int_majorNo,int_minorNo)
 SHLibrary.prototype.shSetBeaconSupport = function(bool_enable) {
     exec(success, fail, 'Streethawk', 'shSetBeaconSupport', [bool_enable]);
 }
+               
+SHLibrary.prototype.shSetAlertSetting = function(int_pauseMinutes) {
+    exec(success, fail, 'Streethawk', 'shSetAlertSetting', [int_pauseMinutes]);
+}
 
-
-SHLibrary.prototype.shAlertSettings = function(appSuccess,appFail) {
+SHLibrary.prototype.shAlertSettings = function(appSuccess, appFail) {
     exec(appSuccess,appFail,'Streethawk', 'shAlertSettings', []);
 }
 
-SHLibrary.prototype.shGetViewName = function(appSuccess,appFail){
-	exec(appSuccess,appFail,'Streethawk','shGetViewName',[]);
+SHLibrary.prototype.shGetViewName = function(appSuccess, appFail){
+	exec(appSuccess,appFail,'Streethawk', 'shGetViewName',[]);
     return true;
 }
 
@@ -167,7 +165,7 @@ SHLibrary.prototype.shRegisterViewCallback = function(appSuccess,appFail) {
     exec(appSuccess,appFail, 'Streethawk', 'shRegisterViewCallback', []);
 }
 
-SHLibrary.prototype.shRawJsonCallback = function(appSuccess,appFail) {
+SHLibrary.prototype.shRawJsonCallback = function(appSuccess, appFail) {
     exec(appSuccess,appFail, 'Streethawk', 'shRawJsonCallback', []);
 }
 
@@ -186,6 +184,7 @@ SHLibrary.prototype.shSetGcmSenderId = function(string_senderKey) {
 SHLibrary.prototype.shGetAppKey = function(appSuccess,appFail) {
     exec(appSuccess,appFail,'Streethawk', 'shGetAppKey', []);
 }
+
 SHLibrary.prototype.shDeeplinking = function(appSuccess,appFail) {
     exec(appSuccess,appFail,'Streethawk', 'shDeeplinking', []);
 }
@@ -193,24 +192,31 @@ SHLibrary.prototype.shDeeplinking = function(appSuccess,appFail) {
 SHLibrary.prototype.pushResultCallback = function(appSuccess,appFail) {
     exec(appSuccess,appFail, 'Streethawk', 'registerPushResultCallback', []);
 }
+
 SHLibrary.prototype.pushDataCallback = function(appSuccess,appFail) {
     exec(appSuccess,appFail, 'Streethawk', 'registerPushDataCallback', []);
 }
+
 SHLibrary.prototype.feedItemCallback = function(appSuccess,appFail) {
     exec(appSuccess,appFail, 'Streethawk', 'registerFeedItemCallback', []);
 }
+
 SHLibrary.prototype.reportFeedRead = function(int_feedid,int_result) {
     exec(success,fail, 'Streethawk', 'shReportFeedRead', [int_feedid, int_result]);
 }
+
 SHLibrary.prototype.sendPushResult = function(String_msgId,int_result) {
     exec(success,fail, 'Streethawk', 'sendPushResult', [String_msgId, int_result]);
 }
+
 SHLibrary.prototype.InviteFriendsToDownloadApplication = function(String_ID,String_deeplinkUrl,String_EmailSubject,String_EmailBody) {
     exec(success,fail, 'Streethawk', 'InviteFriendsToDownloadApplication', [String_ID,String_deeplinkUrl,String_EmailSubject,String_EmailBody]);
 }
+
 SHLibrary.prototype.forcePushToNotificationBar = function(bool_status) {
     exec(success,fail, 'Streethawk', 'forcePushToNotificationBar', [bool_status]);
 }
+
 SHLibrary.prototype.shGetFeedDataFromServer = function(int_offset) {
     exec(success,fail, 'Streethawk', 'shGetFeedDataFromServer', [int_offset]);
 }
@@ -219,6 +225,10 @@ SHLibrary.prototype.notifyNewFeedCallback = function(appSuccess,appFail) {
 }
 SHLibrary.prototype.getShareUrlForAppDownload = function(appSuccess,appFail) {
     exec(appSuccess,appFail, 'Streethawk', 'getShareUrlForAppDownload', []);
+}
+
+SHLibrary.prototype.notifyNewFeedCallback = function() {
+    exec(success,fail, 'Streethawk', 'notifyNewFeedCallback', []);
 }
 
 var myplugin = new SHLibrary();

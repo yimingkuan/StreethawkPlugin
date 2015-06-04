@@ -1,3 +1,32 @@
+Version Number   : 1/1.6.0
+Release Date     : 29-May-2015
+Notes:
+1. Implement new loglines to /v2, Install 1/1.6.0 SDK do fresh new install.
+2. Install update add feature flags, indicating location, notification and iBeacon.
+3. Add battery and memory level in crash reports. 
+4. Add API for accept `advertising identifier` and send it to install/update.
+5. Put multiple feedback in queue if a lot of feedback happen at same time.
+6. Handle custom confirm dialog in notification.
+7. Handle sequence action after notification make decision.
+8. View enter/exit consider canceled pop up.
+9. Tag function return BOOL to indicate succeed or fail.
+10. Re-implement smart push.
+11. Implement emoji conversion.
+12. iBeacon multiple device in same UUID.
+13. Pointzi integration.
+------------------------------------------------------------------------
+Version Number   : 1/1.5.5
+Release Date     : 25-April-2015
+Notes:
+1. Add scroll label to display 8000 title and message. It will scroll on demand.
+2. Avoid send request in case StreetHawk is disabled. 
+3. Remove API of sending manual location.
+4. Customer category can have same identifier to override StreetHawk predefined category.
+5. Feedback with long option list can scroll.
+6. Fix location permission not promote in case user install and not launch for more than half an hour.
+7. Delay post application did finish launch notification for platforms get StreetHawk ready later.
+8. Hard code development platform in SDK.
+------------------------------------------------------------------------
 Version Number   : 1/1.5.4
 Release Date     : 23-March-2015
 Notes:
