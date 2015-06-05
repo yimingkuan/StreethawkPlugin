@@ -23,18 +23,18 @@
  */
 enum SHAction
 {
-    SHAction_OpenUrl,
-    SHAction_LaunchActivity,
-    SHAction_RateApp,
-    SHAction_UserRegistrationScreen,
-    SHAction_UserLoginScreen,
-    SHAction_UpdateApp,
-    SHAction_CallTelephone,
-    SHAction_SimplePrompt,
-    SHAction_Feedback,
-    SHAction_EnableBluetooth,
-    SHAction_EnablePushMsg,
-    SHAction_EnableLocation,
+    SHAction_OpenUrl = 1,
+    SHAction_LaunchActivity = 2,
+    SHAction_RateApp = 3,
+    SHAction_UserRegistrationScreen = 4,
+    SHAction_UserLoginScreen = 5,
+    SHAction_UpdateApp = 6,
+    SHAction_CallTelephone = 7,
+    SHAction_SimplePrompt = 8,
+    SHAction_Feedback = 9,
+    SHAction_EnableBluetooth = 10,
+    SHAction_EnablePushMsg = 11,
+    SHAction_EnableLocation = 12,
     SHAction_CheckAppStatus,
     SHAction_CustomJson,
     SHAction_Undefined,
@@ -49,15 +49,15 @@ enum SHResult
     /**
      Result when click positive button such as "Agree", "Yes Please".
      */
-    SHResult_Accept,
+    SHResult_Accept = 1,
     /**
      Result when click neutral button such as "Later", "Not now".
      */
-    SHResult_Postpone,
+    SHResult_Postpone = 0,
     /**
      Result when click negative button such as "Never", "Cancel".
      */
-    SHResult_Decline,
+    SHResult_Decline = -1,
 };
 typedef enum SHResult SHResult;
 

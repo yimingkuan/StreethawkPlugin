@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Created by Christine XYS    Jan 08, 2014
+ * Created by Christine XYS
  */
 
 #import <Cordova/CDV.h>

@@ -589,7 +589,7 @@ The application version and build version of current Application, formatted as @
  @param url Optional, deeplinking url which will open App by browser link. For example, to open App page with parameter, url like "hawk://launchVC?vC=Deep%20Linking&param1=this%20is%20a%20test&param2=123".
  @param handler Share result callback handler, when successfully share `result` is share_guid_url, otherwise it contains error.
  */
-- (void)originateShareWithCampaign:(NSString*)campaign deepLinkingUrl:(NSURL *)url handler:(SHCallbackHandler)handler;
+- (void)originateShareWithCampaign:(NSString *)campaign deepLinkingUrl:(NSURL *)url handler:(SHCallbackHandler)handler;
 
 /** @name Permission */
 

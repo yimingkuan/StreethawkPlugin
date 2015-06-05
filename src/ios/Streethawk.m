@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Created by Christine XYS    Jan 08, 2014
+ * Created by Christine XYS
  */
 
 #import "Streethawk.h"
@@ -314,9 +314,9 @@
         {
             NSInteger msgId = [command.arguments[0] integerValue];
             NSInteger pushResult = [command.arguments[1] integerValue];
-            if (pushResult < 0  || pushResult > 2)
+            if (pushResult < -1 || pushResult > 1)
             {
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Push result should be: 0 for accept, 1 for postpone, 2 for decline."];
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Push result should be: 1 for accept, 0 for postpone, -1 for decline."];
             }
             else
             {
@@ -420,9 +420,9 @@
         {
             NSInteger feedId = [command.arguments[0] integerValue];
             NSInteger feedResult = [command.arguments[1] integerValue];
-            if (feedResult < 0  || feedResult > 2)
+            if (feedResult < -1 || feedResult > 1)
             {
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Feed result should be: 0 for accept, 1 for postpone, 2 for decline."];
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Feed result should be: 1 for accept, 0 for postpone, -1 for decline."];
             }
             else
             {
