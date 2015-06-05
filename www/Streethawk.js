@@ -225,8 +225,9 @@ SHLibrary.prototype.notifyNewFeedCallback = function(appSuccess, appFail) {
     exec(appSuccess,appFail, 'Streethawk', 'notifyNewFeedCallback', []);
 }
 
-SHLibrary.prototype.getShareUrlForAppDownload = function(appSuccess, appFail) {
-    exec(appSuccess,appFail, 'Streethawk', 'getShareUrlForAppDownload', []);
+SHLibrary.prototype.getShareUrlForAppDownload = function(string_ID,string_shareUrl,appSuccess, appFail) {
+     console.log("Anurag getShareUrlForAppDownload called from js"); 
+    exec(appSuccess,appFail, 'Streethawk', 'getShareUrlForAppDownload', [string_ID,string_shareUrl]);
 }
 
 var myplugin = new SHLibrary();
