@@ -27,49 +27,49 @@
 //////////////////  Functions  ///////////////////////////////////
 
 /**
- * Initialise Streethawk. Command arguement is empty. Before calling this function, make sure following properties are setup correctly, otherwise default value will be used. 
+ * Initialise Streethawk. Command argument is empty. Before calling this function, make sure following properties are setup correctly, otherwise default value will be used.
  * shSetEnableLogs(true/false), by default use false.
  * shSetiTunesId(string_value), by default use null.
  */
 - (void)streethawkinit:(CDVInvokedUrlCommand *)command;
 
 /**
- * Tag numeric for a key. Command arguement is [key_string, number_value];
+ * Tag numeric for a key. Command argument is [key_string, number_value];
  */
 - (void)tagNumeric:(CDVInvokedUrlCommand *)command;
 
 /**
- * Tag string for a key. Command arguement is [key_string, string_value];
+ * Tag string for a key. Command argument is [key_string, string_value];
  */
 - (void)tagString:(CDVInvokedUrlCommand *)command;
 
 /**
- * Tag datetime for a key. Command arguement is [key_string, datetime_value];
+ * Tag datetime for a key. Command argument is [key_string, datetime_value];
  */
 - (void)tagDatetime:(CDVInvokedUrlCommand *)command;
 
 /**
- * Increment tag for a key. Command arguement is [key_string];
+ * Increment tag for a key. Command argument is [key_string];
  */
 - (void)incrementTag:(CDVInvokedUrlCommand *)command;
 
 /**
- * Remove tag for a key. Command arguement is [key_string];
+ * Remove tag for a key. Command argument is [key_string];
  */
 - (void)removeTag:(CDVInvokedUrlCommand *)command;
 
 /**
- * Send log to trace current page is entered. Command arguement is [view_string]. 
+ * Send log to trace current page is entered. Command argument is [view_string]. 
  */
 - (void)currentPage:(CDVInvokedUrlCommand *)command;
 
 /**
- * Send feedback with only title and message to StreetHawk server. Command arguement is [title_string, message_string].
+ * Send feedback with only title and message to StreetHawk server. Command argument is [title_string, message_string].
  */
 - (void)shSendSimpleFeedback:(CDVInvokedUrlCommand *)command;
 
 /**
- * Send custom activity, which defines mapping of [friendly_name: view_name]. Command arguement is array contains an array each is a dictionary, for example [[{SettingsPG:"settings"}, {home:"index"}]].
+ * Send custom activity, which defines mapping of [friendly_name: view_name]. Command argument is array contains an array each is a dictionary, for example [[{SettingsPG:"settings"}, {home:"index"}]].
  */
 - (void)shCustomActivityList:(CDVInvokedUrlCommand *)command;
 
@@ -97,7 +97,7 @@
 - (void)registerPushDataCallback:(CDVInvokedUrlCommand *)command;
 
 /**
- * Continue process after show custom dialog using `- (void)registerPushDataCallback:(CDVInvokedUrlCommand *)command`. Command arguement is [msgid_int, pushresult_enum(0:accept, 1:postpone, 2:decline)].
+ * Continue process after show custom dialog using `- (void)registerPushDataCallback:(CDVInvokedUrlCommand *)command`. Command argument is [msgid_int, pushresult_enum(0:accept, 1:postpone, 2:decline)].
  */
 - (void)sendPushResult:(CDVInvokedUrlCommand *)command;
 
@@ -127,17 +127,17 @@
 - (void)shGetFeedDataFromServer:(CDVInvokedUrlCommand *)command;
 
 /**
- * Send logline to server for feed result. Command arguement is [feedId_int, result_enum(0:accept, 1:postpone, 2:decline)].
+ * Send logline to server for feed result. Command argument is [feedId_int, result_enum(0:accept, 1:postpone, 2:decline)].
  */
 - (void)shReportFeedRead:(CDVInvokedUrlCommand *)command;
 
 /**
- * Callback when `InviteFriendsToDownloadApplication:` get share url. Callback get share url.
+ * Get Pointzi link to invite friend. Command argument is [campaign_string, deeplinkUrl_string], callback get share url if not error, otherwise get error description.
  */
 - (void)getShareUrlForAppDownload:(CDVInvokedUrlCommand *)command;
 
 /**
- * Get Pointzi link to invite friend. If `getShareUrlForAppDownload` is setup, return share url to `getShareUrlForAppDownload` and let customer App to perform share action; otherwise if email is available send by email, otherwise show a message alert. Command argument is [campaign_string, deeplinkUrl_string, emailSubject_string, emailBody_string].
+ * Get Pointzi link to invite friend. If email is available send by email, otherwise show a message alert. Command argument is [campaign_string, deeplinkUrl_string, emailSubject_string, emailBody_string].
  */
 - (void)InviteFriendsToDownloadApplication:(CDVInvokedUrlCommand *)command;
 
@@ -154,7 +154,7 @@
 - (void)getCurrentFormattedDateTime:(CDVInvokedUrlCommand *)command;
 
 /**
- * Set whether enable console log for debugging. Command arguement is [bool_value].
+ * Set whether enable console log for debugging. Command argument is [bool_value].
  */
 - (void)shSetEnableLogs:(CDVInvokedUrlCommand *)command;
 
@@ -164,7 +164,7 @@
 - (void)shEnableLogs:(CDVInvokedUrlCommand *)command;
 
 /**
- * Set iTunes registered App Id. Command arguement is [string_value] like ['507040546'] or [''] or [null] if not register yet.
+ * Set iTunes registered App Id. Command argument is [string_value] like ['507040546'] or [''] or [null] if not register yet.
  */
 - (void)shSetiTunesId:(CDVInvokedUrlCommand *)command;
 
@@ -174,12 +174,12 @@
 - (void)shiTunesId:(CDVInvokedUrlCommand *)command;
 
 /**
- * Set is push notification is enabled by default, set this to false to avoid asking system permission when App launch. Command arguement is [bool_value].
+ * Set is push notification is enabled by default, set this to false to avoid asking system permission when App launch. Command argument is [bool_value].
  */
 - (void)shSetDefaultPushNotificationSupport:(CDVInvokedUrlCommand *)command;
 
 /**
- * Set whether support push notification, set this later to have push notification enabled and ask for permission. Command arguement is [bool_value].
+ * Set whether support push notification, set this later to have push notification enabled and ask for permission. Command argument is [bool_value].
  */
 - (void)shSetIsPushNotificationEnabled:(CDVInvokedUrlCommand *)command;
 
@@ -189,12 +189,12 @@
 - (void)shIsPushNotificationEnabled:(CDVInvokedUrlCommand *)command;
 
 /**
- * Set is location service is enabled by default, set this to false to avoid asking system permission when App launch. Command arguement is [bool_value].
+ * Set is location service is enabled by default, set this to false to avoid asking system permission when App launch. Command argument is [bool_value].
  */
 - (void)shSetDefaultLocationSupport:(CDVInvokedUrlCommand *)command;
 
 /**
- * Set whether enable location service, set this later to have location service enabled and ask for permission. Command arguement is [bool_value].
+ * Set whether enable location service, set this later to have location service enabled and ask for permission. Command argument is [bool_value].
  */
 - (void)shSetIsUseLocation:(CDVInvokedUrlCommand *)command;
 
@@ -204,7 +204,7 @@
 - (void)shIsUseLocation:(CDVInvokedUrlCommand *)command;
 
 /**
- * Set alert settings times measured by minutes. Command arguement is [int_value].
+ * Set alert settings times measured by minutes. Command argument is [int_value].
  */
 - (void)shSetAlertSetting:(CDVInvokedUrlCommand *)command;
 

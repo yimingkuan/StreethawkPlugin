@@ -445,6 +445,55 @@
 - (void)getShareUrlForAppDownload:(CDVInvokedUrlCommand *)command
 {
     self.callbackCommandForShareUrl = command;
+    CDVPluginResult *pluginResult = nil;
+    if (command.arguments.count == 2)
+    {
+        if ([command.arguments[0] isKindOfClass:[NSString class]] && [command.arguments[1] isKindOfClass:[NSString class]])
+        {
+            NSString *campaign = command.arguments[0];
+            NSString *deeplinking = command.arguments[1];
+            NSURL *deeplinkingUrl = nil;
+            if (deeplinking != nil && deeplinking.length > 0)
+            {
+                deeplinkingUrl = [NSURL URLWithString:deeplinking];
+                if (deeplinkingUrl == nil)
+                {
+                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Command 2 is not valid url format, correct it or set empty."];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                    return;
+                }
+            }
+            [StreetHawk originateShareWithCampaign:campaign deepLinkingUrl:deeplinkingUrl handler:^(id result, NSError *error)
+             {
+                 if (self.callbackCommandForShareUrl != nil) //do automatically handling
+                 {
+                     CDVPluginResult *pluginResult = nil;
+                     if (error == nil)
+                     {
+                         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:result];
+                     }
+                     else
+                     {
+                         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:error.localizedDescription];
+                     }
+                     [pluginResult setKeepCallbackAsBool:YES];
+                     [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackCommandForShareUrl.callbackId];
+                 }
+             }];
+        }
+        else
+        {
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Parameters expect [campaign_string, deeplinkUrl_string]."];
+        }
+    }
+    else
+    {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Wrong number of parameters, expect 2."];
+    }
+    if (pluginResult != nil)
+    {
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }
 }
 
 - (void)InviteFriendsToDownloadApplication:(CDVInvokedUrlCommand *)command
@@ -471,44 +520,27 @@
             }
             [StreetHawk originateShareWithCampaign:campaign deepLinkingUrl:deeplinkingUrl handler:^(id result, NSError *error)
              {
-                 if (self.callbackCommandForShareUrl == nil) //do automatically handling
+                 presentErrorAlert(error, YES);
+                 if (error == nil)
                  {
-                     presentErrorAlert(error, YES);
-                     if (error == nil)
-                     {
-                         dispatch_async(dispatch_get_main_queue(), ^
+                     dispatch_async(dispatch_get_main_queue(), ^
+                        {
+                            NSString *shareUrl = result;
+                            if ([MFMailComposeViewController canSendMail])
                             {
-                                NSString *shareUrl = result;
-                                if ([MFMailComposeViewController canSendMail])
-                                {
-                                    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
-                                    mc.mailComposeDelegate = self;
-                                    [mc setMessageBody:[NSString stringWithFormat:@"%@\n\n%@", emailBody, shareUrl] isHTML:NO];
-                                    [mc setSubject:emailTitle];
-                                    UIWindow *window = [UIApplication sharedApplication].windows[0];
-                                    [window.rootViewController presentViewController:mc animated:YES completion:nil];
-                                }
-                                else
-                                {
-                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"share_guid_url" message:shareUrl delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-                                    [alert show];
-                                }
-                            });
-                     }
-                 }
-                 else
-                 {
-                     CDVPluginResult *pluginResult = nil;
-                     if (error == nil)
-                     {
-                         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:result];
-                     }
-                     else
-                     {
-                         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:error.localizedDescription];
-                     }
-                     [pluginResult setKeepCallbackAsBool:YES];
-                     [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackCommandForShareUrl.callbackId];
+                                MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+                                mc.mailComposeDelegate = self;
+                                [mc setMessageBody:[NSString stringWithFormat:@"%@\n\n%@", emailBody, shareUrl] isHTML:NO];
+                                [mc setSubject:emailTitle];
+                                UIWindow *window = [UIApplication sharedApplication].windows[0];
+                                [window.rootViewController presentViewController:mc animated:YES completion:nil];
+                            }
+                            else
+                            {
+                                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"share_guid_url" message:shareUrl delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+                                [alert show];
+                            }
+                        });
                  }
              }];
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];

@@ -226,7 +226,6 @@ SHLibrary.prototype.notifyNewFeedCallback = function(appSuccess, appFail) {
 }
 
 SHLibrary.prototype.getShareUrlForAppDownload = function(string_ID,string_shareUrl,appSuccess, appFail) {
-     console.log("Anurag getShareUrlForAppDownload called from js"); 
     exec(appSuccess,appFail, 'Streethawk', 'getShareUrlForAppDownload', [string_ID,string_shareUrl]);
 }
 
