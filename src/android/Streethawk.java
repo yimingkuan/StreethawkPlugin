@@ -25,8 +25,7 @@ public class Streethawk extends CordovaPlugin implements ISHObserver,ISHFeedItem
     private CallbackContext mPushResultCallback;
     private CallbackContext mFeedItemCallback;
     private CallbackContext mNotifyNewFeedCallback;
-   private CallbackContext mShareUrlCallBack;
-    
+   	private CallbackContext mShareUrlCallBack;
     
     private final String ACTION 		= "action";
     private final String MSGID			= "msgid";
@@ -204,9 +203,18 @@ public class Streethawk extends CordovaPlugin implements ISHObserver,ISHFeedItem
 		if(action.equals("shGetFeedDataFromServer")){
 			return shGetFeedDataFromServer(args);
 		}
+		if(action.equals("setAppKey")){
+			return setAppKey(args);
+		}
 		Log.e(TAG,"Action not found"+action);
         return false;
     }
+    private boolean setAppKey(JSONArray args)throws JSONException{
+    	String appKey = args.getString(0);	
+    	StreetHawk.INSTANCE.setAppKey(appKey);
+    	return true;
+    }
+    
     private boolean streethawkInit(){
         StreetHawk.INSTANCE.registerSHObserver(this);
         StreetHawk.INSTANCE.registerSHFeedItemObserver(this);

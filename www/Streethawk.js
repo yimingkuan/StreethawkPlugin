@@ -38,6 +38,7 @@ var streethawkTags = {
 };
 
 SHLibrary.prototype.streethawkinit = function() {
+    console.log("streethawkinit");
     exec(success, fail, 'Streethawk', 'streethawkinit', []);
     document.addEventListener("resume", function() {
         exec(success, fail, 'Streethawk', 'shOnResume', []);
@@ -228,6 +229,12 @@ SHLibrary.prototype.notifyNewFeedCallback = function(appSuccess, appFail) {
 SHLibrary.prototype.getShareUrlForAppDownload = function(string_ID,string_shareUrl,appSuccess, appFail) {
     exec(appSuccess,appFail, 'Streethawk', 'getShareUrlForAppDownload', [string_ID,string_shareUrl]);
 }
+
+SHLibrary.prototype.setAppKey = function(string_AppKey) {
+	console.log("StreetHawk setAppKey");
+    exec(success, fail, 'Streethawk', 'setAppKey', [string_AppKey]);
+}
+
 
 var myplugin = new SHLibrary();
 module.exports = myplugin;
