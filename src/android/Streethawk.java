@@ -159,6 +159,8 @@ public class Streethawk extends CordovaPlugin implements ISHObserver,ISHFeedItem
             this.mPushResultCallback = callbackContext;
             return true;
         }
+        
+        
         if(action.equals("registerFeedItemCallback")){
             this.mFeedItemCallback = callbackContext;
             return true;
@@ -257,14 +259,14 @@ public class Streethawk extends CordovaPlugin implements ISHObserver,ISHFeedItem
     private boolean shReportFeedRead(JSONArray args)throws JSONException{
         int FeedId = args.getInt(0);	
 		int result = args.getInt(1);
-        StreetHawk.INSTANCE.shReportFeedRead(FeedId,result);
+        StreetHawk.shReportFeedRead(FeedId,result);
         return true;
     }
     
     private boolean sendPushResult(JSONArray args)throws JSONException{
         String msgId = args.getString(0);	
 		int result = args.getInt(1);
-        StreetHawk.INSTANCE.sendPushResult(cordova.getActivity().getApplicationContext(),msgId,result);
+        StreetHawk.sendPushResult(cordova.getActivity().getApplicationContext(),msgId,result);
         return true;
     }
     
