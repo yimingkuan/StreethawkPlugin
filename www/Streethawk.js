@@ -235,6 +235,5 @@ SHLibrary.prototype.setAppKey = function(string_AppKey) {
     exec(success, fail, 'Streethawk', 'setAppKey', [string_AppKey]);
 }
 
-
 var myplugin = new SHLibrary();
 module.exports = myplugin;

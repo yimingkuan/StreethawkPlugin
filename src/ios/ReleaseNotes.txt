@@ -1,3 +1,11 @@
+Version Number   : 1/1.6.1
+Release Date     : 9-June-2015
+Notes:
+1. Pointzi end point update, refine API definition.
+2. Add property to set App Key.
+3. Pointzi implement click increase.
+4. Add API to send feedback title and content without UI.
+------------------------------------------------------------------------
 Version Number   : 1/1.6.0
 Release Date     : 29-May-2015
 Notes:
