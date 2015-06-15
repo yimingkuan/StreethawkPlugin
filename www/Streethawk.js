@@ -230,6 +230,12 @@ SHLibrary.prototype.getShareUrlForAppDownload = function(string_ID,string_shareU
     exec(appSuccess,appFail, 'Streethawk', 'getShareUrlForAppDownload', [string_ID,string_shareUrl]);
 }
 
+SHLibrary.prototype.originateShareWithCampaign = function(string utm_campaign, string shareUrl){
+	exec(appSuccess,appFail, 'Streethawk', 'getShareUrlForAppDownload', [string utm_campaign,string shareUrl]);
+}
+
+
+
 SHLibrary.prototype.setAppKey = function(string_AppKey) {
 	console.log("StreetHawk setAppKey");
     exec(success, fail, 'Streethawk', 'setAppKey', [string_AppKey]);

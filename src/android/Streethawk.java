@@ -155,6 +155,10 @@ public class Streethawk extends CordovaPlugin implements ISHObserver,ISHFeedItem
             this.mPushDataCallback = callbackContext;
             return true;
         }
+        if(action.equals("registerPushResultCallback")){
+            this.mPushResultCallback = callbackContext;
+            return true;
+        }
         if(action.equals("registerFeedItemCallback")){
             this.mFeedItemCallback = callbackContext;
             return true;
