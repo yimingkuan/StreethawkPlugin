@@ -213,12 +213,12 @@
         {
             NSString *title = command.arguments[0];
             NSString *message = command.arguments[1];
-            [StreetHawk shFeedback:nil needInputDialog:NO needConfirmDialog:NO withTitle:title withMessage:message withPushData:nil];
+            [StreetHawk shSendFeedbackWithTitle:title withContent:message withHandler:nil];
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         }
         else
         {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Parameters expects string."];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Parameters expects [title_string, message_string]."];
         }
     }
     else
@@ -463,7 +463,7 @@
                     return;
                 }
             }
-            [StreetHawk originateShareWithCampaign:campaign deepLinkingUrl:deeplinkingUrl handler:^(id result, NSError *error)
+            [StreetHawk originateShareWithCampaign:campaign shareUrl:deeplinkingUrl streetHawkGrowth_object:^(id result, NSError *error)
              {
                  if (self.callbackCommandForShareUrl != nil) //do automatically handling
                  {
@@ -518,7 +518,7 @@
                     return;
                 }
             }
-            [StreetHawk originateShareWithCampaign:campaign deepLinkingUrl:deeplinkingUrl handler:^(id result, NSError *error)
+            [StreetHawk originateShareWithCampaign:campaign shareUrl:deeplinkingUrl streetHawkGrowth_object:^(id result, NSError *error)
              {
                  presentErrorAlert(error, YES);
                  if (error == nil)
@@ -558,6 +558,28 @@
 }
 
 #pragma mark - properties
+
+- (void)setAppKey:(CDVInvokedUrlCommand *)command
+{
+    CDVPluginResult *pluginResult = nil;
+    if (command.arguments.count == 1)
+    {
+        if ([command.arguments[0] isKindOfClass:[NSString class]])
+        {
+            StreetHawk.appKey = command.arguments[0];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        }
+        else
+        {
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Parameters expect [appKey_string]."];
+        }
+    }
+    else
+    {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Wrong number of parameters, expect 1."];
+    }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
 
 - (void)getSHLibraryVersion:(CDVInvokedUrlCommand *)command
 {

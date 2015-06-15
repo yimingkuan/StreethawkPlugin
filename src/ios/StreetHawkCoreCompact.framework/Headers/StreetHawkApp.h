@@ -85,7 +85,10 @@ typedef void (^SHOpenUrlHandler)(NSURL *openUrl);
 
 /**
  Initialize for an Application, setting up the environment.
- @param appKey The global name of the app. This is registered in StreetHawk server, once registered it cannot change.
+ @param appKey The global name of the app. This is registered in StreetHawk server, once registered it cannot change. There are three ways to set `appKey`:
+               1. Set `appKey` by this function.
+               2. If 1 pass nil or empty, check property `StreetHawk.appKey`.
+               3. If 1 and 2 still nill or empty, check InfoPlist `APP_KEY`.
  @param isDebugMode The mode of whether print NSLog in Xcode console.
  @param iTunesId The App id after register in iTunes, for example @"337064413". It used for rating App, if this id is not setup, rating dialog will not promote.
  */
@@ -94,9 +97,9 @@ typedef void (^SHOpenUrlHandler)(NSURL *openUrl);
 /** @name Global properties */
 
 /**
- The allocated name or code for this app as set in the StreetHawk Cloud, for example "SHSheridan1". It's mandatory for an Application to work.
+ The allocated name or code for this app as set in the StreetHawk Cloud, for example "SHSheridan1". It's mandatory for an Application to work. Check `- (void)registerInstallForApp:(NSString *)appKey withDebugMode:(BOOL)isDebugMode withiTunesId:(NSString *)iTunesId` for how it works.
  */
-@property (nonatomic, readonly, weak) NSString *appKey;
+@property (nonatomic, strong) NSString *appKey;
 
 /**
  Set up default host url, it's the starting url. Normally customers does not need to set it, and use "https://api.streethawk.com" as starting url. Some test App can set it be "https://dev.streethawk.com". It's only used for initialise, set this before call `registerInstallForApp:withDebugMode:withiTunesId:`.
@@ -421,7 +424,7 @@ The application version and build version of current Application, formatted as @
 /** @name Global properties and methods */
 
 /**
- API to trigger feedback. It behaves in this way:
+ API to trigger feedback UI and send feedback. It behaves in this way:
  
  * If define option choice list by `arrayChoice`, a choice list will show first, after user select one of the option: a) If `needInput` is Yes, an input UI with the selected choice is displayed for user to input free text; b) If `needInput` is No user's selected choice is posted to server directly.
  * If `arrayChoice` = nil or empty, input free text UI is displayed for user to type.
@@ -434,6 +437,14 @@ The application version and build version of current Application, formatted as @
  @param pushData When used in notification, pass in payload from server. If not used in notification, pass nil.
  */
 - (void)shFeedback:(NSArray *)arrayChoice needInputDialog:(BOOL)needInput needConfirmDialog:(BOOL)needConfirm withTitle:(NSString *)infoTitle withMessage:(NSString *)infoMessage withPushData:(PushDataForApplication *)pushData;
+
+/**
+ Submit feedback request to server without UI.
+ @param title Feedback title submit to server. 
+ @param content Feedback content submit to server. 
+ @param handler Request callback handler.
+ */
+- (void)shSendFeedbackWithTitle:(NSString *)title withContent:(NSString *)content withHandler:(SHCallbackHandler)handler;
 
 /**
  Push notification 8004/8006/8007 is to launch a certain view controller, however it's difficult for server to know "how to launch the view controller". In iOS platform it requires the following elements to initialize a view controller:
@@ -585,11 +596,11 @@ The application version and build version of current Application, formatted as @
 /**
  Call this function to share and invite friend.
  
- @param campaign Optional, for identify how this share is used for. For example in a book App, it would be "Child", "Computer", "Poetry".
- @param url Optional, deeplinking url which will open App by browser link. For example, to open App page with parameter, url like "hawk://launchVC?vC=Deep%20Linking&param1=this%20is%20a%20test&param2=123".
+ @param utm_campaign Optional, for identify how this share is used for. For example in a book App, it would be "Child", "Computer", "Poetry".
+ @param shareUrl Optional, share url which will open App by browser link. For example, to open App page with parameter, url like "hawk://launchVC?vC=Deep%20Linking&param1=this%20is%20a%20test&param2=123".
  @param handler Share result callback handler, when successfully share `result` is share_guid_url, otherwise it contains error.
  */
-- (void)originateShareWithCampaign:(NSString *)campaign deepLinkingUrl:(NSURL *)url handler:(SHCallbackHandler)handler;
+- (void)originateShareWithCampaign:(NSString *)utm_campaign shareUrl:(NSURL *)shareUrl streetHawkGrowth_object:(SHCallbackHandler)handler;
 
 /** @name Permission */
 

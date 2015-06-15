@@ -132,7 +132,7 @@
 - (void)shReportFeedRead:(CDVInvokedUrlCommand *)command;
 
 /**
- * Get Pointzi link to invite friend. Command argument is [campaign_string, deeplinkUrl_string], callback get share url if not error, otherwise get error description.
+ * Get Pointzi link to invite friend. Command argument is [utm_campaign_string, shareUrl_string], callback get share url if not error, otherwise get error description.
  */
 - (void)getShareUrlForAppDownload:(CDVInvokedUrlCommand *)command;
 
@@ -142,6 +142,11 @@
 - (void)InviteFriendsToDownloadApplication:(CDVInvokedUrlCommand *)command;
 
 //////////////////  Properties  ///////////////////////////////////
+
+/**
+ * API to set app key. Command argument is [appKey_string].
+ */
+- (void)setAppKey:(CDVInvokedUrlCommand *)command;
 
 /**
  * Get current Streethawk library version. Command return string like "1/1.3.3".

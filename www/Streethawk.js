@@ -226,21 +226,14 @@ SHLibrary.prototype.notifyNewFeedCallback = function(appSuccess, appFail) {
     exec(appSuccess,appFail, 'Streethawk', 'notifyNewFeedCallback', []);
 }
 
-SHLibrary.prototype.getShareUrlForAppDownload = function(string_ID,string_shareUrl,appSuccess, appFail) {
-    exec(appSuccess,appFail, 'Streethawk', 'getShareUrlForAppDownload', [string_ID,string_shareUrl]);
+SHLibrary.prototype.originateShareWithCampaign = function(string_utm_campaign, string_shareUrl, appSuccess, appFail) {
+	exec(appSuccess,appFail, 'Streethawk', 'getShareUrlForAppDownload', [string_utm_campaign, string_shareUrl]);
 }
-
-SHLibrary.prototype.originateShareWithCampaign = function(string utm_campaign, string shareUrl){
-	exec(appSuccess,appFail, 'Streethawk', 'getShareUrlForAppDownload', [string utm_campaign,string shareUrl]);
-}
-
-
 
 SHLibrary.prototype.setAppKey = function(string_AppKey) {
 	console.log("StreetHawk setAppKey");
     exec(success, fail, 'Streethawk', 'setAppKey', [string_AppKey]);
 }
-
 
 var myplugin = new SHLibrary();
 module.exports = myplugin;

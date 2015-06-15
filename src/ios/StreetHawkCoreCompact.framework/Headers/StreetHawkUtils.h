@@ -251,4 +251,11 @@ extern NSString *developmentPlatformString();
  */
 extern BOOL streetHawkIsEnabled();
 
+/**
+ Utility function to check string is nil or empty.
+ @param str Check the string.
+ @return Return YES if `str` is nil or length = 0; Otherwise return NO.
+ */
+extern BOOL strIsEmpty(NSString *str);
+
 #endif
