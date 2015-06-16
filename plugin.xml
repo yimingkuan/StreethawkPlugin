@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
 <plugin id="com.streethawk.plugin" version="1.6.1" xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android">
-	<name>StreetHawk for push messaging,geofencing,ibeacon,mobile analytics,deeplinking, app virality ,organic growth ,marketing automation and more</name>
+	<name>StreetHawk - Push,geofence,ibeacon,analytics,appp virality and organic growth</name>
 	<description>      
-      &lt;p&gt;<a href="http://www.streethawk.com">Streethawk</a> is a mobile engagement automation library for your smartphone and tablet apps. Engage users in the right time using push notifications, emails and sms, segment your user base, create geofences to trigger location based campaigns or ibeacons for proximity based campaigns,measure share and measure app virality and organic growth, deeplinking and app indexing, mobile analytics measure campaign performance and more. StreetHawk supports both iOS and Android devices..&lt;/p&gt;
+      &lt;p&gt;<a href="http://www.streethawk.com">Streethawk</a> is a mobile engagement automation library for your smartphone and tablet apps. Engage users in the right time using push messaging, emails and sms, segment your user base, create geofences to trigger location based campaigns or ibeacons for proximity based campaigns,measure share and measure app virality and organic growth, deeplinking and app indexing, mobile analytics measure campaign performance and more. StreetHawk supports both iOS and Android devices..&lt;/p&gt;
       <a href="mailto:support@streethawk.com">Support</a> 
     </description>
 	    
     <license>Apache 2.0</license>
-    <keywords>push,push notifications,push notifications,phonegap,push message, push messaging,notification,segments,emails,sms,segments,geofence,location,beacon,beacons,ibeacon,ibeacons,crash reports,analysis,mobile analytics,retention,retain,users,user,analytics,engagement,adm,engage,measure,optimize,android,ios,marketing,rate,AB spilit,segments,campaign,campaigns,crash reports,crash,reports,geofencing,uninstall,uninstalls,multistep,tag,tagging,location,usage,bluetooth,sessions,session,count,in app,web,url,feeds,simple,push,plugin,gcm,apns,deeplink,deeplinking</keywords>
+    <keywords>push,push notifications,push notifications,phonegap,push message, push messaging,notification,segments,emails,sms,segments,geofence,location,beacon,beacons,ibeacon,ibeacons,crash reports,analysis,mobile analytics,retention,retain,users,user,analytics,engagement,adm,engage,measure,optimize,android,ios,marketing,rate,AB spilit,segments,campaign,campaigns,crash reports,crash,reports,geofencing,uninstall,uninstalls,multistep,tag,tagging,location,usage,bluetooth,sessions,session,count,in app,web,url,feeds,simple,push,plugin,gcm,apns,deeplink,deeplinking,i</keywords>
     
     
     <dependency id="com.google.playservices" />
