@@ -1,10 +1,9 @@
-<?xml version='1.0' encoding='utf-8'?>
-<plugin id="com.streethawk.plugin2" version="1.6.1" xmlns="http://apache.org/cordova/ns/plugins/1.0"
-	xmlns:android="http://schemas.android.com/apk/res/android">
-	<name>Streethawk</name>
-	<description>      
-      <p><a href="http://www.streethawk.com">Streethawk</a> is a mobile engagement automation library for your smartphone and tablet apps. Engage users in the right time using push messaging, emails and sms, segment your user base, create geofences to trigger location based campaigns or ibeacons for proximity based campaigns,measure share and measure app virality and organic growth, deeplinking and app indexing, mobile analytics measure campaign performance and more. StreetHawk supports both iOS and Android devices..</p>
-      <a href="mailto:support@streethawk.com">Support</a> 
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="com.streethawk.plugin2" version="1.6.1" xmlns="http://apache.org/cordova/ns/plugins/1.0">
+    <name>Streethawk</name>
+    <description>      
+    <p><a href="http://www.streethawk.com">Streethawk</a> is a mobile engagement automation library for your smartphone and tablet apps. Engage users in the right time using push messaging, emails and sms, segment your user base, create geofences to trigger location based campaigns or ibeacons for proximity based campaigns,measure share and measure app virality and organic growth, deeplinking and app indexing, mobile analytics measure campaign performance and more. StreetHawk supports both iOS and Android devices..</p>
+    <a href="mailto:support@streethawk.com">Support</a> 
     </description>
 	    
     <license>Apache 2.0</license>
@@ -18,7 +17,6 @@
 		<clobbers target="cordova.plugins.Streethawk"/>
 	</js-module>
 	<platform name="android">
-		
 		<config-file parent="/*" target="res/xml/config.xml">
 			<feature name="Streethawk">
 				<param name="android-package" value="com.streethawk.plugin.Streethawk"/>
@@ -26,12 +24,12 @@
 		</config-file>
 		
 		<config-file target="AndroidManifest.xml" parent="/*/application/activity">
-      <intent-filter>
-        <data android:scheme="$URL_SCHEME"/>
-        <action android:name="android.intent.action.VIEW" />
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-      </intent-filter>
+        <intent-filter>
+            <data android:scheme="$URL_SCHEME"/>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+        </intent-filter>
     </config-file>
 		
 		
